@@ -1,14 +1,471 @@
+<!-- 風琴效果選單 -->
+<!-- 滿版寬高 100% -->
 <!DOCTYPE html>
 <html>
 
 <head>
+    <meta charset="UTF-8">
     <title>Index</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+            overflow-y: auto;
+            background: #000000;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background: rgba(0, 0, 0, 1);
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ddd;
+            font-size: 0.9rem;
+            z-index: 30;
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            box-sizing: border-box;
+            z-index: 30;
+
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(6px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+            transition: backgroun-color 0.35s, border-color 0.35s;
+        }
+
+        .header.scrolled {
+            background: rgba(0, 0, 0, 0.85);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .header .logo {
+            height: 34px;
+            width: auto;
+        }
+
+        .header-menu-btn {
+            display: none;
+            width: 34px;
+            height: 34px;
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
+
+        .header-menu-btn span {
+            display: block;
+            height: 3px;
+            background: #fff;
+            margin: 6px 0;
+            transition: 0.3s;
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -260px;
+            width: 260px;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.92);
+            box-shadow: -2px 0 8px rgba(0, 0, 0, 0.3);
+            transition: right 0.35s ease;
+            z-index: 40;
+            padding: 24px;
+            box-sizing: border-box;
+        }
+
+        .mobile-menu.open {
+            right: 0;
+        }
+
+        .mobile-menu a {
+            display: block;
+            color: #ddd;
+            text-decoration: none;
+            font-size: 1.1rem;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            transition: color 0.25s;
+        }
+
+        .mobile-menu a:hover {
+            color: #fff;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        .header-nav a {
+            color: #ccc;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: color 0.25s;
+        }
+
+        .header-nav a:hover {
+            color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            .header-nav {
+                display: none;
+            }
+
+            .header-menu-btn {
+                display: block;
+            }
+        }
+
+        .accordion {
+            display: flex;
+            width: 100%;
+            height: calc(100% - 80px);
+        }
+
+        .panel {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            border-right: 1px solid #000;
+            transition: flex 0.55s cubic-bezier(0.25, 0.8, 0.25, 1);
+            text-decoration: none;
+        }
+
+        .panel:last-child {
+            border-right: none;
+        }
+
+        .panel:hover {
+            flex: 4;
+        }
+
+        .panel img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%) brightness(0.5);
+            transition: 0.55s;
+        }
+
+        .panel:hover img {
+            filter: grayscale(0) brightness(1);
+            transform: scale(1.1);
+        }
+
+        .center-label {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+
+        .vertical-text {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            transform: rotate(180deg);
+            font-size: 1.5rem;
+            letter-spacing: 0.15em;
+            font-weight: bold;
+            opacity: 1;
+            transition: opacity 0.3s;
+        }
+
+        .panel:hover .vertical-text {
+            opacity: 0;
+        }
+
+        .panel-content {
+            position: absolute;
+            left: 40px;
+            bottom: 40px;
+            opacity: 0;
+            transition: opacity 0.3s ease 0.2s;
+        }
+
+        .panel:hover .panel-content {
+            opacity: 1;
+        }
+
+        .panel-content h3 {
+            margin: 0 0 8px 0;
+            font-size: 2.2rem;
+            font-weight: 700;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 8px;
+            font-size: 0.8rem;
+        }
+
+        .t-white {
+            color: #fff;
+        }
+
+        .t-black {
+            color: #000;
+        }
+
+        .t-green {
+            color: #4ade80;
+        }
+
+        .t-blue {
+            color: #60a5fa;
+        }
+
+        .t-purple {
+            color: #c084fc;
+        }
+
+        .t-pink {
+            color: #db2777;
+        }
+
+        .t-red {
+            color: #7f1d1d;
+        }
+
+        .t-indigo {
+            color: #4f46e5;
+        }
+
+        .bg-yellow {
+            background: #facc15;
+        }
+
+        .bg-white {
+            background: #fff;
+        }
+
+        .bg-teal {
+            background: #008080;
+        }
+
+        .bg-news {
+            background: #fdfbf7;
+        }
+
+        .bg-indigo {
+            background: #eef2ff;
+        }
+
+        .bg-pink {
+            background: #fce7f3;
+        }
+
+        .bg-gray {
+            background: #1f2937;
+        }
+
+        .tag-dark {
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+        }
+    </style>
 </head>
 
 <body>
-    要做一個酷炫的導覽頁，因為有11個頁面
-    <br />
-    很像百葉窗簾那樣，要有百葉窗簾滑動的感覺
+    <div class="header" id="header">
+        <img src="media/logo.png" class="logo" alt="Logo">
+
+        <div class="header-nav">
+            <a href="#">Home</a>
+            <a href="#">Pages</a>
+            <a href="#">About</a>
+        </div>
+
+        <button class="header-menu-btn" id="menuBtn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#">Home</a>
+        <a href="#">Pages</a>
+        <a href="#">About</a>
+    </div>
+
+    <div class="accordion">
+
+        <!-- 01 -->
+        <a href="page1/page1.html" class="panel">
+            <img src="https://picsum.photos/600/800?random=1" alt="01">
+            <div class="center-label">
+                <h2 class="vertical-text t-white">01 N1146723</h2>
+            </div>
+            <div class="panel-content t-white">
+                <h3>Page 01</h3>
+                <span class="tag" style="background:#78716c;">N1146723 組長</span>
+            </div>
+        </a>
+
+        <!-- 02 -->
+        <a href="page2/page2.html" class="panel">
+            <img src="https://picsum.photos/600/800?random=2" alt="02">
+            <div class="center-label">
+                <h2 class="vertical-text t-green">02 N1146723</h2>
+            </div>
+            <div class="panel-content t-white">
+                <h3 class="t-green">Page 02</h3>
+                <span class="tag" style="background:#064e3b; color:#fff;">N1146723 組長</span>
+            </div>
+        </a>
+
+        <!-- 03 -->
+        <a href="page3/page3.html" class="panel">
+            <img src="https://picsum.photos/600/800?random=3" alt="03">
+            <div class="center-label">
+                <h2 class="vertical-text t-blue">03 N1146707</h2>
+            </div>
+            <div class="panel-content t-white">
+                <h3 class="t-blue">Page 03</h3>
+                <span class="tag" style="background:#1e3a8a; color:#fff;">N1146707 張同學</span>
+            </div>
+        </a>
+
+        <!-- 04 -->
+        <a href="page4/page4.html" class="panel bg-yellow">
+            <div class="center-label">
+                <h2 class="vertical-text t-black">04 N1146707</h2>
+            </div>
+            <div class="panel-content t-black">
+                <h3>Page 04</h3>
+                <span class="tag" style="background:#000; color:#fff;">N1146707 張同學</span>
+            </div>
+        </a>
+
+        <!-- 05 -->
+        <a href="page5/page5.html" class="panel bg-white">
+            <div class="center-label">
+                <h2 class="vertical-text" style="color:#9ca3af; font-weight:300;">05 N1146707</h2>
+            </div>
+            <div class="panel-content t-black">
+                <h3 style="font-weight:300;">Page 05</h3>
+                <span class="tag" style="border:1px solid #000;">N1146707 張同學</span>
+            </div>
+        </a>
+
+        <!-- 06 -->
+        <a href="page6/page6.html" class="panel bg-teal">
+            <div class="center-label">
+                <h2 class="vertical-text t-white">06 N1146743</h2>
+            </div>
+            <div class="panel-content t-white">
+                <h3>Page 06</h3>
+                <span class="tag" style="background:#9ca3af; color:#000; border:2px solid #fff;">N1146743 楊同學</span>
+            </div>
+        </a>
+
+        <!-- 07 -->
+        <a href="page7/page7.html" class="panel bg-news">
+            <div class="center-label">
+                <h2 class="vertical-text t-red" style="font-family:serif;">07 N1146743</h2>
+            </div>
+            <div class="panel-content t-red" style="font-family:serif;">
+                <h3>Page 07</h3>
+                <span class="tag" style="border-bottom:1px solid #7f1d1d;">N1146743 楊同學</span>
+            </div>
+        </a>
+
+        <!-- 08 -->
+        <a href="page8/page8.html" class="panel">
+            <img src="https://picsum.photos/600/800?random=8" alt="08">
+            <div class="center-label">
+                <h2 class="vertical-text t-purple">08 N1146743</h2>
+            </div>
+            <div class="panel-content t-white">
+                <h3 class="t-purple">Page 08</h3>
+                <span class="tag" style="background:rgba(88,28,135,0.6); color:#fff;">N1146743 楊同學</span>
+            </div>
+        </a>
+
+        <!-- 09 -->
+        <a href="page9/page9.html" class="panel bg-indigo">
+            <div class="center-label">
+                <h2 class="vertical-text t-indigo">09 N1116445</h2>
+            </div>
+            <div class="panel-content" style="color:#1e1b4b;">
+                <h3>Page 09</h3>
+                <span class="tag" style="background:#c7d2fe; color:#000;">N1116445 呂同學</span>
+            </div>
+        </a>
+
+        <!-- 10 -->
+        <a href="page10/page10.html" class="panel bg-pink">
+            <div class="center-label">
+                <h2 class="vertical-text t-pink">10 N1116445</h2>
+            </div>
+            <div class="panel-content t-pink">
+                <h3>Page 10</h3>
+                <span class="tag" style="background:#fbcfe8; color:#000;">N1116445 呂同學</span>
+            </div>
+        </a>
+
+        <!-- 11 -->
+        <a href="page11/page11.html" class="panel bg-gray">
+            <div class="center-label">
+                <h2 class="vertical-text t-white">11 N1116445</h2>
+            </div>
+            <div class="panel-content t-white">
+                <h3>Page 11</h3>
+                <span class="tag tag-dark">N1116445 呂同學</span>
+            </div>
+        </a>
+        <div class="footer">
+            © 2025 放一些內容
+        </div>
+    </div>
+
+    <script>
+        const header = document.getElementById("header");
+
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 10) {
+                header.classList.add("scrolled");
+            } else {
+                header.classList.remove("scrolled");
+            }
+        });
+
+        const menuBtn = document.getElementById("menuBtn");
+        const mobileMenu = document.getElementById("mobileMenu");
+
+        menuBtn.addEventListener("click", () => {
+            mobileMenu.classList.toggle("open");
+        });
+    </script>
+
 </body>
 
 </html>

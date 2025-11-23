@@ -1,16 +1,456 @@
+<!-- 兩支手機對話功能，靈感來自於自己的期末報告跟社會風氣 -->
+<!-- 偏功能性，可以根據手機設定時間，大頭貼，等等 -->
+<!-- 有亮暗切換模式，或許可以研究下載圖片功能 -->
 <!DOCTYPE html>
 <html>
 
 <head>
+    <meta charset="UTF-8">
     <title>Page2</title>
+
+    <style>
+        body {
+            background-color: #1f2937;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            transition: background-color 0.3s ease;
+        }
+
+        body.light {
+            background-color: #e5e7eb;
+        }
+
+        .phone-wrapper {
+            display: flex;
+            gap: 48px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 40px;
+        }
+
+        .phone {
+            width: 375px;
+            height: 812px;
+            background: #ffffff;
+            border-radius: 48px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+            border: 8px solid #1f2937;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        body.light .phone {
+            background: #ffffff;
+            border-color: #e5e7eb;
+        }
+
+        body.dark .phone {
+            background: #0b1220;
+            border-color: #111827;
+        }
+
+        .status-bar {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 48px;
+            background: #fff;
+            z-index: 20;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding: 0 24px 8px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #222;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        body.dark .status-bar {
+            background: transparent;
+            color: #f3f4f6;
+        }
+
+        .content {
+            flex: 1;
+            overflow: hidden;
+            padding-top: 56px;
+            padding-bottom: 80px;
+            background: #f9fafb;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.3s ease;
+        }
+
+        body.dark .content {
+            background: #0b1220;
+        }
+
+        .header {
+            padding: 0 24px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header .sub {
+            font-size: 12px;
+            color: #9ca3af;
+        }
+
+        .header .name {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1f2937;
+        }
+
+        body.dark .header .name {
+            color: #f3f4f6;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid #ddd;
+            object-fit: cover;
+        }
+
+        .chat-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            scroll-behavior: smooth;
+        }
+
+        .chat-area::-webkit-scrollbar {
+            display: none;
+        }
+
+        .msg {
+            display: flex;
+            max-width: 80%;
+            gap: 8px;
+            align-items: flex-end;
+        }
+
+        .msg .bubble {
+            padding: 10px 14px;
+            border-radius: 18px;
+            font-size: 14px;
+            line-height: 1.3;
+            word-break: break-word;
+            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+        }
+
+        .msg.outgoing {
+            margin-left: auto;
+            justify-content: flex-end;
+        }
+
+        .msg.outgoing .bubble {
+            background: #dcf8c6;
+            color: #111827;
+            border-bottom-right-radius: 6px;
+        }
+
+        body.dark .msg.outgoing .bubble {
+            background: #185e1a;
+            color: #ecfdf5;
+        }
+
+        .msg.incoming {
+            margin-right: auto;
+            justify-content: flex-start;
+        }
+
+        .msg.incoming .bubble {
+            background: #ffffff;
+            color: #111827;
+            border-bottom-left-radius: 6px;
+        }
+
+        body.dark .msg.incoming .bubble {
+            background: #111827;
+            color: #f3f4f6;
+        }
+
+        .time {
+            font-size: 10px;
+            color: #9ca3af;
+            margin-top: 4px;
+            opacity: 0.9;
+        }
+
+        body.dark .time {
+            color: #9ca3af;
+        }
+
+        .input-area {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 12px;
+            box-sizing: border-box;
+            background: transparent;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .input-area .text {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.95);
+            border: none;
+            outline: none;
+            padding: 12px 14px;
+            border-radius: 24px;
+            font-size: 14px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+            resize: none;
+            max-height: 120px;
+            min-height: 40px;
+        }
+
+        body.dark .input-area .text {
+            background: rgba(255, 255, 255, 0.04);
+            color: #e5e7eb;
+        }
+
+        .send-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: none;
+            background: #10b981;
+            color: white;
+            font-size: 18px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        body.dark .send-btn {
+            background: #059669;
+        }
+
+        #modeToggle {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            padding: 10px 16px;
+            background: #4b5563;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            z-index: 999;
+        }
+
+        @media (max-width: 900px) {
+            .phone-wrapper {
+                gap: 24px;
+                padding: 20px;
+            }
+
+            .phone {
+                width: 320px;
+                height: 760px;
+            }
+        }
+
+        .page-header {
+            width: 100%;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding: 0 0 12px;
+            z-index: 900;
+        }
+    </style>
 </head>
 
-<body>
-    要做一個手機對話器，滿足現代人沒朋友又想聊天的需求
-    <br />
-    亮點:1亮暗模式切換 2兩部手機可以自訂設定，例如時間之類的 3下載對話圖片 4類似line那樣
-    <br />
-    原因? 這學期做資訊倫理有用到類似功能
+<body class="dark">
+    <button id="modeToggle">Light Mode</button>
+    <header class="page-header">
+        沒朋友？自己跟自己聊天！
+    </header>
+    <div class="phone-wrapper">
+        <div class="phone" data-user="A">
+            <div class="status-bar">
+                <span>9:41</span>
+                <div><span>📶</span> <span>🔋</span></div>
+            </div>
+
+            <div class="content">
+                <div class="header">
+                    <div>
+                        <p class="sub">人生海海</p>
+                        <p class="name">小王</p>
+                    </div>
+                    <img src="https://picsum.photos/50/50?random=user1" class="avatar" alt="A avatar">
+                </div>
+
+                <div class="chat-area" id="chatA" data-user="A"></div>
+                <div class="input-area" style="padding-bottom:12px;">
+                    <textarea id="inputA" class="text" rows="1" placeholder="輸入訊息"></textarea>
+                    <button class="send-btn" data-send-for="A">➤</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="phone" data-user="B">
+            <div class="status-bar">
+                <span>9:41</span>
+                <div><span>📶</span> <span>🔋</span></div>
+            </div>
+
+            <div class="content">
+                <div class="header">
+                    <div>
+                        <p class="sub">錢難賺</p>
+                        <p class="name">小三</p>
+                    </div>
+                    <img src="https://picsum.photos/50/50?random=user2" class="avatar" alt="B avatar">
+                </div>
+
+                <div class="chat-area" id="chatB" data-user="B"></div>
+
+                <div class="input-area" style="padding-bottom:12px;">
+                    <textarea id="inputB" class="text" rows="1" placeholder="輸入訊息"></textarea>
+                    <button class="send-btn" data-send-for="B">➤</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        const btn = document.getElementById("modeToggle");
+        const bodyEl = document.body;
+
+        const chatA = document.getElementById("chatA");
+        const chatB = document.getElementById("chatB");
+        const inputA = document.getElementById("inputA");
+        const inputB = document.getElementById("inputB");
+        const sendBtns = document.querySelectorAll('.send-btn');
+
+        if (!bodyEl.classList.contains('dark') && !bodyEl.classList.contains('light')) {
+            bodyEl.classList.add('dark');
+        }
+
+        function updateModeText() {
+            btn.textContent = bodyEl.classList.contains('light') ? 'Dark Mode' : 'Light Mode';
+        }
+        updateModeText();
+
+        btn.addEventListener("click", () => {
+            bodyEl.classList.toggle("dark");
+            bodyEl.classList.toggle("light");
+            updateModeText();
+        });
+
+
+        function nowTime() {
+            const d = new Date();
+            const hh = String(d.getHours()).padStart(2, '0');
+            const mm = String(d.getMinutes()).padStart(2, '0');
+            return `${hh}:${mm}`;
+        }
+
+
+        function appendMessage(targetChatEl, type /* 'incoming' | 'outgoing' */, text) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'msg ' + type;
+
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            bubble.textContent = text;
+
+            wrapper.appendChild(bubble);
+
+
+            const t = document.createElement('div');
+            t.className = 'time';
+            t.textContent = nowTime();
+
+
+            const container = document.createElement('div');
+            container.style.display = 'flex';
+            container.style.flexDirection = 'column';
+            container.appendChild(wrapper);
+            container.appendChild(t);
+
+            targetChatEl.appendChild(container);
+
+            targetChatEl.scrollTop = targetChatEl.scrollHeight;
+        }
+
+        function sendMessage(sender, text) {
+            if (!text || !text.trim()) return;
+            const clean = text.trim();
+
+            if (sender === 'A') {
+                appendMessage(chatA, 'outgoing', clean);
+                appendMessage(chatB, 'incoming', clean);
+            } else if (sender === 'B') {
+                appendMessage(chatB, 'outgoing', clean);
+                appendMessage(chatA, 'incoming', clean);
+            }
+        }
+
+        sendBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const who = btn.getAttribute('data-send-for');
+                if (who === 'A') {
+                    sendMessage('A', inputA.value);
+                    inputA.value = '';
+                    inputA.focus();
+                } else {
+                    sendMessage('B', inputB.value);
+                    inputB.value = '';
+                    inputB.focus();
+                }
+            });
+        });
+
+        inputA.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage('A', inputA.value);
+                inputA.value = '';
+            }
+        });
+        inputB.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage('B', inputB.value);
+                inputB.value = '';
+            }
+        });
+
+        appendMessage(chatA, 'incoming', '人生如何');
+        appendMessage(chatB, 'outgoing', '人生如何');
+        appendMessage(chatA, 'outgoing', "我怎知道");
+        appendMessage(chatB, 'incoming', "我怎知道");
+
+    </script>
 </body>
 
 </html>
