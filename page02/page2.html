@@ -1,6 +1,3 @@
-<!-- 兩支手機對話功能，靈感來自於自己的期末報告跟社會風氣 -->
-<!-- 偏功能性，可以根據手機設定時間，大頭貼，等等 -->
-<!-- 有亮暗切換模式，或許可以研究下載圖片功能 -->
 <!DOCTYPE html>
 <html>
 
@@ -13,9 +10,6 @@
             margin: 0;
             padding: 0;
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             font-family: Arial, sans-serif;
             transition: background-color 0.3s ease;
         }
@@ -24,13 +18,47 @@
             background-color: #e5e7eb;
         }
 
+        .page-header {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 24px;
+            background-color: #111827;
+            color: #f3f4f6;
+            box-sizing: border-box;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 900;
+        }
+
+        body.light .page-header {
+            background-color: #e5e7eb;
+            color: #111827;
+        }
+
+        .page-header .center {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .mode-btn {
+            background: transparent;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: inherit;
+        }
+
         .phone-wrapper {
             display: flex;
             gap: 48px;
             align-items: center;
             justify-content: center;
             flex-wrap: wrap;
-            padding: 40px;
+            padding: 100px 40px 40px;
+            /* 預留 header 高度 */
         }
 
         .phone {
@@ -62,12 +90,12 @@
             top: 0;
             width: 100%;
             height: 48px;
-            background: #fff;
+            background: #ffffff;
             z-index: 20;
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
-            padding: 0 24px 8px;
+            padding: 0 8px 8px;
             font-size: 12px;
             font-weight: bold;
             color: #222;
@@ -121,7 +149,7 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            border: 1px solid #ddd;
+            border: 1px solid #dddddd;
             object-fit: cover;
         }
 
@@ -141,23 +169,29 @@
 
         .msg {
             display: flex;
-            max-width: 80%;
-            gap: 8px;
             align-items: flex-end;
+            max-width: 85%;
+            gap: 6px;
         }
 
-        .msg .bubble {
+        .msg.outgoing {
+            margin-left: auto;
+            justify-content: flex-end;
+        }
+
+        .msg.incoming {
+            margin-right: auto;
+            justify-content: flex-start;
+        }
+
+        .bubble {
             padding: 10px 14px;
             border-radius: 18px;
             font-size: 14px;
             line-height: 1.3;
             word-break: break-word;
             box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
-        }
-
-        .msg.outgoing {
-            margin-left: auto;
-            justify-content: flex-end;
+            max-width: 240px;
         }
 
         .msg.outgoing .bubble {
@@ -169,11 +203,6 @@
         body.dark .msg.outgoing .bubble {
             background: #185e1a;
             color: #ecfdf5;
-        }
-
-        .msg.incoming {
-            margin-right: auto;
-            justify-content: flex-start;
         }
 
         .msg.incoming .bubble {
@@ -190,8 +219,9 @@
         .time {
             font-size: 10px;
             color: #9ca3af;
-            margin-top: 4px;
             opacity: 0.9;
+            white-space: nowrap;
+            margin-bottom: 4px;
         }
 
         body.dark .time {
@@ -247,51 +277,19 @@
         body.dark .send-btn {
             background: #059669;
         }
-
-        #modeToggle {
-            position: fixed;
-            top: 24px;
-            right: 24px;
-            padding: 10px 16px;
-            background: #4b5563;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            z-index: 999;
-        }
-
-        @media (max-width: 900px) {
-            .phone-wrapper {
-                gap: 24px;
-                padding: 20px;
-            }
-
-            .phone {
-                width: 320px;
-                height: 760px;
-            }
-        }
-
-        .page-header {
-            width: 100%;
-            text-align: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            padding: 0 0 12px;
-            z-index: 900;
-        }
     </style>
 </head>
 
 <body class="dark">
-    <button id="modeToggle">Light Mode</button>
+
     <header class="page-header">
-        沒朋友？自己跟自己聊天！
+        <button class="mode-btn" id="sunBtn">☀️</button>
+        <div class="center">沒朋友，來聊天</div>
+        <button class="mode-btn" id="moonBtn">🌙</button>
     </header>
+
     <div class="phone-wrapper">
+        <!-- PHONE A -->
         <div class="phone" data-user="A">
             <div class="status-bar">
                 <span>9:41</span>
@@ -304,17 +302,19 @@
                         <p class="sub">人生海海</p>
                         <p class="name">小王</p>
                     </div>
-                    <img src="https://picsum.photos/50/50?random=user1" class="avatar" alt="A avatar">
+                    <img src="https://picsum.photos/50/50?random=user1" class="avatar">
                 </div>
 
-                <div class="chat-area" id="chatA" data-user="A"></div>
-                <div class="input-area" style="padding-bottom:12px;">
+                <div class="chat-area" id="chatA"></div>
+
+                <div class="input-area">
                     <textarea id="inputA" class="text" rows="1" placeholder="輸入訊息"></textarea>
                     <button class="send-btn" data-send-for="A">➤</button>
                 </div>
             </div>
         </div>
 
+        <!-- PHONE B -->
         <div class="phone" data-user="B">
             <div class="status-bar">
                 <span>9:41</span>
@@ -327,21 +327,20 @@
                         <p class="sub">錢難賺</p>
                         <p class="name">小三</p>
                     </div>
-                    <img src="https://picsum.photos/50/50?random=user2" class="avatar" alt="B avatar">
+                    <img src="https://picsum.photos/50/50?random=user2" class="avatar">
                 </div>
 
-                <div class="chat-area" id="chatB" data-user="B"></div>
+                <div class="chat-area" id="chatB"></div>
 
-                <div class="input-area" style="padding-bottom:12px;">
+                <div class="input-area">
                     <textarea id="inputB" class="text" rows="1" placeholder="輸入訊息"></textarea>
                     <button class="send-btn" data-send-for="B">➤</button>
                 </div>
             </div>
         </div>
-
     </div>
+
     <script>
-        const btn = document.getElementById("modeToggle");
         const bodyEl = document.body;
 
         const chatA = document.getElementById("chatA");
@@ -350,65 +349,61 @@
         const inputB = document.getElementById("inputB");
         const sendBtns = document.querySelectorAll('.send-btn');
 
+        const sunBtn = document.getElementById('sunBtn');
+        const moonBtn = document.getElementById('moonBtn');
+
+        // 預設 dark
         if (!bodyEl.classList.contains('dark') && !bodyEl.classList.contains('light')) {
             bodyEl.classList.add('dark');
         }
 
-        function updateModeText() {
-            btn.textContent = bodyEl.classList.contains('light') ? 'Dark Mode' : 'Light Mode';
-        }
-        updateModeText();
-
-        btn.addEventListener("click", () => {
-            bodyEl.classList.toggle("dark");
-            bodyEl.classList.toggle("light");
-            updateModeText();
+        sunBtn.addEventListener('click', () => {
+            bodyEl.classList.add('light');
+            bodyEl.classList.remove('dark');
         });
 
+        moonBtn.addEventListener('click', () => {
+            bodyEl.classList.add('dark');
+            bodyEl.classList.remove('light');
+        });
 
         function nowTime() {
             const d = new Date();
-            const hh = String(d.getHours()).padStart(2, '0');
-            const mm = String(d.getMinutes()).padStart(2, '0');
-            return `${hh}:${mm}`;
+            return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
         }
 
-
-        function appendMessage(targetChatEl, type /* 'incoming' | 'outgoing' */, text) {
-            const wrapper = document.createElement('div');
-            wrapper.className = 'msg ' + type;
+        function appendMessage(targetChatEl, type, text) {
+            const msg = document.createElement('div');
+            msg.className = 'msg ' + type;
 
             const bubble = document.createElement('div');
             bubble.className = 'bubble';
             bubble.textContent = text;
 
-            wrapper.appendChild(bubble);
+            const timeEl = document.createElement('div');
+            timeEl.className = 'time';
+            timeEl.textContent = nowTime();
 
+            if (type === 'outgoing') {
+                msg.appendChild(timeEl);
+                msg.appendChild(bubble);
+            } else {
+                msg.appendChild(bubble);
+                msg.appendChild(timeEl);
+            }
 
-            const t = document.createElement('div');
-            t.className = 'time';
-            t.textContent = nowTime();
-
-
-            const container = document.createElement('div');
-            container.style.display = 'flex';
-            container.style.flexDirection = 'column';
-            container.appendChild(wrapper);
-            container.appendChild(t);
-
-            targetChatEl.appendChild(container);
-
+            targetChatEl.appendChild(msg);
             targetChatEl.scrollTop = targetChatEl.scrollHeight;
         }
 
-        function sendMessage(sender, text) {
+        function postMessage(sender, text) {
             if (!text || !text.trim()) return;
             const clean = text.trim();
 
             if (sender === 'A') {
                 appendMessage(chatA, 'outgoing', clean);
                 appendMessage(chatB, 'incoming', clean);
-            } else if (sender === 'B') {
+            } else {
                 appendMessage(chatB, 'outgoing', clean);
                 appendMessage(chatA, 'incoming', clean);
             }
@@ -418,13 +413,11 @@
             btn.addEventListener('click', () => {
                 const who = btn.getAttribute('data-send-for');
                 if (who === 'A') {
-                    sendMessage('A', inputA.value);
+                    postMessage('A', inputA.value);
                     inputA.value = '';
-                    inputA.focus();
                 } else {
-                    sendMessage('B', inputB.value);
+                    postMessage('B', inputB.value);
                     inputB.value = '';
-                    inputB.focus();
                 }
             });
         });
@@ -432,24 +425,23 @@
         inputA.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
-                sendMessage('A', inputA.value);
+                postMessage('A', inputA.value);
                 inputA.value = '';
             }
         });
         inputB.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
-                sendMessage('B', inputB.value);
+                postMessage('B', inputB.value);
                 inputB.value = '';
             }
         });
 
-        appendMessage(chatA, 'incoming', '人生如何');
-        appendMessage(chatB, 'outgoing', '人生如何');
-        appendMessage(chatA, 'outgoing', "我怎知道");
-        appendMessage(chatB, 'incoming', "我怎知道");
-
+        // 預設訊息
+        postMessage('B', '人生如何人生如何人生如何人生如何人生如何人生如何');
+        postMessage('A', '我怎知道我怎知道我怎知道我怎知道我怎知道');
     </script>
+
 </body>
 
 </html>
