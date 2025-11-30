@@ -345,7 +345,7 @@
         <div class="phone-wrapper">
             <div class="phone" data-user="A">
                 <div class="status-bar">
-                    <span>9:41</span>
+                    <span class="time-display"></span>
                     <div><span>📶</span> <span>🔋</span></div>
                 </div>
 
@@ -369,7 +369,7 @@
 
             <div class="phone" data-user="B">
                 <div class="status-bar">
-                    <span>9:41</span>
+                    <span class="time-display"></span>
                     <div><span>📶</span> <span>🔋</span></div>
                 </div>
 
@@ -430,6 +430,15 @@
             const d = new Date();
             return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
         }
+
+        // 每秒更新手機狀態列時間
+        function updateTime() {
+            document.querySelectorAll('.status-bar .time-display').forEach(el => {
+                el.textContent = nowTime();
+            });
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
 
         function appendMessage(targetChatEl, type, text) {
             const msg = document.createElement('div');
@@ -516,7 +525,6 @@
         // 預設訊息
         postMessage('B', '人生如何人生如何人生如何人生如何人生如何人生如何');
         postMessage('A', '我怎知道我怎知道我怎知道我怎知道我怎知道');
-
     </script>
 </body>
 
