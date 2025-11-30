@@ -13,7 +13,8 @@
             font-family: Arial, sans-serif;
             transition: background-color 0.3s ease;
             overflow: hidden;
-            /* 禁止頁面滾動 */
+            display: flex;
+            flex-direction: column;
         }
 
         body.light {
@@ -54,23 +55,51 @@
             color: inherit;
         }
 
+        .main-wrapper {
+            display: flex;
+            flex: 1;
+            padding-top: 52px;
+            gap: 48px;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        .side-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            min-width: 150px;
+        }
+
+        .side-panel label {
+            color: #f3f4f6;
+            font-size: 14px;
+        }
+
+        body.light .side-panel label {
+            color: #111827;
+        }
+
+        .side-panel input {
+            padding: 6px 8px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
         .phone-wrapper {
             display: flex;
             gap: 48px;
             align-items: center;
             justify-content: center;
             flex-wrap: wrap;
-            padding: 8px 40px;
-            box-sizing: border-box;
-            height: calc(100vh - 52px - 16px);
-            margin-top: 52px;
         }
 
         .phone {
             flex: 1 1 275px;
             max-width: 275px;
-            height: 100%;
-            width: 275px;
+            height: 500px;
             background: #ffffff;
             border-radius: 48px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
@@ -149,7 +178,8 @@
             color: #1f2937;
         }
 
-        body.dark .header .name {
+        body.dark .header .name,
+        body.dark .header .sub {
             color: #f3f4f6;
         }
 
@@ -294,7 +324,7 @@
     </style>
 </head>
 
-<body class="dark">
+<body class="light">
 
     <header class="page-header">
         <button class="mode-btn" id="sunBtn">☀️</button>
@@ -302,61 +332,77 @@
         <button class="mode-btn" id="moonBtn">🌙</button>
     </header>
 
-    <div class="phone-wrapper">
-        <!-- PHONE A -->
-        <div class="phone" data-user="A">
-            <div class="status-bar">
-                <span>9:41</span>
-                <div><span>📶</span> <span>🔋</span></div>
-            </div>
+    <div class="main-wrapper">
+        <!-- 左側面板 -->
+        <div class="side-panel" id="panelA">
+            <label>手機 A 名字</label>
+            <input type="text" class="name-input" value="小王">
+            <label>手機 A 副標題</label>
+            <input type="text" class="sub-input" value="人生海海">
+        </div>
 
-            <div class="content">
-                <div class="header">
-                    <div>
-                        <p class="name">小王</p>
-                        <p class="sub">人生海海</p>
-                    </div>
-                    <img src="https://picsum.photos/50/50?random=user1" class="avatar">
+        <!-- 手機 -->
+        <div class="phone-wrapper">
+            <div class="phone" data-user="A">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <div><span>📶</span> <span>🔋</span></div>
                 </div>
 
-                <div class="chat-area" id="chatA"></div>
+                <div class="content">
+                    <div class="header">
+                        <div>
+                            <p class="name">小王</p>
+                            <p class="sub">人生海海</p>
+                        </div>
+                        <img src="https://picsum.photos/50/50?random=user1" class="avatar">
+                    </div>
 
-                <div class="input-area">
-                    <textarea id="inputA" class="text" rows="1" placeholder="輸入訊息"></textarea>
-                    <button class="send-btn" data-send-for="A">➤</button>
+                    <div class="chat-area" id="chatA"></div>
+
+                    <div class="input-area">
+                        <textarea id="inputA" class="text" rows="1" placeholder="輸入訊息"></textarea>
+                        <button class="send-btn" data-send-for="A">➤</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="phone" data-user="B">
+                <div class="status-bar">
+                    <span>9:41</span>
+                    <div><span>📶</span> <span>🔋</span></div>
+                </div>
+
+                <div class="content">
+                    <div class="header">
+                        <div>
+                            <p class="name">小三</p>
+                            <p class="sub">錢難賺</p>
+                        </div>
+                        <img src="https://picsum.photos/50/50?random=user2" class="avatar">
+                    </div>
+
+                    <div class="chat-area" id="chatB"></div>
+
+                    <div class="input-area">
+                        <textarea id="inputB" class="text" rows="1" placeholder="輸入訊息"></textarea>
+                        <button class="send-btn" data-send-for="B">➤</button>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- PHONE B -->
-        <div class="phone" data-user="B">
-            <div class="status-bar">
-                <span>9:41</span>
-                <div><span>📶</span> <span>🔋</span></div>
-            </div>
-
-            <div class="content">
-                <div class="header">
-                    <div>
-                        <p class="name">小三</p>
-                        <p class="sub">錢難賺</p>
-                    </div>
-                    <img src="https://picsum.photos/50/50?random=user2" class="avatar">
-                </div>
-
-                <div class="chat-area" id="chatB"></div>
-
-                <div class="input-area">
-                    <textarea id="inputB" class="text" rows="1" placeholder="輸入訊息"></textarea>
-                    <button class="send-btn" data-send-for="B">➤</button>
-                </div>
-            </div>
+        <!-- 右側面板 -->
+        <div class="side-panel" id="panelB">
+            <label>手機 B 名字</label>
+            <input type="text" class="name-input" value="小三">
+            <label>手機 B 副標題</label>
+            <input type="text" class="sub-input" value="錢難賺">
         </div>
     </div>
 
     <script>
         const bodyEl = document.body;
-
         const chatA = document.getElementById("chatA");
         const chatB = document.getElementById("chatB");
         const inputA = document.getElementById("inputA");
@@ -366,7 +412,6 @@
         const sunBtn = document.getElementById('sunBtn');
         const moonBtn = document.getElementById('moonBtn');
 
-        // 預設 dark
         if (!bodyEl.classList.contains('dark') && !bodyEl.classList.contains('light')) {
             bodyEl.classList.add('dark');
         }
@@ -389,11 +434,9 @@
         function appendMessage(targetChatEl, type, text) {
             const msg = document.createElement('div');
             msg.className = 'msg ' + type;
-
             const bubble = document.createElement('div');
             bubble.className = 'bubble';
             bubble.textContent = text;
-
             const timeEl = document.createElement('div');
             timeEl.className = 'time';
             timeEl.textContent = nowTime();
@@ -413,7 +456,6 @@
         function postMessage(sender, text) {
             if (!text || !text.trim()) return;
             const clean = text.trim();
-
             if (sender === 'A') {
                 appendMessage(chatA, 'outgoing', clean);
                 appendMessage(chatB, 'incoming', clean);
@@ -436,14 +478,14 @@
             });
         });
 
-        inputA.addEventListener('keydown', (e) => {
+        inputA.addEventListener('keydown', e => {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
                 postMessage('A', inputA.value);
                 inputA.value = '';
             }
         });
-        inputB.addEventListener('keydown', (e) => {
+        inputB.addEventListener('keydown', e => {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
                 postMessage('B', inputB.value);
@@ -451,11 +493,31 @@
             }
         });
 
+        // 同步側邊面板輸入
+        function setupPanel(panelId, phoneSelector) {
+            const panel = document.getElementById(panelId);
+            const phone = document.querySelector(phoneSelector);
+            const nameInput = panel.querySelector('.name-input');
+            const subInput = panel.querySelector('.sub-input');
+            const nameEl = phone.querySelector('.name');
+            const subEl = phone.querySelector('.sub');
+
+            nameInput.addEventListener('input', () => {
+                nameEl.textContent = nameInput.value;
+            });
+            subInput.addEventListener('input', () => {
+                subEl.textContent = subInput.value;
+            });
+        }
+
+        setupPanel('panelA', '.phone[data-user="A"]');
+        setupPanel('panelB', '.phone[data-user="B"]');
+
         // 預設訊息
         postMessage('B', '人生如何人生如何人生如何人生如何人生如何人生如何');
         postMessage('A', '我怎知道我怎知道我怎知道我怎知道我怎知道');
-    </script>
 
+    </script>
 </body>
 
 </html>
