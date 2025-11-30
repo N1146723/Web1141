@@ -43,8 +43,27 @@
         }
 
         .page-header .center {
-            font-size: 18px;
-            font-weight: bold;
+            overflow: hidden;
+            position: relative;
+            width: 800px;
+            height: 24px;
+        }
+
+        .page-header .marquee {
+            position: absolute;
+            white-space: nowrap;
+            display: inline-block;
+            animation: marquee 10s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(100%);
+            }
+
+            100% {
+                transform: translateX(-100%);
+            }
         }
 
         .mode-btn {
@@ -344,7 +363,9 @@
 
     <header class="page-header">
         <button class="mode-btn" id="sunBtn">☀️</button>
-        <div class="center">沒朋友，來聊天</div>
+        <div class="center">
+            <div class="marquee">～～ 沒朋友，自己跟自己聊天！刪除訊息功能開發中，敬請期待 ～～</div>
+        </div>
         <button class="mode-btn" id="moonBtn">🌙</button>
     </header>
 
