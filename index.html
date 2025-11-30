@@ -1,306 +1,34 @@
+<!-- ***************************** -->
+<!--  N1146723 (組長) 第一個頁面 * -->
+<!-- ***************************** -->
+
 <!-- 風琴效果選單 -->
-<!-- 滿版寬高 100% -->
+<!-- 滿版寬高 100% title footer 手機樣式的右上選單 設計感的頁面 -->
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="UTF-8">
-    <title>Index</title>
-    <style>
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            overflow-x: hidden;
-            overflow-y: auto;
-            background: #000000;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
-
-        .footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 80px;
-            background: rgba(0, 0, 0, 1);
-            border-top: 1px solid rgba(255, 255, 255, 0.12);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #ddd;
-            font-size: 0.9rem;
-            z-index: 30;
-        }
-
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 64px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 24px;
-            box-sizing: border-box;
-            z-index: 30;
-
-            background: rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(6px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-
-            transition: backgroun-color 0.35s, border-color 0.35s;
-        }
-
-        .header.scrolled {
-            background: rgba(0, 0, 0, 0.85);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.18);
-        }
-
-        .header .logo {
-            height: 34px;
-            width: auto;
-        }
-
-        .header-menu-btn {
-            display: none;
-            width: 34px;
-            height: 34px;
-            border: none;
-            background: none;
-            cursor: pointer;
-        }
-
-        .header-menu-btn span {
-            display: block;
-            height: 3px;
-            background: #fff;
-            margin: 6px 0;
-            transition: 0.3s;
-        }
-
-        .mobile-menu {
-            position: fixed;
-            top: 0;
-            right: -260px;
-            width: 260px;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.92);
-            box-shadow: -2px 0 8px rgba(0, 0, 0, 0.3);
-            transition: right 0.35s ease;
-            z-index: 40;
-            padding: 24px;
-            box-sizing: border-box;
-        }
-
-        .mobile-menu.open {
-            right: 0;
-        }
-
-        .mobile-menu a {
-            display: block;
-            color: #ddd;
-            text-decoration: none;
-            font-size: 1.1rem;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            transition: color 0.25s;
-        }
-
-        .mobile-menu a:hover {
-            color: #fff;
-        }
-
-        .header-nav {
-            display: flex;
-            gap: 20px;
-        }
-
-        .header-nav a {
-            color: #ccc;
-            font-size: 0.9rem;
-            text-decoration: none;
-            transition: color 0.25s;
-        }
-
-        .header-nav a:hover {
-            color: #fff;
-        }
-
-        @media (max-width: 768px) {
-            .header-nav {
-                display: none;
-            }
-
-            .header-menu-btn {
-                display: block;
-            }
-        }
-
-        .accordion {
-            display: flex;
-            width: 100%;
-            height: calc(100% - 80px);
-        }
-
-        .panel {
-            flex: 1;
-            position: relative;
-            overflow: hidden;
-            border-right: 1px solid #000;
-            transition: flex 0.55s cubic-bezier(0.25, 0.8, 0.25, 1);
-            text-decoration: none;
-        }
-
-        .panel:last-child {
-            border-right: none;
-        }
-
-        .panel:hover {
-            flex: 4;
-        }
-
-        .panel img {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: grayscale(100%) brightness(0.5);
-            transition: 0.55s;
-        }
-
-        .panel:hover img {
-            filter: grayscale(0) brightness(1);
-            transform: scale(1.1);
-        }
-
-        .center-label {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            pointer-events: none;
-        }
-
-        .vertical-text {
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
-            transform: rotate(180deg);
-            font-size: 1.5rem;
-            letter-spacing: 0.15em;
-            font-weight: bold;
-            opacity: 1;
-            transition: opacity 0.3s;
-        }
-
-        .panel:hover .vertical-text {
-            opacity: 0;
-        }
-
-        .panel-content {
-            position: absolute;
-            left: 40px;
-            bottom: 40px;
-            opacity: 0;
-            transition: opacity 0.3s ease 0.2s;
-        }
-
-        .panel:hover .panel-content {
-            opacity: 1;
-        }
-
-        .panel-content h3 {
-            margin: 0 0 8px 0;
-            font-size: 2.2rem;
-            font-weight: 700;
-        }
-
-        .tag {
-            display: inline-block;
-            padding: 4px 8px;
-            font-size: 0.8rem;
-        }
-
-        .t-white {
-            color: #fff;
-        }
-
-        .t-black {
-            color: #000;
-        }
-
-        .t-green {
-            color: #4ade80;
-        }
-
-        .t-blue {
-            color: #60a5fa;
-        }
-
-        .t-purple {
-            color: #c084fc;
-        }
-
-        .t-pink {
-            color: #db2777;
-        }
-
-        .t-red {
-            color: #7f1d1d;
-        }
-
-        .t-indigo {
-            color: #4f46e5;
-        }
-
-        .bg-yellow {
-            background: #facc15;
-        }
-
-        .bg-white {
-            background: #fff;
-        }
-
-        .bg-teal {
-            background: #008080;
-        }
-
-        .bg-news {
-            background: #fdfbf7;
-        }
-
-        .bg-indigo {
-            background: #eef2ff;
-        }
-
-        .bg-pink {
-            background: #fce7f3;
-        }
-
-        .bg-gray {
-            background: #1f2937;
-        }
-
-        .tag-dark {
-            background: rgba(0, 0, 0, 0.7);
-            color: #fff;
-        }
-    </style>
+    <title>114-1 WEB Design</title>
+    <link rel="stylesheet" href="index/style.css">
+    <script src="index/script.js"></script>
 </head>
 
-<body>
-    <div class="header" id="header">
-        <img src="media/logo.png" class="logo" alt="Logo">
+<body onload="init()">
+    <div class="header">
 
+        <div class="logo-area">
+            <img class="logo" src="index/media/logo.png" alt="Logo">
+            <div>
+                <div class="logo-text-big">114-1 WEB Design </div>
+                <div class="logo-text-little">11 beautiful pages by 4 members ✨✨</div>
+            </div>
+        </div>
         <div class="header-nav">
-            <a href="#">Home</a>
-            <a href="#">Pages</a>
-            <a href="#">About</a>
+            <a href="https://github.com/N1146723/Web1141" target="_blank">GitHub</a>
+            <a href="#" target="_blank">Members</a>
+            <a href="https://docs.google.com/document/d/1kBFKFEpiEYYy4r1fhn8T5baJV9wC-DZ5edGfSDCNnC0/edit?tab=t.0"
+                target="_blank">Timeline</a>
         </div>
 
         <button class="header-menu-btn" id="menuBtn">
@@ -311,22 +39,24 @@
     </div>
 
     <div class="mobile-menu" id="mobileMenu">
-        <a href="#">Home</a>
-        <a href="#">Pages</a>
-        <a href="#">About</a>
+        <button class="close-btn" id="closeBtn">x</button>
+        <a href="https://github.com/N1146723/Web1141" target="_blank">GitHub</a>
+        <a href="#" target="_blank">Members</a>
+        <a href="https://docs.google.com/document/d/1kBFKFEpiEYYy4r1fhn8T5baJV9wC-DZ5edGfSDCNnC0/edit?tab=t.0"
+            target="_blank">Timeline</a>
     </div>
 
     <div class="accordion">
-
         <!-- 01 -->
         <a href="page01/page1.html" class="panel">
             <img src="https://picsum.photos/600/800?random=1" alt="01">
             <div class="center-label">
-                <h2 class="vertical-text t-white">01 N1146723</h2>
+                <h2 class="vertical-text t-white">01 Gallary</h2>
             </div>
             <div class="panel-content t-white">
-                <h3>Page 01</h3>
-                <span class="tag" style="background:#78716c;">N1146723 組長</span>
+                <h3>01 Gallary</h3>
+                <h6>展示了個人繪畫作品集</h6>
+                <span class="tag" style="background:#78716c;">N1146723 宜舫(組長)</span>
             </div>
         </a>
 
@@ -334,11 +64,12 @@
         <a href="page02/page2.html" class="panel">
             <img src="https://picsum.photos/600/800?random=2" alt="02">
             <div class="center-label">
-                <h2 class="vertical-text t-green">02 N1146723</h2>
+                <h2 class="vertical-text t-green">02 Lonely?</h2>
             </div>
             <div class="panel-content t-white">
-                <h3 class="t-green">Page 02</h3>
-                <span class="tag" style="background:#064e3b; color:#fff;">N1146723 組長</span>
+                <h3 class="t-green">02 Lonely?</h3>
+                <h6>沒朋友嗎？來跟自己聊天吧！</h6>
+                <span class="tag" style="background:#064e3b; color:#fff;">N1146723 宜舫(組長)</span>
             </div>
         </a>
 
@@ -442,29 +173,27 @@
                 <span class="tag tag-dark">N1116445 呂同學</span>
             </div>
         </a>
-        <div class="footer">
-            © 2025 放一些內容
+    </div>
+    <div class="footer">
+        <div class="footer-center">
+            <a href="https://www.facebook.com" target="_blank" class="social-icon">
+                <img src="index/media/facebook.png" alt="Facebook">
+            </a>
+            <a href="https://www.instagram.com" target="_blank" class="social-icon">
+                <img src="index/media/instagram.png" alt="Instagram">
+            </a>
+            <a href="https://www.linkedin.com" target="_blank" class="social-icon">
+                <img src="index/media/linkedin.png" alt="LinkedIn">
+            </a>
+            <div class="footer-text">
+                © 2025 NTUB Department of Information Management
+            </div>
+
+            <a href="mailto:N1145623@ntub.edu.tw" class="footer-email">N1145623@ntub.edu.tw</a>
+
+
         </div>
     </div>
-
-    <script>
-        const header = document.getElementById("header");
-
-        window.addEventListener("scroll", () => {
-            if (window.scrollY > 10) {
-                header.classList.add("scrolled");
-            } else {
-                header.classList.remove("scrolled");
-            }
-        });
-
-        const menuBtn = document.getElementById("menuBtn");
-        const mobileMenu = document.getElementById("mobileMenu");
-
-        menuBtn.addEventListener("click", () => {
-            mobileMenu.classList.toggle("open");
-        });
-    </script>
 
 </body>
 

@@ -1,0 +1,347 @@
+/*****************************/
+/* N1146723 (組長) 第一個頁面 */
+/*****************************/
+
+/* 我想做簡單滿版，不需要滾動的畫面 */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: #000000;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.header {
+    position: fixed; /* 固定在視窗上 */
+    width: 100%;
+    height: 64px;
+    display: flex; /* 裡面的東西水平排列 */
+    align-items: center; /* 內容物置中 */
+    justify-content: space-between;
+    padding: 0 24px;
+    box-sizing: border-box;
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(8px); /* 美美的 blur */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.logo {
+    height: 34px;
+    width: 34px;
+    border-radius: 50%;
+}
+
+.logo-text-big {
+    color: #ffffff;
+    font-size: 20px;  
+    font-weight: bold;
+}
+.logo-text-little {
+    color: #ffffff;
+    font-size: 14px;
+}
+.header-menu-btn {
+    display: none;
+    width: 34px;
+    height: 34px;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.header-menu-btn span {
+    display: block;
+    height: 3px;
+    background: #ffffff;
+    margin: 6px 0;
+    transition: 0.3s;
+}
+.close-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-size: 1.5rem;
+    color: #fff;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    right: -260px;
+    width: 260px;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.92);
+    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.3);
+    transition: right 0.35s ease;
+    z-index: 40;
+    padding: 24px;
+    box-sizing: border-box;
+}
+
+.mobile-menu.open {
+    right: 0;
+}
+
+.mobile-menu a {
+    display: block;
+    color: #dddddd;
+    text-decoration: none;
+    font-size: 1.1rem;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    transition: color 0.25s;
+}
+
+.mobile-menu a:hover {
+    color: #fff;
+}
+
+.header-nav {
+    display: flex;
+    gap: 20px;
+}
+
+.header-nav a {
+    color: #ccc;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: color 0.25s;
+}
+
+.header-nav a:hover {
+    color: #fff;
+}
+
+@media (max-width: 768px) {
+    .header-nav {
+        display: none;
+    }
+
+    .header-menu-btn {
+        display: block;
+    }
+}
+
+.accordion {
+    display: flex;
+    width: 100%;
+    height: calc(100% - 60px);
+}
+
+.panel {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    border-right: 1px solid #000;
+    transition: flex 0.55s cubic-bezier(0.25, 0.8, 0.25, 1);
+    text-decoration: none;
+}
+
+.panel:last-child {
+    border-right: none;
+}
+
+.panel:hover {
+    flex: 4;
+}
+
+.panel img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%) brightness(0.5);
+    transition: 0.55s;
+}
+
+.panel:hover img {
+    filter: grayscale(0) brightness(1);
+    transform: scale(1.1);
+}
+
+.center-label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.vertical-text {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    font-size: 1.5rem;
+    letter-spacing: 0.15em;
+    font-weight: bold;
+    opacity: 1;
+    transition: opacity 0.3s;
+}
+
+.panel:hover .vertical-text {
+    opacity: 0;
+}
+
+.panel-content {
+    position: absolute;
+    left: 40px;
+    bottom: 40px;
+    opacity: 0;
+    transition: opacity 0.3s ease 0.2s;
+}
+
+.panel:hover .panel-content {
+    opacity: 1;
+}
+
+.panel-content h3 {
+    margin: 0 0 8px 0;
+    font-size: 2.2rem;
+    font-weight: 700;
+}
+
+.tag {
+    display: inline-block;
+    padding: 4px 8px;
+    font-size: 0.8rem;
+}
+
+.t-white {
+    color: #fff;
+}
+
+.t-black {
+    color: #000;
+}
+
+.t-green {
+    color: #4ade80;
+}
+
+.t-blue {
+    color: #60a5fa;
+}
+
+.t-purple {
+    color: #c084fc;
+}
+
+.t-pink {
+    color: #db2777;
+}
+
+.t-red {
+    color: #7f1d1d;
+}
+
+.t-indigo {
+    color: #4f46e5;
+}
+
+.bg-yellow {
+    background: #facc15;
+}
+
+.bg-white {
+    background: #fff;
+}
+
+.bg-teal {
+    background: #008080;
+}
+
+.bg-news {
+    background: #fdfbf7;
+}
+
+.bg-indigo {
+    background: #eef2ff;
+}
+
+.bg-pink {
+    background: #fce7f3;
+}
+
+.bg-gray {
+    background: #1f2937;
+}
+
+.tag-dark {
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background: rgba(0, 0, 0, 1);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ddd;
+    font-size: 0.9rem;
+    z-index: 30;
+}
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background: rgba(0, 0, 0, 1);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center; /* 置中 */
+    color: #ddd;
+    font-size: 0.9rem;
+    z-index: 1;
+    box-sizing: border-box;
+}
+
+.footer-center {
+    display: flex;
+    align-items: center;
+    gap: 18px; /* icon 與文字間距 */
+}
+
+.social-icon img {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.2s;
+}
+
+.social-icon img:hover {
+    transform: scale(1.2);
+}
+
+.footer-text {
+     color: #bbbbbb;
+    margin-left: 24px;
+}
+
+.footer-email {
+    color: #ddd;
+    text-decoration: underline;
+    margin-left: 4px;
+}
+
+.footer-email:hover {
+    color: #fff;
+}
