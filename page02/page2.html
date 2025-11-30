@@ -81,11 +81,30 @@
             color: #111827;
         }
 
-        .side-panel input {
+        .side-panel input,
+        .side-panel select {
             padding: 6px 8px;
             border-radius: 6px;
             border: 1px solid #ccc;
             font-size: 14px;
+        }
+
+        .avatar-selector {
+            display: flex;
+            gap: 6px;
+        }
+
+        .avatar-selector img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            object-fit: cover;
+            cursor: pointer;
+        }
+
+        .avatar-selector img.selected {
+            border-color: #10b981;
         }
 
         .phone-wrapper {
@@ -227,7 +246,8 @@
         .bubble {
             padding: 10px 14px;
             border-radius: 18px;
-            font-size: 14px;
+            font-size: 12px;
+            /* 預設中 12px */
             line-height: 1.3;
             word-break: break-word;
             box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
@@ -295,10 +315,6 @@
             min-height: 20px;
         }
 
-        .header p {
-            margin: 0;
-        }
-
         body.dark .input-area .text {
             background: rgba(255, 255, 255, 0.04);
             color: #e5e7eb;
@@ -335,31 +351,45 @@
     <div class="main-wrapper">
         <!-- 左側面板 -->
         <div class="side-panel" id="panelA">
+            <label>選擇頭像</label>
+            <div class="avatar-selector" data-target="A">
+                <img src="https://picsum.photos/50/50?random=1" class="selected">
+                <img src="https://picsum.photos/50/50?random=2">
+                <img src="https://picsum.photos/50/50?random=3">
+                <img src="https://picsum.photos/50/50?random=4">
+                <img src="https://picsum.photos/50/50?random=5">
+            </div>
             <label>手機 A 名字</label>
             <input type="text" class="name-input" value="小王">
             <label>手機 A 副標題</label>
             <input type="text" class="sub-input" value="人生海海">
+
+            <label>聊天字體大小</label>
+            <select class="font-size-select" data-target="A">
+                <option value="10px">小</option>
+                <option value="12px" selected>中</option>
+                <option value="14px">大</option>
+            </select>
+
+
         </div>
 
-        <!-- 手機 -->
+        <!-- 手機 A 與 B -->
         <div class="phone-wrapper">
             <div class="phone" data-user="A">
                 <div class="status-bar">
                     <span class="time-display"></span>
                     <div><span>📶</span> <span>🔋</span></div>
                 </div>
-
                 <div class="content">
                     <div class="header">
                         <div>
                             <p class="name">小王</p>
                             <p class="sub">人生海海</p>
                         </div>
-                        <img src="https://picsum.photos/50/50?random=user1" class="avatar">
+                        <img src="https://picsum.photos/50/50?random=1" class="avatar">
                     </div>
-
                     <div class="chat-area" id="chatA"></div>
-
                     <div class="input-area">
                         <textarea id="inputA" class="text" rows="1" placeholder="輸入訊息"></textarea>
                         <button class="send-btn" data-send-for="A">➤</button>
@@ -372,18 +402,15 @@
                     <span class="time-display"></span>
                     <div><span>📶</span> <span>🔋</span></div>
                 </div>
-
                 <div class="content">
                     <div class="header">
                         <div>
                             <p class="name">小三</p>
                             <p class="sub">錢難賺</p>
                         </div>
-                        <img src="https://picsum.photos/50/50?random=user2" class="avatar">
+                        <img src="https://picsum.photos/50/50?random=1" class="avatar">
                     </div>
-
                     <div class="chat-area" id="chatB"></div>
-
                     <div class="input-area">
                         <textarea id="inputB" class="text" rows="1" placeholder="輸入訊息"></textarea>
                         <button class="send-btn" data-send-for="B">➤</button>
@@ -394,10 +421,25 @@
 
         <!-- 右側面板 -->
         <div class="side-panel" id="panelB">
+            <label>選擇頭像</label>
+            <div class="avatar-selector" data-target="B">
+                <img src="https://picsum.photos/50/50?random=1" class="selected">
+                <img src="https://picsum.photos/50/50?random=2">
+                <img src="https://picsum.photos/50/50?random=3">
+                <img src="https://picsum.photos/50/50?random=4">
+                <img src="https://picsum.photos/50/50?random=5">
+            </div>
             <label>手機 B 名字</label>
             <input type="text" class="name-input" value="小三">
             <label>手機 B 副標題</label>
             <input type="text" class="sub-input" value="錢難賺">
+
+            <label>聊天字體大小</label>
+            <select class="font-size-select" data-target="B">
+                <option value="10px">小</option>
+                <option value="12px" selected>中</option>
+                <option value="14px">大</option>
+            </select>
         </div>
     </div>
 
@@ -431,7 +473,6 @@
             return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
         }
 
-        // 每秒更新手機狀態列時間
         function updateTime() {
             document.querySelectorAll('.status-bar .time-display').forEach(el => {
                 el.textContent = nowTime();
@@ -446,6 +487,12 @@
             const bubble = document.createElement('div');
             bubble.className = 'bubble';
             bubble.textContent = text;
+
+            // 設定字體大小
+            const target = targetChatEl.id === "chatA" ? 'A' : 'B';
+            const fontSelect = document.querySelector(`.font-size-select[data-target="${target}"]`);
+            bubble.style.fontSize = fontSelect.value;
+
             const timeEl = document.createElement('div');
             timeEl.className = 'time';
             timeEl.textContent = nowTime();
@@ -502,7 +549,7 @@
             }
         });
 
-        // 同步側邊面板輸入
+        // 同步名字與副標題
         function setupPanel(panelId, phoneSelector) {
             const panel = document.getElementById(panelId);
             const phone = document.querySelector(phoneSelector);
@@ -511,16 +558,38 @@
             const nameEl = phone.querySelector('.name');
             const subEl = phone.querySelector('.sub');
 
-            nameInput.addEventListener('input', () => {
-                nameEl.textContent = nameInput.value;
-            });
-            subInput.addEventListener('input', () => {
-                subEl.textContent = subInput.value;
-            });
+            nameInput.addEventListener('input', () => nameEl.textContent = nameInput.value);
+            subInput.addEventListener('input', () => subEl.textContent = subInput.value);
         }
 
         setupPanel('panelA', '.phone[data-user="A"]');
         setupPanel('panelB', '.phone[data-user="B"]');
+        // 更新整個聊天區字體大小
+        document.querySelectorAll('.font-size-select').forEach(select => {
+            const target = select.getAttribute('data-target');
+            const chatArea = document.querySelector(`#chat${target}`);
+
+            // 當選擇改變時
+            select.addEventListener('change', () => {
+                const newSize = select.value;
+                chatArea.querySelectorAll('.bubble').forEach(bubble => {
+                    bubble.style.fontSize = newSize;
+                });
+            });
+        });
+
+        // 頭像選擇功能
+        document.querySelectorAll('.avatar-selector').forEach(selector => {
+            const target = selector.getAttribute('data-target');
+            const phoneAvatar = document.querySelector(`.phone[data-user="${target}"] .avatar`);
+            selector.querySelectorAll('img').forEach(img => {
+                img.addEventListener('click', () => {
+                    selector.querySelectorAll('img').forEach(i => i.classList.remove('selected'));
+                    img.classList.add('selected');
+                    phoneAvatar.src = img.src;
+                });
+            });
+        });
 
         // 預設訊息
         postMessage('B', '人生如何人生如何人生如何人生如何人生如何人生如何');
