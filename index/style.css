@@ -236,21 +236,25 @@ body {
     background: #78716c;
 }
 
+.bg-02 {
+    background: #ffd942;
+}
+
 .label-02 {
-    color: #4ade80;
+    color: #371364;
 }
 
 .title-02 {
-    color: #4ade80;
+    color: #371364;
 }
 
 .desc-02 {
-    color: #ffffff;
+    color: #6432a1;
 }
 
 .tag-02 {
     color: #ffffff;
-    background: #064e3b;
+    background: #371364;
 }
 
 .label-03 {
@@ -270,25 +274,21 @@ body {
     background: #1e3a8a;
 }
 
-.bg-04 {
-    background: #ffd942;
-}
-
 .label-04 {
-    color: #371364;
+    color: #4ade80;
 }
 
 .title-04 {
-    color: #371364;
+    color: #4ade80;
 }
 
 .desc-04 {
-    color: #6432a1;
+    color: #ffffff;
 }
 
 .tag-04 {
     color: #ffffff;
-    background: #371364;
+    background: #064e3b;
 }
 
 .bg-05 {
