@@ -1,6 +1,4 @@
-/*****************************/
-/* N1146723 (組長) 第3個頁面 */
-/*****************************/
+// N1146723 鄭宜舫 (組長) 頁面#3
 function init() {
     const bodyEl = document.body;
     const chatA = document.getElementById("chatA");

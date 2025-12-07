@@ -1,9 +1,6 @@
-/*****************************/
-/* N1146723 (組長) 第一個頁面 */
-/*****************************/
-
-/* 我想做簡單滿版，不需要滾動的畫面 */
-html, body {
+/* N1146723 鄭宜舫 (組長) 頁面#1 */
+html,
+body {
     margin: 0;
     padding: 0;
     width: 100%;
@@ -13,17 +10,16 @@ html, body {
 }
 
 .header {
-    position: fixed; /* 固定在視窗上 */
+    position: fixed;
     width: 100%;
-    height: 64px;
-    display: flex; /* 裡面的東西水平排列 */
-    align-items: center; /* 內容物置中 */
+    padding: 8px 24px;
+    display: flex;
+    align-items: center;
     justify-content: space-between;
-    padding: 0 24px;
     box-sizing: border-box;
     z-index: 1;
     background: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(8px); /* 美美的 blur */
+    backdrop-filter: blur(8px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
@@ -41,13 +37,32 @@ html, body {
 
 .logo-text-big {
     color: #ffffff;
-    font-size: 20px;  
+    font-size: 20px;
     font-weight: bold;
 }
+
 .logo-text-little {
     color: #ffffff;
-    font-size: 14px;
+    font-size: 13px;
 }
+
+.header-nav {
+    display: flex;
+    gap: 20px;
+}
+
+.header-nav a {
+    color: #cccccc;
+    font-size: 15px;
+    text-decoration: none;
+    transition: color 0.25s;
+}
+
+.header-nav a:hover {
+    color: #ffffff;
+    font-weight: bold;
+}
+
 .header-menu-btn {
     display: none;
     width: 34px;
@@ -64,28 +79,30 @@ html, body {
     margin: 6px 0;
     transition: 0.3s;
 }
-.close-btn {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    font-size: 1.5rem;
-    color: #fff;
-    background: none;
-    border: none;
-    cursor: pointer;
-}
+
 .mobile-menu {
     position: fixed;
     top: 0;
     right: -260px;
     width: 260px;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.92);
+    background: rgba(0, 0, 0, 0.9);
     box-shadow: -2px 0 8px rgba(0, 0, 0, 0.3);
     transition: right 0.35s ease;
-    z-index: 40;
+    z-index: 2;
     padding: 24px;
     box-sizing: border-box;
+}
+
+.close-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-size: 1.5em;
+    color: #cccccc;
+    background: none;
+    border: none;
+    cursor: pointer;
 }
 
 .mobile-menu.open {
@@ -94,32 +111,16 @@ html, body {
 
 .mobile-menu a {
     display: block;
-    color: #dddddd;
+    color: #cccccc;
     text-decoration: none;
-    font-size: 1.1rem;
+    font-size: 1.1em;
     padding: 12px 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     transition: color 0.25s;
 }
 
 .mobile-menu a:hover {
-    color: #fff;
-}
-
-.header-nav {
-    display: flex;
-    gap: 20px;
-}
-
-.header-nav a {
-    color: #ccc;
-    font-size: 0.9rem;
-    text-decoration: none;
-    transition: color 0.25s;
-}
-
-.header-nav a:hover {
-    color: #fff;
+    color: #ffffff;
 }
 
 @media (max-width: 768px) {
@@ -142,7 +143,7 @@ html, body {
     flex: 1;
     position: relative;
     overflow: hidden;
-    border-right: 1px solid #000;
+    border-right: 1px solid #000000;
     transition: flex 0.55s cubic-bezier(0.25, 0.8, 0.25, 1);
     text-decoration: none;
 }
@@ -218,69 +219,218 @@ html, body {
     font-size: 0.8rem;
 }
 
-.t-white {
-    color: #fff;
+.label-01 {
+    color: #ffffff;
 }
 
-.t-black {
-    color: #000;
+.title-01 {
+    color: #ffffff;
 }
 
-.t-green {
+.desc-01 {
+    color: #ffffff;
+}
+
+.tag-01 {
+    color: #ffffff;
+    background: #78716c;
+}
+
+.label-02 {
     color: #4ade80;
 }
 
-.t-blue {
+.title-02 {
+    color: #4ade80;
+}
+
+.desc-02 {
+    color: #ffffff;
+}
+
+.tag-02 {
+    color: #ffffff;
+    background: #064e3b;
+}
+
+.label-03 {
     color: #60a5fa;
 }
 
-.t-purple {
-    color: #c084fc;
+.title-03 {
+    color: #60a5fa;
 }
 
-.t-pink {
-    color: #db2777;
+.desc-03 {
+    color: #ffffff;
 }
 
-.t-red {
+.tag-03 {
+    color: #ffffff;
+    background: #1e3a8a;
+}
+
+.bg-04 {
+    background: #ffd942;
+}
+
+.label-04 {
+    color: #371364;
+}
+
+.title-04 {
+    color: #371364;
+}
+
+.desc-04 {
+    color: #6432a1;
+}
+
+.tag-04 {
+    color: #ffffff;
+    background: #371364;
+}
+
+.bg-05 {
+    background: #d2ffff;
+}
+
+.label-05 {
+    color: #627ca4;
+    font-weight: 300;
+}
+
+.title-05 {
+    color: #7491bc;
+    font-weight: 300;
+}
+
+.desc-05 {
+    color: #3f5981;
+}
+
+.tag-05 {
+    color: #3f5981;
+    border: 1px solid #7491bc;
+}
+
+.label-06 {
+    color: #ffffff;
+}
+
+.title-06 {
+    color: #ffffff;
+}
+
+.desc-06 {
+    color: #dddddd;
+}
+
+.tag-06 {
+    background: #d0d3d8;
+    color: #111111;
+    border: 1.5px solid #ffffff;
+}
+
+.bg-07 {
+    background: #fff0d2;
+}
+
+.label-07 {
     color: #7f1d1d;
+    font-family: serif;
 }
 
-.t-indigo {
+.title-07 {
+    color: #7f1d1d;
+    font-family: serif;
+}
+
+.desc-07 {
+    color: #ad6903;
+    font-family: serif;
+}
+
+.tag-07 {
+    color: #7f1d1d;
+    font-family: serif;
+    border-bottom: 1px solid #7f1d1d;
+}
+
+.label-08 {
+    color: #ca96ff;
+}
+
+.title-08 {
+    color: #ca96ff;
+}
+
+.desc-08 {
+    color: #f1e4ff;
+}
+
+.tag-08 {
+    background: rgba(88, 28, 135, 0.6);
+    color: #ffffff;
+}
+
+.bg-09 {
+    background: #b9c8ff;
+}
+
+.label-09 {
     color: #4f46e5;
 }
 
-.bg-yellow {
-    background: #facc15;
+.title-09 {
+    color: #2b2593;
 }
 
-.bg-white {
-    background: #fff;
+.desc-09 {
+    color: #4f46e5;
 }
 
-.bg-teal {
-    background: #008080;
+.tag-09 {
+    color: #d7d4ff;
+    background: #322ca3;
 }
 
-.bg-news {
-    background: #fdfbf7;
+.bg-10 {
+    background: #f0c0dc;
 }
 
-.bg-indigo {
-    background: #eef2ff;
+.label-10 {
+    color: #db2777;
 }
 
-.bg-pink {
-    background: #fce7f3;
+.title-10 {
+    color: #9a0a4b;
 }
 
-.bg-gray {
-    background: #1f2937;
+.desc-10 {
+    color: #db2777;
 }
 
-.tag-dark {
+.tag-10 {
+    color: #db2777;
+    background: #ffd9ee;
+}
+
+.label-11 {
+    color: #ffffff;
+}
+
+.title-11 {
+    color: #ffffff;
+}
+
+.desc-11 {
+    color: #ffffff;
+}
+
+.tag-11 {
     background: rgba(0, 0, 0, 0.7);
-    color: #fff;
+    color: #ffffff;
 }
 
 .footer {
@@ -289,28 +439,13 @@ html, body {
     left: 0;
     width: 100%;
     height: 60px;
-    background: rgba(0, 0, 0, 1);
+    background: #000000;
     border-top: 1px solid rgba(255, 255, 255, 0.12);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #ddd;
-    font-size: 0.9rem;
-    z-index: 30;
-}
-.footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 60px;
-    background: rgba(0, 0, 0, 1);
-    border-top: 1px solid rgba(255, 255, 255, 0.12);
-    display: flex;
-    align-items: center;
-    justify-content: center; /* 置中 */
-    color: #ddd;
-    font-size: 0.9rem;
+    color: #dddddd;
+    font-size: 0.9em;
     z-index: 1;
     box-sizing: border-box;
 }
@@ -318,7 +453,7 @@ html, body {
 .footer-center {
     display: flex;
     align-items: center;
-    gap: 18px; /* icon 與文字間距 */
+    gap: 18px;
 }
 
 .social-icon img {
@@ -332,16 +467,16 @@ html, body {
 }
 
 .footer-text {
-     color: #bbbbbb;
-    margin-left: 24px;
+    color: #bbbbbb;
+    margin-left: 4px;
 }
 
 .footer-email {
-    color: #ddd;
+    color: #bbbbbb;
     text-decoration: underline;
     margin-left: 4px;
 }
 
 .footer-email:hover {
-    color: #fff;
+    color: #ffffff;
 }

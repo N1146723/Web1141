@@ -1,9 +1,6 @@
-<!-- ***************************** -->
-<!--  N1146723 (組長) 第一個頁面 * -->
-<!-- ***************************** -->
-
+<!-- N1146723 鄭宜舫 (組長) 頁面#1 -->
 <!-- 風琴效果選單 -->
-<!-- 滿版寬高 100% title footer 手機樣式的右上選單 設計感的頁面 -->
+<!-- 滿版寬高不須滾動 100% title footer 手機樣式的右上選單 設計感的頁面 -->
 <!DOCTYPE html>
 <html>
 
@@ -15,14 +12,14 @@
 </head>
 
 <body onload="init()">
+    <!-- 標頭 -->
     <div class="header">
-
         <div class="logo-area">
             <img class="logo" src="index/media/logo.png" alt="Logo">
             <div>
                 <div class="logo-text-big">114-1 WEB Design </div>
-                <div class="logo-text-little">11 beautiful pages by 4 members ✨✨ N1146723 | N1146723 | N1146723 |
-                    N1146723</div>
+                <div class="logo-text-little">11 beautiful pages by 4 members ✨✨ N1146723．N1146707．N1146743．N1116445
+                </div>
             </div>
         </div>
         <div class="header-nav">
@@ -39,6 +36,7 @@
         </button>
     </div>
 
+    <!-- 寬度 < 768px ，右上改為手機式漢堡選單 -->
     <div class="mobile-menu" id="mobileMenu">
         <button class="close-btn" id="closeBtn">x</button>
         <a href="https://github.com/N1146723/Web1141" target="_blank">GitHub</a>
@@ -47,134 +45,148 @@
             target="_blank">Timeline</a>
     </div>
 
+    <!-- 風琴卡牌內容 -->
     <div class="accordion">
         <!-- 01 -->
         <a href="page01/page1.html" class="panel" target="_blank">
-            <img src="https://picsum.photos/600/800?random=1" alt="01">
+            <img src="index/media/1.jpg" alt="01">
             <div class="center-label">
-                <h2 class="vertical-text t-white">01 Gallary</h2>
+                <h2 class="vertical-text label-01">01 Gallary</h2>
             </div>
-            <div class="panel-content t-white">
-                <h3>01 Gallary</h3>
-                <h6>展示了個人繪畫作品集</h6>
-                <span class="tag" style="background:#78716c;">N1146723 宜舫(組長)</span>
+            <div class="panel-content">
+                <h3 class="title-01">01 Gallary</h3>
+                <h6 class="desc-01">展示了個人繪畫作品集</h6>
+                <span class="tag tag-01">N1146723 宜舫(組長)</span>
             </div>
         </a>
 
         <!-- 02 -->
         <a href="page02/page2.html" class="panel" target="_blank">
-            <img src="https://picsum.photos/600/800?random=2" alt="02">
+            <img src="index/media/2.jpg" alt="02">
             <div class="center-label">
-                <h2 class="vertical-text t-green">02 Lonely?</h2>
+                <h2 class="vertical-text label-02">02 Lonely?</h2>
             </div>
-            <div class="panel-content t-white">
-                <h3 class="t-green">02 Lonely?</h3>
-                <h6>沒朋友嗎？來跟自己聊天吧！</h6>
-                <span class="tag" style="background:#064e3b; color:#fff;">N1146723 宜舫(組長)</span>
+            <div class="panel-content">
+                <h3 class="title-02">02 Lonely?</h3>
+                <h6 class="desc-02">沒朋友嗎？來跟自己聊天吧！</h6>
+                <span class="tag tag-02">N1146723 宜舫(組長)</span>
             </div>
         </a>
 
         <!-- 03 -->
         <a href="page03/page3.html" class="panel" target="_blank">
-            <img src="https://picsum.photos/600/800?random=3" alt="03">
+            <img src="index/media/3.jpg" alt="03">
             <div class="center-label">
-                <h2 class="vertical-text t-blue">03 N1146707</h2>
+                <h2 class="vertical-text label-03">03 N1146707</h2>
             </div>
-            <div class="panel-content t-white">
-                <h3 class="t-blue">Page 03</h3>
-                <span class="tag" style="background:#1e3a8a; color:#fff;">N1146707 張同學</span>
+            <div class="panel-content">
+                <h3 class="title-03">Page 03</h3>
+                <h6 class="desc-03">DESC</h6>
+                <span class="tag tag-03">N1146707 張同學</span>
             </div>
         </a>
 
         <!-- 04 -->
-        <a href="page04/page4.html" class="panel bg-yellow" target="_blank">
+        <a href="page04/page4.html" class="panel bg-04" target="_blank">
             <div class="center-label">
-                <h2 class="vertical-text t-black">04 N1146707</h2>
+                <h2 class="vertical-text label-04">04 N1146707</h2>
             </div>
-            <div class="panel-content t-black">
-                <h3>Page 04</h3>
-                <span class="tag" style="background:#000; color:#fff;">N1146707 張同學</span>
+            <div class="panel-content">
+                <h3 class="title-04">Page 04</h3>
+                <h6 class="desc-04">DESC</h6>
+                <span class="tag tag-04">N1146707 張同學</span>
             </div>
         </a>
 
         <!-- 05 -->
-        <a href="page05/page5.html" class="panel bg-white" target="_blank">
+        <a href="page05/page5.html" class="panel bg-05" target="_blank">
             <div class="center-label">
-                <h2 class="vertical-text" style="color:#9ca3af; font-weight:300;">05 N1146707</h2>
+                <h2 class="vertical-text label-05">05 N1146707</h2>
             </div>
-            <div class="panel-content t-black">
-                <h3 style="font-weight:300;">Page 05</h3>
-                <span class="tag" style="border:1px solid #000;">N1146707 張同學</span>
+            <div class="panel-content">
+                <h3 class="title-05">Page 05</h3>
+                <h6 class="desc-05">DESC</h6>
+                <span class="tag tag-05">N1146707 張同學</span>
             </div>
         </a>
 
         <!-- 06 -->
-        <a href="page06/page6.html" class="panel bg-teal" target="_blank">
+        <a href="page06/page6.html" class="panel" target="_blank">
+            <img src="index/media/6.jpg" alt="06">
             <div class="center-label">
-                <h2 class="vertical-text t-white">06 N1146743</h2>
+                <h2 class="vertical-text label-06">06 N1146743</h2>
             </div>
-            <div class="panel-content t-white">
-                <h3>Page 06</h3>
-                <span class="tag" style="background:#9ca3af; color:#000; border:2px solid #fff;">N1146743 楊同學</span>
+            <div class="panel-content">
+                <h3 class="title-06">Page 06</h3>
+                <h6 class="desc-06">DESC</h6>
+                <span class="tag tag-06">N1146743 楊同學</span>
             </div>
         </a>
 
         <!-- 07 -->
-        <a href="page07/page7.html" class="panel bg-news" target="_blank">
+        <a href="page07/page7.html" class="panel bg-07" target="_blank">
             <div class="center-label">
-                <h2 class="vertical-text t-red" style="font-family:serif;">07 N1146743</h2>
+                <h2 class="vertical-text label-07">07 N1146743</h2>
             </div>
-            <div class="panel-content t-red" style="font-family:serif;">
-                <h3>Page 07</h3>
-                <span class="tag" style="border-bottom:1px solid #7f1d1d;">N1146743 楊同學</span>
+            <div class="panel-content">
+                <h3 class="title-07">Page 07</h3>
+                <h6 class="desc-07">DESC</h6>
+                <span class="tag tag-07">N1146743 楊同學</span>
             </div>
         </a>
 
         <!-- 08 -->
         <a href="page08/page8.html" class="panel" target="_blank">
-            <img src="https://picsum.photos/600/800?random=8" alt="08">
+            <img src="index/media/8.jpg" alt="08">
             <div class="center-label">
-                <h2 class="vertical-text t-purple">08 N1146743</h2>
+                <h2 class="vertical-text label-08">08 N1146743</h2>
             </div>
-            <div class="panel-content t-white">
-                <h3 class="t-purple">Page 08</h3>
-                <span class="tag" style="background:rgba(88,28,135,0.6); color:#fff;">N1146743 楊同學</span>
+            <div class="panel-content">
+                <h3 class="title-08">Page 08</h3>
+                <h6 class="desc-08">DESC</h6>
+                <span class="tag tag-08">N1146743 楊同學</span>
             </div>
         </a>
 
         <!-- 09 -->
-        <a href="page09/page9.html" class="panel bg-indigo" target="_blank">
+        <a href="page09/page9.html" class="panel bg-09" target="_blank">
             <div class="center-label">
-                <h2 class="vertical-text t-indigo">09 N1116445</h2>
+                <h2 class="vertical-text label-09">09 N1116445</h2>
             </div>
-            <div class="panel-content" style="color:#1e1b4b;">
-                <h3>Page 09</h3>
-                <span class="tag" style="background:#c7d2fe; color:#000;">N1116445 呂同學</span>
+            <div class="panel-content">
+                <h3 class="title-09">Page 09</h3>
+                <h6 class="desc-09">DESC</h6>
+                <span class="tag tag-09">N1116445 呂同學</span>
             </div>
         </a>
 
         <!-- 10 -->
-        <a href="page10/page10.html" class="panel bg-pink" target="_blank">
+        <a href="page10/page10.html" class="panel bg-10" target="_blank">
             <div class="center-label">
-                <h2 class="vertical-text t-pink">10 N1116445</h2>
+                <h2 class="vertical-text label-10">10 N1116445</h2>
             </div>
-            <div class="panel-content t-pink">
-                <h3>Page 10</h3>
-                <span class="tag" style="background:#fbcfe8; color:#000;">N1116445 呂同學</span>
+            <div class="panel-content">
+                <h3 class="title-10">Page 10</h3>
+                <h6 class="desc-10">DESC</h6>
+                <span class="tag tag-10">N1116445 呂同學</span>
             </div>
         </a>
 
         <!-- 11 -->
-        <a href="page11/page11.html" class="panel bg-gray" target="_blank">
+        <a href="page11/page11.html" class="panel" target="_blank">
+            <img src="index/media/11.jpg" alt="11">
             <div class="center-label">
-                <h2 class="vertical-text t-white">11 N1116445</h2>
+                <h2 class="vertical-text label-11">11 N1116445</h2>
             </div>
-            <div class="panel-content t-white">
-                <h3>Page 11</h3>
-                <span class="tag tag-dark">N1116445 呂同學</span>
+            <div class="panel-content">
+                <h3 class="title-11">Page 11</h3>
+                <h6 class="desc-11">DESC</h6>
+                <span class="tag tag-11">N1116445 呂同學</span>
             </div>
         </a>
     </div>
+
+    <!-- 頁腳 -->
     <div class="footer">
         <div class="footer-center">
             <a href="https://www.facebook.com" target="_blank" class="social-icon">
@@ -189,10 +201,7 @@
             <div class="footer-text">
                 © 2025 NTUB Department of Information Management
             </div>
-
             <a href="mailto:N1145623@ntub.edu.tw" class="footer-email">N1145623@ntub.edu.tw</a>
-
-
         </div>
     </div>
 
