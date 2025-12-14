@@ -1,55 +1,55 @@
 // N1146723 鄭宜舫 (組長) 頁面#3
 function init() {
-    const bodyEl = document.body;
-    const chatA = document.getElementById("chatA");
-    const chatB = document.getElementById("chatB");
-    const inputA = document.getElementById("inputA");
-    const inputB = document.getElementById("inputB");
-    const sendBtns = document.querySelectorAll('.send-btn');
+    var docBody = document.body;
+    var chatA = document.getElementById("chatA");
+    var chatB = document.getElementById("chatB");
+    var inputA = document.getElementById("inputA");
+    var inputB = document.getElementById("inputB");
+    var sendBtns = document.querySelectorAll('.send-btn');
 
-    const sunBtn = document.getElementById('sunBtn');
-    const moonBtn = document.getElementById('moonBtn');
+    var sunBtn = document.getElementById('sunBtn');
+    var moonBtn = document.getElementById('moonBtn');
 
-    if (!bodyEl.classList.contains('dark') && !bodyEl.classList.contains('light')) {
-        bodyEl.classList.add('dark');
+    if (!docBody.classList.contains('dark') && !docBody.classList.contains('light')) {
+        docBody.classList.add('dark');
     }
 
     sunBtn.addEventListener('click', () => {
-        bodyEl.classList.add('light');
-        bodyEl.classList.remove('dark');
+        docBody.classList.add('light');
+        docBody.classList.remove('dark');
     });
 
     moonBtn.addEventListener('click', () => {
-        bodyEl.classList.add('dark');
-        bodyEl.classList.remove('light');
+        docBody.classList.add('dark');
+        docBody.classList.remove('light');
     });
 
     function nowTime() {
-        const d = new Date();
+        var d = new Date();
         return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
     }
 
     function updateTime() {
-        document.querySelectorAll('.status-bar .time-display').forEach(el => {
-            el.textContent = nowTime();
+        document.querySelectorAll('.status-bar .time-display').forEach(item => {
+            item.textContent = nowTime();
         });
     }
     updateTime();
     setInterval(updateTime, 1000);
 
-    function appendMessage(targetChatEl, type, text) {
-        const msg = document.createElement('div');
+    function appendMessage(targetChat, type, text) {
+        var msg = document.createElement('div');
         msg.className = 'msg ' + type;
-        const bubble = document.createElement('div');
+        var bubble = document.createElement('div');
         bubble.className = 'bubble';
         bubble.textContent = text;
 
         // 設定字體大小
-        const target = targetChatEl.id === "chatA" ? 'A' : 'B';
-        const fontSelect = document.querySelector(`.font-size-select[data-target="${target}"]`);
+        var target = targetChat.id === "chatA" ? 'A' : 'B';
+        var fontSelect = document.querySelector(`.font-size-select[data-target="${target}"]`);
         bubble.style.fontSize = fontSelect.value;
 
-        const timeEl = document.createElement('div');
+        var timeEl = document.createElement('div');
         timeEl.className = 'time';
         timeEl.textContent = nowTime();
 
@@ -61,13 +61,13 @@ function init() {
             msg.appendChild(timeEl);
         }
 
-        targetChatEl.appendChild(msg);
-        targetChatEl.scrollTop = targetChatEl.scrollHeight;
+        targetChat.appendChild(msg);
+        targetChat.scrollTop = targetChat.scrollHeight;
     }
 
     function postMessage(sender, text) {
         if (!text || !text.trim()) return;
-        const clean = text.trim();
+        var clean = text.trim();
         if (sender === 'A') {
             appendMessage(chatA, 'outgoing', clean);
             appendMessage(chatB, 'incoming', clean);
@@ -79,7 +79,7 @@ function init() {
 
     sendBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            const who = btn.getAttribute('data-send-for');
+            var who = btn.getAttribute('data-send-for');
             if (who === 'A') {
                 postMessage('A', inputA.value);
                 inputA.value = '';
@@ -107,12 +107,12 @@ function init() {
 
     // 同步名字與副標題
     function setupPanel(panelId, phoneSelector) {
-        const panel = document.getElementById(panelId);
-        const phone = document.querySelector(phoneSelector);
-        const nameInput = panel.querySelector('.name-input');
-        const subInput = panel.querySelector('.sub-input');
-        const nameEl = phone.querySelector('.name');
-        const subEl = phone.querySelector('.sub');
+        var panel = document.getElementById(panelId);
+        var phone = document.querySelector(phoneSelector);
+        var nameInput = panel.querySelector('.name-input');
+        var subInput = panel.querySelector('.sub-input');
+        var nameEl = phone.querySelector('.name');
+        var subEl = phone.querySelector('.sub');
 
         nameInput.addEventListener('input', () => nameEl.textContent = nameInput.value);
         subInput.addEventListener('input', () => subEl.textContent = subInput.value);
@@ -122,12 +122,12 @@ function init() {
     setupPanel('panelB', '.phone[data-user="B"]');
     // 更新整個聊天區字體大小
     document.querySelectorAll('.font-size-select').forEach(select => {
-        const target = select.getAttribute('data-target');
-        const chatArea = document.querySelector(`#chat${target}`);
+        var target = select.getAttribute('data-target');
+        var chatArea = document.querySelector(`#chat${target}`);
 
         // 當選擇改變時
         select.addEventListener('change', () => {
-            const newSize = select.value;
+            var newSize = select.value;
             chatArea.querySelectorAll('.bubble').forEach(bubble => {
                 bubble.style.fontSize = newSize;
             });
@@ -136,8 +136,8 @@ function init() {
 
     // 頭像選擇功能
     document.querySelectorAll('.avatar-selector').forEach(selector => {
-        const target = selector.getAttribute('data-target');
-        const phoneAvatar = document.querySelector(`.phone[data-user="${target}"] .avatar`);
+        var target = selector.getAttribute('data-target');
+        var phoneAvatar = document.querySelector(`.phone[data-user="${target}"] .avatar`);
         selector.querySelectorAll('img').forEach(img => {
             img.addEventListener('click', () => {
                 selector.querySelectorAll('img').forEach(i => i.classList.remove('selected'));
@@ -148,7 +148,7 @@ function init() {
     });
 
     // 預設訊息
-    postMessage('B', '人生如何人生如何人生如何人生如何人生如何人生如何');
-    postMessage('A', '我怎知道我怎知道我怎知道我怎知道我怎知道');
+    postMessage('B', '你好嗎');
+    postMessage('A', '我還不錯我還不錯我還不錯我還不錯我還不錯');
 }
 
