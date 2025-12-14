@@ -1,12 +1,2089 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-TW">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>台北咖啡地圖 - 探索城市中的咖啡香</title>
+        
+        <!-- Leaflet CSS -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+        
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
 
-<head>
-    <title>標題待改</title>
-</head>
+            body {
+                font-family: 'Microsoft JhengHei', 'PingFang TC', sans-serif;
+                background: #f8f5f2;
+                min-height: 100vh;
+            }
 
-<body>
-    <h1>N1116445 呂同學的第1個頁面</h1>
-</body>
+            /* 頂部導航欄 */
+            .navbar {
+                background: linear-gradient(135deg, #6b4423 0%, #3e2723 100%);
+                padding: 20px 40px;
+                box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+                position: sticky;
+                top: 0;
+                z-index: 1000;
+                animation: slideDown 0.5s ease;
+            }
 
+            .nav-content {
+                max-width: 1600px;
+                margin: 0 auto;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .logo {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                color: white;
+            }
+
+            .logo-icon {
+                font-size: 2.5rem;
+                animation: logoBounce 2s ease-in-out infinite;
+            }
+
+            .logo-text h1 {
+                font-size: 1.8rem;
+                margin-bottom: 5px;
+            }
+
+            .logo-text p {
+                font-size: 0.9rem;
+                opacity: 0.9;
+            }
+
+            .nav-right {
+                display: flex;
+                align-items: center;
+                gap: 25px;
+            }
+
+            .nav-stats {
+                display: flex;
+                gap: 30px;
+            }
+
+            /* 回首頁按鈕 */
+            .home-btn {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                padding: 12px 24px;
+                background: linear-gradient(135deg, #d4a574 0%, #c19660 100%);
+                color: #3e2723;
+                text-decoration: none;
+                border-radius: 30px;
+                font-weight: bold;
+                font-size: 1rem;
+                transition: all 0.3s ease;
+                box-shadow: 0 4px 15px rgba(212, 165, 116, 0.3);
+            }
+
+            .home-btn:hover {
+                background: linear-gradient(135deg, #e8c49a 0%, #d4a574 100%);
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(212, 165, 116, 0.5);
+            }
+
+            .home-btn-icon {
+                font-size: 1.2rem;
+            }
+
+            .nav-stat-item {
+                text-align: center;
+                color: white;
+            }
+
+            .nav-stat-number {
+                font-size: 1.5rem;
+                font-weight: bold;
+                color: #d4a574;
+            }
+
+            .nav-stat-label {
+                font-size: 0.8rem;
+                opacity: 0.9;
+                margin-top: 5px;
+            }
+
+            /* 主要內容區 */
+            .container {
+                max-width: 1600px;
+                margin: 0 auto;
+                padding: 40px 20px 20px 20px;
+            }
+
+            /* 地圖和列表佈局 */
+            .content-wrapper {
+                display: grid;
+                grid-template-columns: 1fr 450px;
+                gap: 30px;
+                margin-bottom: 30px;
+            }
+
+            /* 地圖容器 */
+            .map-section {
+                background: white;
+                border-radius: 20px;
+                overflow: hidden;
+                box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+                animation: fadeInLeft 0.8s ease;
+            }
+
+            .map-header {
+                background: linear-gradient(135deg, #8d6e63 0%, #6b4423 100%);
+                padding: 25px 30px;
+                color: white;
+            }
+
+            .map-header h2 {
+                font-size: 1.8rem;
+                margin-bottom: 8px;
+            }
+
+            .map-header p {
+                opacity: 0.9;
+                font-size: 0.95rem;
+            }
+
+            .map-container {
+                width: 100%;
+                height: 700px;
+                position: relative;
+                background: #e0e0e0;
+                border-radius: 0 0 20px 20px;
+            }
+
+            .map-container #map {
+                width: 100%;
+                height: 100%;
+                border: none;
+                border-radius: 0 0 20px 20px;
+            }
+
+            /* Leaflet 標記樣式 */
+            .custom-marker {
+                background: none;
+                border: none;
+            }
+
+            .marker-pin {
+                width: 40px;
+                height: 40px;
+                background: linear-gradient(135deg, #d4a574 0%, #b8935f 100%);
+                border-radius: 50% 50% 50% 0;
+                transform: rotate(-45deg);
+                position: relative;
+                box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+            }
+
+            .marker-icon {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) rotate(45deg);
+                font-size: 1.2rem;
+            }
+
+            /* 咖啡廳列表側邊欄 */
+            .cafes-sidebar {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                animation: fadeInRight 0.8s ease;
+                height: 790px;
+            }
+
+            /* 區域篩選器 */
+            .filter-section {
+                background: white;
+                padding: 20px;
+                border-radius: 15px;
+                box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            }
+
+            .filter-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                cursor: pointer;
+                user-select: none;
+                margin-bottom: 15px;
+                padding: 5px 0;
+            }
+
+            .filter-header:hover .filter-title {
+                color: #d4a574;
+            }
+
+            .filter-title {
+                font-size: 1rem;
+                color: #5d4037;
+                font-weight: bold;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                transition: color 0.3s ease;
+            }
+
+            .filter-toggle {
+                font-size: 1.2rem;
+                color: #8d6e63;
+                transition: transform 0.3s ease;
+            }
+
+            .filter-toggle.collapsed {
+                transform: rotate(-90deg);
+            }
+
+            .filter-content {
+                overflow: hidden;
+                transition: max-height 0.3s ease, opacity 0.3s ease;
+                max-height: 500px;
+                opacity: 1;
+            }
+
+            .filter-content.collapsed {
+                max-height: 0;
+                opacity: 0;
+            }
+
+            .filter-buttons {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+            }
+
+            .filter-btn {
+                padding: 8px 12px;
+                background: #f5f5f5;
+                border: 2px solid transparent;
+                border-radius: 8px;
+                color: #666;
+                font-size: 0.85rem;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                text-align: center;
+                font-weight: 500;
+            }
+
+            .filter-btn:hover {
+                background: #efebe9;
+                border-color: #d7ccc8;
+                color: #5d4037;
+            }
+
+            .filter-btn.active {
+                background: linear-gradient(135deg, #d4a574 0%, #b8935f 100%);
+                border-color: #d4a574;
+                color: white;
+                font-weight: bold;
+                box-shadow: 0 3px 10px rgba(212, 165, 116, 0.3);
+            }
+
+            .filter-btn.all {
+                grid-column: 1 / -1;
+                background: linear-gradient(135deg, #8d6e63 0%, #6b4423 100%);
+                color: white;
+                font-weight: bold;
+            }
+
+            .filter-btn.all:hover {
+                background: linear-gradient(135deg, #6b4423 0%, #5d4037 100%);
+                border-color: #8d6e63;
+            }
+
+            .filter-btn.all.active {
+                background: linear-gradient(135deg, #d4a574 0%, #b8935f 100%);
+                box-shadow: 0 3px 10px rgba(212, 165, 116, 0.4);
+            }
+
+            .filter-count {
+                margin-top: 10px;
+                text-align: center;
+                color: #8d6e63;
+                font-size: 0.85rem;
+                font-weight: 500;
+            }
+
+            /* 咖啡廳列表 */
+            .cafes-list {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                max-height: none;
+                flex: 1;
+                overflow-y: auto;
+                padding: 5px;
+            }
+
+            /* 自訂滾動條 */
+            .cafes-list::-webkit-scrollbar {
+                width: 6px;
+            }
+
+            .cafes-list::-webkit-scrollbar-track {
+                background: rgba(139, 110, 99, 0.1);
+                border-radius: 10px;
+            }
+
+            .cafes-list::-webkit-scrollbar-thumb {
+                background: rgba(139, 110, 99, 0.5);
+                border-radius: 10px;
+            }
+
+            .cafes-list::-webkit-scrollbar-thumb:hover {
+                background: rgba(139, 110, 99, 0.7);
+            }
+
+            /* 咖啡廳卡片 - 簡潔版 */
+            .cafe-card {
+                background: white;
+                border-radius: 12px;
+                padding: 20px;
+                border-left: 4px solid #8d6e63;
+                box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+                cursor: pointer;
+                transition: all 0.3s ease;
+                position: relative;
+            }
+
+            .cafe-card:hover {
+                transform: translateX(5px);
+                box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+                border-left-color: #d4a574;
+            }
+
+            .cafe-card.active {
+                border-left: 4px solid #d4a574;
+                box-shadow: 0 8px 30px rgba(212, 165, 116, 0.4);
+                background: linear-gradient(135deg, #fff 0%, #faf8f6 100%);
+            }
+
+            .cafe-card-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                margin-bottom: 12px;
+            }
+
+            .cafe-number {
+                position: absolute;
+                top: 15px;
+                right: 15px;
+                width: 30px;
+                height: 30px;
+                background: linear-gradient(135deg, #8d6e63 0%, #6b4423 100%);
+                color: white;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.9rem;
+                font-weight: bold;
+            }
+
+            .cafe-name {
+                font-size: 1.2rem;
+                color: #3e2723;
+                font-weight: bold;
+                margin-bottom: 8px;
+                padding-right: 40px;
+            }
+
+            .cafe-rating {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                margin-bottom: 12px;
+            }
+
+            .stars {
+                color: #ffa726;
+                font-size: 0.9rem;
+            }
+
+            .rating-number {
+                color: #666;
+                font-size: 0.85rem;
+                font-weight: bold;
+            }
+
+            .cafe-location {
+                display: flex;
+                align-items: flex-start;
+                gap: 8px;
+                color: #666;
+                font-size: 0.85rem;
+                margin-bottom: 10px;
+                line-height: 1.4;
+            }
+
+            .location-icon {
+                color: #8d6e63;
+                font-size: 1rem;
+                margin-top: 2px;
+            }
+
+            .cafe-tags {
+                display: flex;
+                gap: 6px;
+                flex-wrap: wrap;
+            }
+
+            .tag {
+                padding: 4px 10px;
+                background: linear-gradient(135deg, #efebe9 0%, #d7ccc8 100%);
+                color: #5d4037;
+                border-radius: 12px;
+                font-size: 0.75rem;
+                font-weight: 500;
+            }
+
+            .tag.highlight {
+                background: linear-gradient(135deg, #d4a574 0%, #b8935f 100%);
+                color: white;
+            }
+
+            /* 底部資訊卡片區 */
+            .info-cards {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 25px;
+                animation: fadeInUp 0.8s ease;
+            }
+
+            .info-card {
+                background: white;
+                border-radius: 15px;
+                padding: 30px;
+                text-align: center;
+                box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+                transition: all 0.3s ease;
+                border-top: 4px solid transparent;
+            }
+
+            .info-card:nth-child(1) {
+                border-top-color: #8d6e63;
+            }
+
+            .info-card:nth-child(2) {
+                border-top-color: #d4a574;
+            }
+
+            .info-card:nth-child(3) {
+                border-top-color: #a1887f;
+            }
+
+            .info-card:nth-child(4) {
+                border-top-color: #bcaaa4;
+            }
+
+            .info-card:hover {
+                transform: translateY(-8px);
+                box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            }
+
+            .info-icon {
+                font-size: 3rem;
+                margin-bottom: 15px;
+            }
+
+            .info-title {
+                font-size: 1.1rem;
+                color: #5d4037;
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+
+            .info-description {
+                font-size: 0.9rem;
+                color: #666;
+                line-height: 1.6;
+            }
+
+            /* 頁尾 */
+            .footer {
+                margin-top: 60px;
+                padding: 30px 20px;
+                text-align: center;
+                background: linear-gradient(135deg, #6b4423 0%, #3e2723 100%);
+                color: white;
+            }
+
+            .footer-content {
+                max-width: 1600px;
+                margin: 0 auto;
+            }
+
+            .footer p {
+                margin-bottom: 10px;
+                opacity: 0.9;
+            }
+
+            .footer a {
+                color: #d4a574;
+                text-decoration: none;
+                transition: color 0.3s ease;
+            }
+
+            .footer a:hover {
+                color: #ffa726;
+            }
+
+            /* 載入動畫 */
+            .loading {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(135deg, #6b4423 0%, #3e2723 100%);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                z-index: 9999;
+                animation: fadeOut 0.5s ease 1.5s forwards;
+            }
+
+            .loading-icon {
+                font-size: 5rem;
+                margin-bottom: 20px;
+                animation: bounce 1s infinite;
+            }
+
+            .loading-text {
+                color: white;
+                font-size: 1.5rem;
+            }
+
+            /* 動畫定義 */
+            @keyframes slideDown {
+                from {
+                    transform: translateY(-100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+            }
+
+            @keyframes fadeInLeft {
+                from {
+                    opacity: 0;
+                    transform: translateX(-50px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+
+            @keyframes fadeInRight {
+                from {
+                    opacity: 0;
+                    transform: translateX(50px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(50px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            @keyframes fadeOut {
+                to {
+                    opacity: 0;
+                    pointer-events: none;
+                    display: none;
+                }
+            }
+
+            @keyframes bounce {
+                0%, 100% {
+                    transform: translateY(0);
+                }
+                50% {
+                    transform: translateY(-20px);
+                }
+            }
+
+            @keyframes logoBounce {
+                0%, 100% {
+                    transform: translateY(0);
+                }
+                50% {
+                    transform: translateY(-8px);
+                }
+            }
+
+            /* 響應式設計 */
+            @media (max-width: 1200px) {
+                .content-wrapper {
+                    grid-template-columns: 1fr;
+                }
+
+                .cafes-sidebar {
+                    order: -1;
+                }
+
+                .cafes-list {
+                    max-height: none;
+                    display: grid;
+                    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                }
+
+                .map-container {
+                    height: 500px;
+                }
+            }
+
+            @media (max-width: 768px) {
+                .navbar {
+                    padding: 15px 20px;
+                }
+
+                .logo-text h1 {
+                    font-size: 1.3rem;
+                }
+
+                .logo-icon {
+                    font-size: 2rem;
+                }
+
+                .nav-stats {
+                    display: none;
+                }
+
+                .container {
+                    padding: 20px 15px;
+                }
+
+                .cafes-list {
+                    grid-template-columns: 1fr;
+                }
+
+                .map-container {
+                    height: 400px;
+                }
+
+                .info-cards {
+                    grid-template-columns: 1fr;
+                }
+            }
+
+            /* 浮動按鈕 */
+            .floating-btn {
+                position: fixed;
+                bottom: 30px;
+                right: 30px;
+                width: 60px;
+                height: 60px;
+                background: linear-gradient(135deg, #d4a574 0%, #b8935f 100%);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.5rem;
+                color: white;
+                box-shadow: 0 5px 20px rgba(212, 165, 116, 0.4);
+                cursor: pointer;
+                transition: all 0.3s ease;
+                z-index: 999;
+                animation: pulse 2s infinite;
+            }
+
+            .floating-btn:hover {
+                transform: scale(1.1);
+                box-shadow: 0 8px 30px rgba(212, 165, 116, 0.6);
+            }
+
+            @keyframes pulse {
+                0%, 100% {
+                    box-shadow: 0 5px 20px rgba(212, 165, 116, 0.4);
+                }
+                50% {
+                    box-shadow: 0 5px 30px rgba(212, 165, 116, 0.7);
+                }
+            }
+
+            /* ===== 新增動畫效果 ===== */
+
+            /* 咖啡杯冒煙動畫 */
+            .logo-icon {
+                position: relative;
+            }
+
+            .logo-icon::before,
+            .logo-icon::after {
+                content: '~';
+                position: absolute;
+                top: -15px;
+                font-size: 1rem;
+                color: rgba(255, 255, 255, 0.6);
+                animation: steam 2s ease-in-out infinite;
+            }
+
+            .logo-icon::before {
+                left: 35%;
+                animation-delay: 0s;
+            }
+
+            .logo-icon::after {
+                left: 55%;
+                animation-delay: 0.5s;
+            }
+
+            @keyframes steam {
+                0% {
+                    transform: translateY(0) scale(1);
+                    opacity: 0;
+                }
+                50% {
+                    opacity: 0.8;
+                }
+                100% {
+                    transform: translateY(-20px) scale(1.5);
+                    opacity: 0;
+                }
+            }
+
+            /* 卡片滾動進場動畫 */
+            .cafe-card {
+                opacity: 0;
+                transform: translateY(30px);
+                animation: cardFadeIn 0.6s ease forwards;
+            }
+
+            .cafe-card:nth-child(1) { animation-delay: 0.1s; }
+            .cafe-card:nth-child(2) { animation-delay: 0.15s; }
+            .cafe-card:nth-child(3) { animation-delay: 0.2s; }
+            .cafe-card:nth-child(4) { animation-delay: 0.25s; }
+            .cafe-card:nth-child(5) { animation-delay: 0.3s; }
+            .cafe-card:nth-child(6) { animation-delay: 0.35s; }
+            .cafe-card:nth-child(7) { animation-delay: 0.4s; }
+            .cafe-card:nth-child(8) { animation-delay: 0.45s; }
+            .cafe-card:nth-child(9) { animation-delay: 0.5s; }
+            .cafe-card:nth-child(10) { animation-delay: 0.55s; }
+
+            @keyframes cardFadeIn {
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            /* 星星閃爍動畫 */
+            .stars {
+                animation: starTwinkle 2s ease-in-out infinite;
+            }
+
+            @keyframes starTwinkle {
+                0%, 100% {
+                    text-shadow: 0 0 5px rgba(255, 167, 38, 0.3);
+                }
+                50% {
+                    text-shadow: 0 0 15px rgba(255, 167, 38, 0.8), 0 0 25px rgba(255, 167, 38, 0.4);
+                }
+            }
+
+            /* 標籤懸停彈跳動畫 */
+            .tag {
+                transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            }
+
+            .tag:hover {
+                transform: scale(1.1) translateY(-3px);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+            }
+
+            /* 資訊卡片圖標動畫 */
+            .info-icon {
+                transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+                display: inline-block;
+            }
+
+            .info-card:hover .info-icon {
+                transform: scale(1.3) rotate(15deg);
+                animation: iconBounce 0.6s ease;
+            }
+
+            @keyframes iconBounce {
+                0%, 100% { transform: scale(1.3) rotate(15deg); }
+                25% { transform: scale(1.4) rotate(-10deg); }
+                50% { transform: scale(1.2) rotate(20deg); }
+                75% { transform: scale(1.35) rotate(-5deg); }
+            }
+
+            /* 數字計數動畫效果（配合 JS）*/
+            .nav-stat-number {
+                transition: all 0.3s ease;
+            }
+
+            .nav-stat-number.counting {
+                animation: countPulse 0.5s ease;
+            }
+
+            @keyframes countPulse {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.2); color: #ffa726; }
+            }
+
+            /* 咖啡廳卡片選中彈跳 */
+            .cafe-card.active {
+                animation: cardActive 0.5s ease;
+            }
+
+            @keyframes cardActive {
+                0% { transform: scale(1); }
+                30% { transform: scale(1.03); }
+                60% { transform: scale(0.98); }
+                100% { transform: scale(1); }
+            }
+
+            /* 篩選按鈕波紋效果 */
+            .filter-btn {
+                position: relative;
+                overflow: hidden;
+            }
+
+            .filter-btn::after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 0;
+                height: 0;
+                background: rgba(255, 255, 255, 0.3);
+                border-radius: 50%;
+                transform: translate(-50%, -50%);
+                transition: width 0.6s ease, height 0.6s ease;
+            }
+
+            .filter-btn:active::after {
+                width: 200px;
+                height: 200px;
+            }
+
+            /* 地圖標記彈跳動畫 */
+            .marker-pin {
+                transition: all 0.3s ease;
+            }
+
+            .marker-pin.bounce {
+                animation: markerBounce 0.8s ease;
+            }
+
+            @keyframes markerBounce {
+                0%, 100% { transform: rotate(-45deg) translateY(0); }
+                20% { transform: rotate(-45deg) translateY(-15px); }
+                40% { transform: rotate(-45deg) translateY(0); }
+                60% { transform: rotate(-45deg) translateY(-8px); }
+                80% { transform: rotate(-45deg) translateY(0); }
+            }
+
+            /* 咖啡廳編號懸停效果 */
+            .cafe-number {
+                transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            }
+
+            .cafe-card:hover .cafe-number {
+                transform: scale(1.15) rotate(10deg);
+                background: linear-gradient(135deg, #d4a574 0%, #b8935f 100%);
+            }
+
+            /* 位置圖標跳動 */
+            .location-icon {
+                display: inline-block;
+                animation: locationPulse 2s ease-in-out infinite;
+            }
+
+            @keyframes locationPulse {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.2); }
+            }
+
+            /* 地圖區塊懸停光暈 */
+            .map-section {
+                transition: box-shadow 0.4s ease;
+            }
+
+            .map-section:hover {
+                box-shadow: 0 15px 50px rgba(139, 110, 99, 0.2);
+            }
+
+            /* 頁尾連結懸停動畫 */
+            .footer a {
+                position: relative;
+            }
+
+            .footer a::after {
+                content: '';
+                position: absolute;
+                bottom: -2px;
+                left: 0;
+                width: 0;
+                height: 2px;
+                background: #ffa726;
+                transition: width 0.3s ease;
+            }
+
+            .footer a:hover::after {
+                width: 100%;
+            }
+
+            /* 滾動時導航欄陰影加深 */
+            .navbar.scrolled {
+                box-shadow: 0 5px 30px rgba(0, 0, 0, 0.2);
+            }
+
+            /* 浮動按鈕懸停旋轉 */
+            .floating-btn:hover {
+                transform: scale(1.1) rotate(360deg);
+                transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            }
+
+            /* 載入動畫的咖啡杯旋轉 */
+            .loading-icon {
+                animation: bounce 1s infinite, spin 3s linear infinite;
+            }
+
+            @keyframes spin {
+                from { transform: rotate(0deg); }
+                to { transform: rotate(360deg); }
+            }
+
+            /* 地圖標記提示 */
+            .map-overlay {
+                position: absolute;
+                bottom: 20px;
+                left: 20px;
+                background: rgba(255, 255, 255, 0.95);
+                padding: 15px 20px;
+                border-radius: 10px;
+                box-shadow: 0 3px 15px rgba(0,0,0,0.2);
+                z-index: 10;
+                pointer-events: none;
+            }
+
+            .map-overlay p {
+                color: #5d4037;
+                font-size: 0.9rem;
+                margin-bottom: 5px;
+            }
+
+            .map-overlay p:last-child {
+                margin-bottom: 0;
+                color: #8d6e63;
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- 載入動畫 -->
+        <div class="loading">
+            <div class="loading-icon">☕</div>
+            <div class="loading-text">正在為您尋找最棒的咖啡廳...</div>
+        </div>
+
+        <!-- 頂部導航欄 -->
+        <nav class="navbar">
+            <div class="nav-content">
+                <div class="logo">
+                    <div class="logo-icon">☕</div>
+                    <div class="logo-text">
+                        <h1>台北咖啡地圖</h1>
+                        <p>探索城市中的咖啡香，尋找你的專屬咖啡廳</p>
+                    </div>
+                </div>
+                <div class="nav-right">
+                    <div class="nav-stats">
+                        <div class="nav-stat-item">
+                            <div class="nav-stat-number">26</div>
+                            <div class="nav-stat-label">精選咖啡廳</div>
+                        </div>
+                        <div class="nav-stat-item">
+                            <div class="nav-stat-number">4.8</div>
+                            <div class="nav-stat-label">平均評分</div>
+                        </div>
+                        <div class="nav-stat-item">
+                            <div class="nav-stat-number">8+</div>
+                            <div class="nav-stat-label">行政區</div>
+                        </div>
+                    </div>
+                    <a href="index.html" class="home-btn">
+                        <span class="home-btn-icon">🏠</span>
+                        <span>回首頁</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- 主要內容 -->
+        <div class="container">
+            <div class="content-wrapper">
+                <!-- 地圖區域 -->
+                <div class="map-section">
+                    <div class="map-header">
+                        <h2>📍 咖啡廳地圖</h2>
+                        <p>點擊右側咖啡廳卡片，在地圖上查看位置</p>
+                    </div>
+                    <div class="map-container">
+                        <!-- OpenStreetMap -->
+                        <div id="map"></div>
+                        <div class="map-overlay">
+                            <p>💡 使用提示</p>
+                            <p>點擊咖啡廳卡片即可在地圖上定位</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 咖啡廳列表側邊欄 -->
+                <div class="cafes-sidebar">
+                    <!-- 區域篩選器 -->
+                    <div class="filter-section">
+                        <div class="filter-header" id="filterHeader">
+                            <div class="filter-title">
+                                <span>🔍</span>
+                                <span>依行政區篩選</span>
+                            </div>
+                            <span class="filter-toggle">▼</span>
+                        </div>
+                        <div class="filter-content" id="filterContent">
+                            <div class="filter-buttons">
+                                <button class="filter-btn all active" data-district="all">全部顯示 (26)</button>
+                                <button class="filter-btn" data-district="信義區">信義區 (1)</button>
+                                <button class="filter-btn" data-district="松山區">松山區 (7)</button>
+                                <button class="filter-btn" data-district="中山區">中山區 (4)</button>
+                                <button class="filter-btn" data-district="大安區">大安區 (2)</button>
+                                <button class="filter-btn" data-district="大同區">大同區 (4)</button>
+                                <button class="filter-btn" data-district="中正區">中正區 (2)</button>
+                                <button class="filter-btn" data-district="士林區">士林區 (3)</button>
+                                <button class="filter-btn" data-district="內湖區">內湖區 (1)</button>
+                                <button class="filter-btn" data-district="北投區">北投區 (2)</button>
+                            </div>
+                            <div class="filter-count">目前顯示：<span id="currentCount">26</span> 間咖啡廳</div>
+                        </div>
+                    </div>
+
+                    <div class="cafes-list">
+                        <!-- 信義區 -->
+                        <div class="cafe-card" data-location="25.0330,121.5654" data-name="Tropo Coffee" data-district="信義區">
+                            <div class="cafe-number">1</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">Tropo Coffee</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★★</span>
+                                        <span class="rating-number">4.8</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>信義區 - 摩登復古的迷人空間</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">精品咖啡</span>
+                                <span class="tag">復古風</span>
+                            </div>
+                        </div>
+
+                        <!-- 松山區 -->
+                        <div class="cafe-card" data-location="25.0590,121.5570" data-name="汩咖啡" data-district="松山區">
+                            <div class="cafe-number">2</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">汩咖啡</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★★</span>
+                                        <span class="rating-number">4.7</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>松山區 - 鐵皮屋裡的日式侘寂空間</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">日式風格</span>
+                                <span class="tag">侘寂美學</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-card" data-location="25.0600,121.5580" data-name="真拾生活" data-district="松山區">
+                            <div class="cafe-number">3</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">真拾生活</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★☆</span>
+                                        <span class="rating-number">4.6</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>松山區 - 北歐鄉村風Brunch Cafe</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">北歐風</span>
+                                <span class="tag">Brunch</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-card" data-location="25.0605,121.5590" data-name="PECKISH Bakery" data-district="松山區">
+                            <div class="cafe-number">4</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">PECKISH Bakery</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★★</span>
+                                        <span class="rating-number">4.8</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>松山區 - 設計感可頌專賣Cafe</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">可頌專賣</span>
+                                <span class="tag">設計感</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-card" data-location="25.0595,121.5598" data-name="PAUSE studio" data-district="松山區">
+                            <div class="cafe-number">5</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">PAUSE studio</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★★</span>
+                                        <span class="rating-number">4.9</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>松山區 - 民生社區純白韓系咖啡廳</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">純白韓系</span>
+                                <span class="tag">不限時</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-card" data-location="25.0585,121.5575" data-name="ALL DAY ROASTING COMPANY" data-district="松山區">
+                            <div class="cafe-number">6</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">ALL DAY ROASTING</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★★</span>
+                                        <span class="rating-number">4.7</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>松山區 - 工業風自家烘焙咖啡</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">自家烘焙</span>
+                                <span class="tag">工業風</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-card" data-location="25.0610,121.5595" data-name="CAFEAO" data-district="松山區">
+                            <div class="cafe-number">7</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">CAFEAO</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★☆</span>
+                                        <span class="rating-number">4.6</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>松山區 - 陳冠希創立咖啡新品牌</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">潮流品牌</span>
+                                <span class="tag">時尚</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-card" data-location="25.0620,121.5600" data-name="好日子咖啡" data-district="松山區">
+                            <div class="cafe-number">8</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">好日子咖啡</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★☆</span>
+                                        <span class="rating-number">4.5</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>松山區 - 感受延壽街日常氛圍</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag">日常咖啡</span>
+                                <span class="tag">社區</span>
+                            </div>
+                        </div>
+
+                        <!-- 中山區 -->
+                        <div class="cafe-card" data-location="25.0539,121.5246" data-name="春秋書店" data-district="中山區">
+                            <div class="cafe-number">9</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">春秋書店</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★☆</span>
+                                        <span class="rating-number">4.7</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>中山區 - 赤峰街老宅的文青咖啡</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">老宅</span>
+                                <span class="tag">書店</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-card" data-location="25.0630,121.5280" data-name="Hoto Cafe" data-district="中山區">
+                            <div class="cafe-number">10</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">Hoto Cafe</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★★</span>
+                                        <span class="rating-number">4.8</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>中山區 - 公園旁日系咖啡甜點店</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">日系</span>
+                                <span class="tag">甜點</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-card" data-location="25.0640,121.5290" data-name="Keystone Coffee" data-district="中山區">
+                            <div class="cafe-number">11</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">Keystone Coffee</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★★</span>
+                                        <span class="rating-number">4.9</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>中山區 - 職人烘焙咖啡</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">職人烘焙</span>
+                                <span class="tag">精品咖啡</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-card" data-location="25.0545,121.5250" data-name="時差 Jetlag" data-district="中山區">
+                            <div class="cafe-number">12</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">時差 Jetlag</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★☆</span>
+                                        <span class="rating-number">4.6</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>中山區 - 香港空少打造的咖啡角落</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag">香港風</span>
+                                <span class="tag">特色</span>
+                            </div>
+                        </div>
+
+                        <!-- 大安區 -->
+                        <div class="cafe-card" data-location="25.0340,121.5440" data-name="好物 Spirit" data-district="大安區">
+                            <div class="cafe-number">13</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">好物 Spirit 咖啡</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★★</span>
+                                        <span class="rating-number">4.8</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>大安區 - 復古歐風老宅</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">復古歐風</span>
+                                <span class="tag">老宅</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-card" data-location="25.0360,121.5450" data-name="Tamed Fox" data-district="大安區">
+                            <div class="cafe-number">14</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">Tamed Fox</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★☆</span>
+                                        <span class="rating-number">4.7</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>大安區 - 舒心美式Cafe健康蔬食</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">健康蔬食</span>
+                                <span class="tag">美式</span>
+                            </div>
+                        </div>
+
+                        <!-- 大同區 -->
+                        <div class="cafe-card" data-location="25.0539,121.5195" data-name="幻猻家咖啡" data-district="大同區">
+                            <div class="cafe-number">15</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">幻猻家咖啡</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★★</span>
+                                        <span class="rating-number">4.8</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>大同區 - 踏進去穿越到京都</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">京都風格</span>
+                                <span class="tag">老宅</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-card" data-location="25.0550,121.5200" data-name="黑露咖啡" data-district="大同區">
+                            <div class="cafe-number">16</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">黑露咖啡</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★☆</span>
+                                        <span class="rating-number">4.7</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>大同區 - 營業至深夜的京都古風咖啡廳</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">京都古風</span>
+                                <span class="tag">深夜營業</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-card" data-location="25.0560,121.5100" data-name="Modern Mode" data-district="大同區">
+                            <div class="cafe-number">17</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">Modern Mode</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★★</span>
+                                        <span class="rating-number">4.8</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>大同區 - 大稻埕裡的巴黎復古咖啡廳</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">巴黎復古</span>
+                                <span class="tag">大稻埕</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-card" data-location="25.0520,121.5230" data-name="羊毛與花 光點" data-district="大同區">
+                            <div class="cafe-number">18</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">羊毛與花 光點</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★☆</span>
+                                        <span class="rating-number">4.6</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>大同區 - 比鄰城市電影院的採光咖啡廳</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag">採光佳</span>
+                                <span class="tag">電影院旁</span>
+                            </div>
+                        </div>
+
+                        <!-- 中正區 -->
+                        <div class="cafe-card" data-location="25.0420,121.5180" data-name="直物文具Cafe" data-district="中正區">
+                            <div class="cafe-number">19</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">直物文具Cafe</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★★</span>
+                                        <span class="rating-number">4.9</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>中正區 - 台灣首間文具咖啡廳</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">文具主題</span>
+                                <span class="tag">首創</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-card" data-location="25.0490,121.5140" data-name="MKCR 山小孩咖啡" data-district="中正區">
+                            <div class="cafe-number">20</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">MKCR 山小孩咖啡</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★★</span>
+                                        <span class="rating-number">4.8</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>中正區 - 北門旁品質自烘咖啡</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">自烘咖啡</span>
+                                <span class="tag">北門</span>
+                            </div>
+                        </div>
+
+                        <!-- 士林區 -->
+                        <div class="cafe-card" data-location="25.1019,121.5512" data-name="野人花園" data-district="士林區">
+                            <div class="cafe-number">21</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">野人花園</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★★</span>
+                                        <span class="rating-number">4.9</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>士林區 - 沈浸在山中森林的無限時祕境</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">山中秘境</span>
+                                <span class="tag">不限時</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-card" data-location="25.1280,121.5450" data-name="豆留森林" data-district="士林區">
+                            <div class="cafe-number">22</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">豆留森林</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★★</span>
+                                        <span class="rating-number">4.8</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>士林區 - 陽明山下CAMA竹林老宅特別店</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">竹林老宅</span>
+                                <span class="tag">陽明山</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-card" data-location="25.1369,121.5473" data-name="好樣秘境" data-district="士林區">
+                            <div class="cafe-number">23</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">好樣秘境</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★★</span>
+                                        <span class="rating-number">4.9</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>士林區 - 菁山路上的純白靜謐花園</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">純白花園</span>
+                                <span class="tag">秘境</span>
+                            </div>
+                        </div>
+
+                        <!-- 內湖區 -->
+                        <div class="cafe-card" data-location="25.0820,121.5880" data-name="文心藝所" data-district="內湖區">
+                            <div class="cafe-number">24</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">文心藝所</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★★</span>
+                                        <span class="rating-number">4.9</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>內湖區 - 最美書店裡閱讀和喝咖啡</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">最美書店</span>
+                                <span class="tag">藝術空間</span>
+                            </div>
+                        </div>
+
+                        <!-- 北投區 -->
+                        <div class="cafe-card" data-location="25.1370,121.5010" data-name="穠咖啡" data-district="北投區">
+                            <div class="cafe-number">25</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">穠咖啡</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★★</span>
+                                        <span class="rating-number">4.8</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>北投區 - 必嚐酒香提拉米蘇、創意調酒咖啡</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">提拉米蘇</span>
+                                <span class="tag">調酒咖啡</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-card" data-location="25.1520,121.5150" data-name="山上聊" data-district="北投區">
+                            <div class="cafe-number">26</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">山上聊</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★★</span>
+                                        <span class="rating-number">4.9</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>北投區 - 呼吸芬多精擼貓的祕密花園</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">森林系</span>
+                                <span class="tag">貓咪</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 底部資訊卡片 -->
+            <div class="info-cards">
+                <div class="info-card">
+                    <div class="info-icon">☕</div>
+                    <h3 class="info-title">精選咖啡廳</h3>
+                    <p class="info-description">嚴選台北市各區特色咖啡廳，每間都有獨特風格和故事</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">⭐</div>
+                    <h3 class="info-title">高評分推薦</h3>
+                    <p class="info-description">所有咖啡廳平均評分4.7以上，品質有保證</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🕐</div>
+                    <h3 class="info-title">不限時空間</h3>
+                    <p class="info-description">多間咖啡廳提供不限時服務，適合工作與閱讀</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">📸</div>
+                    <h3 class="info-title">IG打卡熱點</h3>
+                    <p class="info-description">精選多間適合拍照的特色空間，留下美好回憶</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 浮動按鈕 -->
+        <div class="floating-btn" title="回到頂部">
+            ↑
+        </div>
+
+        <!-- 頁尾 -->
+        <footer class="footer">
+            <div class="footer-content">
+                <p>資料來源：<a href="https://iceoffice.com.tw/taipeicafemap/" target="_blank">食攝人生 - 台北咖啡廳地圖</a></p>
+                <p>© 2025 台北咖啡地圖 | 探索城市中的每一杯咖啡香</p>
+                <p style="margin-top: 15px; font-size: 0.9rem;">製作者：呂宜蓁 N1116445</p>
+            </div>
+        </footer>
+
+        <!-- Leaflet JS -->
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+        
+        <script>
+            // 咖啡廳資料（26間）
+            const cafes = [
+                { name: 'Tropo Coffee', lat: 25.0330, lng: 121.5654, district: '信義區', desc: '摩登復古的迷人空間' },
+                { name: '汩咖啡', lat: 25.0590, lng: 121.5570, district: '松山區', desc: '鐵皮屋裡的日式侘寂空間' },
+                { name: '真拾生活', lat: 25.0600, lng: 121.5580, district: '松山區', desc: '北歐鄉村風Brunch Cafe' },
+                { name: 'PECKISH Bakery', lat: 25.0605, lng: 121.5590, district: '松山區', desc: '設計感可頌專賣Cafe' },
+                { name: 'PAUSE studio', lat: 25.0595, lng: 121.5598, district: '松山區', desc: '民生社區純白韓系咖啡廳' },
+                { name: 'ALL DAY ROASTING', lat: 25.0585, lng: 121.5575, district: '松山區', desc: '工業風自家烘焙咖啡' },
+                { name: 'CAFEAO', lat: 25.0610, lng: 121.5595, district: '松山區', desc: '陳冠希創立咖啡新品牌' },
+                { name: '好日子咖啡', lat: 25.0620, lng: 121.5600, district: '松山區', desc: '感受延壽街日常氛圍' },
+                { name: '春秋書店', lat: 25.0539, lng: 121.5246, district: '中山區', desc: '赤峰街老宅的文青咖啡' },
+                { name: 'Hoto Cafe', lat: 25.0630, lng: 121.5280, district: '中山區', desc: '公園旁日系咖啡甜點店' },
+                { name: 'Keystone Coffee', lat: 25.0640, lng: 121.5290, district: '中山區', desc: '職人烘焙咖啡' },
+                { name: '時差 Jetlag', lat: 25.0545, lng: 121.5250, district: '中山區', desc: '香港空少打造的咖啡角落' },
+                { name: '好物 Spirit', lat: 25.0340, lng: 121.5440, district: '大安區', desc: '復古歐風老宅' },
+                { name: 'Tamed Fox', lat: 25.0360, lng: 121.5450, district: '大安區', desc: '舒心美式Cafe健康蔬食' },
+                { name: '幻猻家咖啡', lat: 25.0539, lng: 121.5195, district: '大同區', desc: '踏進去穿越到京都' },
+                { name: '黑露咖啡', lat: 25.0550, lng: 121.5200, district: '大同區', desc: '營業至深夜的京都古風咖啡廳' },
+                { name: 'Modern Mode', lat: 25.0560, lng: 121.5100, district: '大同區', desc: '大稻埕裡的巴黎復古咖啡廳' },
+                { name: '羊毛與花 光點', lat: 25.0520, lng: 121.5230, district: '大同區', desc: '比鄰城市電影院的採光咖啡廳' },
+                { name: '直物文具Cafe', lat: 25.0420, lng: 121.5180, district: '中正區', desc: '台灣首間文具咖啡廳' },
+                { name: 'MKCR 山小孩咖啡', lat: 25.0490, lng: 121.5140, district: '中正區', desc: '北門旁品質自烘咖啡' },
+                { name: '野人花園', lat: 25.1019, lng: 121.5512, district: '士林區', desc: '沈浸在山中森林的無限時祕境' },
+                { name: '豆留森林', lat: 25.1280, lng: 121.5450, district: '士林區', desc: '陽明山下CAMA竹林老宅特別店' },
+                { name: '好樣秘境', lat: 25.1369, lng: 121.5473, district: '士林區', desc: '菁山路上的純白靜謐花園' },
+                { name: '文心藝所', lat: 25.0820, lng: 121.5880, district: '內湖區', desc: '最美書店裡閱讀和喝咖啡' },
+                { name: '穠咖啡', lat: 25.1370, lng: 121.5010, district: '北投區', desc: '必嚐酒香提拉米蘇、創意調酒咖啡' },
+                { name: '山上聊', lat: 25.1520, lng: 121.5150, district: '北投區', desc: '呼吸芬多精擼貓的祕密花園' }
+            ];
+
+            // 初始化地圖
+            let map;
+            let markers = [];
+            
+            window.addEventListener('load', function() {
+                // 初始化地圖（台北市中心）
+                map = L.map('map').setView([25.0478, 121.5318], 12);
+                
+                // 添加地圖圖層（使用 OpenStreetMap）
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                    maxZoom: 19
+                }).addTo(map);
+                
+                // 添加咖啡廳標記
+                cafes.forEach((cafe, index) => {
+                    // 創建自定義圖標
+                    const coffeeIcon = L.divIcon({
+                        className: 'custom-marker',
+                        html: `<div class="marker-pin"><span class="marker-icon">☕</span></div>`,
+                        iconSize: [40, 40],
+                        iconAnchor: [20, 40],
+                        popupAnchor: [0, -40]
+                    });
+                    
+                    // 添加標記
+                    const marker = L.marker([cafe.lat, cafe.lng], { icon: coffeeIcon })
+                        .addTo(map)
+                        .bindPopup(`
+                            <div style="text-align: center; min-width: 180px;">
+                                <strong style="font-size: 1.1rem; color: #5d4037; display: block; margin-bottom: 8px;">${cafe.name}</strong>
+                                <span style="font-size: 0.85rem; color: #8d6e63; display: block; margin-bottom: 5px;">📍 ${cafe.district}</span>
+                                <span style="font-size: 0.85rem; color: #666; display: block; margin-bottom: 10px;">${cafe.desc}</span>
+                                <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(cafe.name + ' ' + cafe.district + ' 台北')}" 
+                                target="_blank" 
+                                style="color: #d4a574; text-decoration: none; font-weight: bold; font-size: 0.85rem;">
+                                🗺️ 在 Google 地圖中查看
+                                </a>
+                            </div>
+                        `);
+                    
+                    markers.push(marker);
+                });
+                
+                // 載入完成後移除載入畫面
+                setTimeout(() => {
+                    const loading = document.querySelector('.loading');
+                    if (loading) {
+                        loading.style.display = 'none';
+                    }
+                }, 1500);
+            });
+
+            // 咖啡廳卡片點擊互動
+            const cards = document.querySelectorAll('.cafe-card');
+
+            cards.forEach((card, index) => {
+                card.addEventListener('click', function() {
+                    // 移除所有active狀態
+                    cards.forEach(c => c.classList.remove('active'));
+                    
+                    // 添加當前active狀態
+                    this.classList.add('active');
+                    
+                    // 獲取位置資料
+                    const location = this.getAttribute('data-location');
+                    const name = this.getAttribute('data-name');
+                    
+                    // 更新地圖到對應位置
+                    if (location && map) {
+                        const [lat, lng] = location.split(',');
+                        map.setView([parseFloat(lat), parseFloat(lng)], 16, {
+                            animate: true,
+                            duration: 1
+                        });
+                        
+                        // 找到並打開對應的標記彈出視窗
+                        const cafeData = cafes.find(cafe => cafe.name === name);
+                        if (cafeData) {
+                            const markerIndex = cafes.indexOf(cafeData);
+                            if (markers[markerIndex]) {
+                                markers[markerIndex].openPopup();
+                            }
+                        }
+                    }
+
+                    // 滾動到頂部（在手機版時）
+                    if (window.innerWidth <= 1200) {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                });
+            });
+
+            // 區域篩選功能
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const currentCount = document.getElementById('currentCount');
+            const filterHeader = document.getElementById('filterHeader');
+            const filterContent = document.getElementById('filterContent');
+            const filterToggle = filterHeader.querySelector('.filter-toggle');
+
+            // 摺疊/展開功能
+            filterHeader.addEventListener('click', function() {
+                filterContent.classList.toggle('collapsed');
+                filterToggle.classList.toggle('collapsed');
+            });
+
+            // 篩選按鈕功能
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // 移除所有按鈕的 active 狀態
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    
+                    // 添加當前按鈕的 active 狀態
+                    this.classList.add('active');
+                    
+                    // 獲取篩選的區域
+                    const district = this.getAttribute('data-district');
+                    
+                    let visibleCount = 0;
+                    
+                    // 篩選咖啡廳卡片
+                    cards.forEach((card, index) => {
+                        const cardDistrict = card.getAttribute('data-district');
+                        
+                        if (district === 'all' || cardDistrict === district) {
+                            card.style.display = 'block';
+                            visibleCount++;
+                            
+                            // 顯示對應的地圖標記
+                            if (markers[index]) {
+                                markers[index].addTo(map);
+                            }
+                        } else {
+                            card.style.display = 'none';
+                            
+                            // 隱藏對應的地圖標記
+                            if (markers[index]) {
+                                markers[index].remove();
+                            }
+                        }
+                    });
+                    
+                    // 更新計數
+                    currentCount.textContent = visibleCount;
+                    
+                    // 調整地圖視角以顯示所有可見標記
+                    if (district !== 'all' && visibleCount > 0) {
+                        // 創建包含所有可見標記的邊界
+                        const visibleMarkers = [];
+                        cards.forEach((card, index) => {
+                            const cardDistrict = card.getAttribute('data-district');
+                            if (cardDistrict === district && markers[index]) {
+                                visibleMarkers.push(markers[index]);
+                            }
+                        });
+                        
+                        if (visibleMarkers.length > 0) {
+                            const group = L.featureGroup(visibleMarkers);
+                            map.fitBounds(group.getBounds(), { padding: [50, 50] });
+                        }
+                    } else if (district === 'all') {
+                        // 重置到台北市中心視角
+                        map.setView([25.0478, 121.5318], 12);
+                    }
+                });
+            });
+
+            // 浮動按鈕功能
+            const floatingBtn = document.querySelector('.floating-btn');
+            floatingBtn.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // 滾動時顯示/隱藏浮動按鈕
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    floatingBtn.style.opacity = '1';
+                    floatingBtn.style.pointerEvents = 'auto';
+                } else {
+                    floatingBtn.style.opacity = '0';
+                    floatingBtn.style.pointerEvents = 'none';
+                }
+            });
+
+            // 初始隱藏浮動按鈕
+            floatingBtn.style.opacity = '0';
+            floatingBtn.style.transition = 'opacity 0.3s ease';
+
+            // ===== 新增動畫功能 =====
+
+            // 數字計數動畫
+            function animateNumber(element, target, duration = 1500) {
+                const start = 0;
+                const increment = target / (duration / 16);
+                let current = start;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    
+                    // 處理小數點顯示
+                    if (Number.isInteger(target)) {
+                        element.textContent = Math.floor(current);
+                    } else {
+                        element.textContent = current.toFixed(1);
+                    }
+                }, 16);
+            }
+
+            // 頁面載入時執行數字動畫
+            window.addEventListener('load', function() {
+                setTimeout(() => {
+                    const statNumbers = document.querySelectorAll('.nav-stat-number');
+                    statNumbers.forEach(stat => {
+                        const text = stat.textContent;
+                        if (text.includes('+')) {
+                            // 處理 "8+" 這種格式
+                            const num = parseInt(text);
+                            animateNumber(stat, num, 1000);
+                            setTimeout(() => stat.textContent = num + '+', 1000);
+                        } else if (text.includes('.')) {
+                            // 處理小數
+                            const num = parseFloat(text);
+                            animateNumber(stat, num, 1200);
+                        } else {
+                            // 處理整數
+                            const num = parseInt(text);
+                            animateNumber(stat, num, 1200);
+                        }
+                        stat.classList.add('counting');
+                        setTimeout(() => stat.classList.remove('counting'), 500);
+                    });
+                }, 1600); // 等待載入動畫結束
+            });
+
+            // 滾動時導航欄效果
+            window.addEventListener('scroll', function() {
+                const navbar = document.querySelector('.navbar');
+                if (window.pageYOffset > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            // 卡片滾動進場動畫 (Intersection Observer)
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const cardObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // 為資訊卡片添加滾動動畫
+            document.querySelectorAll('.info-card').forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(50px)';
+                card.style.transition = `all 0.6s ease ${index * 0.15}s`;
+                cardObserver.observe(card);
+            });
+
+            // 咖啡廳卡片點擊時的彈跳動畫
+            cards.forEach(card => {
+                card.addEventListener('click', function() {
+                    // 確保卡片保持可見狀態
+                    this.style.opacity = '1';
+                    this.style.transform = 'translateY(0)';
+                    this.style.animation = 'none';
+                    setTimeout(() => {
+                        this.style.animation = 'cardActive 0.5s ease';
+                    }, 10);
+                });
+            });
+
+            // 滑鼠懸停時星星特效
+            document.querySelectorAll('.cafe-card').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    const stars = this.querySelector('.stars');
+                    if (stars) {
+                        stars.style.animation = 'none';
+                        setTimeout(() => {
+                            stars.style.animation = 'starTwinkle 0.5s ease-in-out 3';
+                        }, 10);
+                    }
+                });
+            });
+
+            // 篩選按鈕點擊波紋效果增強
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    // 創建波紋元素
+                    const ripple = document.createElement('span');
+                    ripple.style.cssText = `
+                        position: absolute;
+                        background: rgba(255, 255, 255, 0.5);
+                        border-radius: 50%;
+                        transform: scale(0);
+                        animation: rippleEffect 0.6s ease-out;
+                        pointer-events: none;
+                    `;
+                    
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    ripple.style.width = ripple.style.height = size + 'px';
+                    ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+                    ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
+                    
+                    this.appendChild(ripple);
+                    setTimeout(() => ripple.remove(), 600);
+                });
+            });
+
+            // 添加波紋動畫樣式
+            const rippleStyle = document.createElement('style');
+            rippleStyle.textContent = `
+                @keyframes rippleEffect {
+                    to {
+                        transform: scale(4);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(rippleStyle);
+
+            // Logo 咖啡杯懸停放大效果
+            const logoIcon = document.querySelector('.logo-icon');
+            if (logoIcon) {
+                logoIcon.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.2)';
+                    this.style.transition = 'transform 0.3s ease';
+                });
+                logoIcon.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            }
+
+            // 地圖提示文字打字機效果
+            const mapOverlayText = document.querySelector('.map-overlay p:last-child');
+            if (mapOverlayText) {
+                const originalText = mapOverlayText.textContent;
+                mapOverlayText.textContent = '';
+                let i = 0;
+                
+                setTimeout(() => {
+                    const typeWriter = setInterval(() => {
+                        if (i < originalText.length) {
+                            mapOverlayText.textContent += originalText.charAt(i);
+                            i++;
+                        } else {
+                            clearInterval(typeWriter);
+                        }
+                    }, 80);
+                }, 2000);
+            }
+        </script>
+    </body>
 </html>
