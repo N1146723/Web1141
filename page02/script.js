@@ -1,5 +1,5 @@
 // N1146723 鄭宜舫 (組長) 頁面#3
-function init() {
+
     var docBody = document.body;
     var chatA = document.getElementById("chatA");
     var chatB = document.getElementById("chatB");
@@ -150,5 +150,3 @@ function init() {
     // 預設訊息
     postMessage('B', '你好嗎');
     postMessage('A', '我還不錯我還不錯我還不錯我還不錯我還不錯');
-}
-

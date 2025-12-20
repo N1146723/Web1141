@@ -1,0 +1,175 @@
+body {
+    margin: 0;
+    font-family: '微軟正黑體', Arial, sans-serif;
+    background: #fdfdf5;
+}
+
+/* --- Header --- */
+header {
+    width: 100%;
+    background-color: #ffb24d;
+    color: #fff;
+    padding: 20px;
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    left: 0;
+    text-align: center;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 28px;
+}
+
+header p {
+    margin: 0;
+    font-size: 14px;
+}
+
+/* ===== 介紹區塊 ===== */
+.intro {
+    background: #fffef5;
+    padding: 60px 20px 40px;
+    margin-bottom: 40px;
+    border-radius: 12px;
+}
+
+.intro-text {
+    max-width: 820px;
+    margin: 0 auto 30px;
+    font-size: 16px;
+    line-height: 1.9;
+    color: #444;
+}
+
+.intro-text p {
+    margin-bottom: 18px;
+}
+
+.highlight-box {
+    max-width: 820px;
+    margin: 30px auto;
+    padding: 18px 22px;
+    background: #fff3cd;
+    color: #5f3b1d;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+
+/* --- Footer --- */
+footer {
+    width: 100%;
+    background: #333;
+    color: #eee;
+    text-align: center;
+    padding: 15px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    box-sizing: border-box;
+}
+
+/* --- Sidebar --- */
+.sidebar {
+    position: fixed;
+    top: 90px;
+    bottom: 70px;
+    width: 260px;
+    background: #ffffff;
+    border-right: 1px solid #ffb24d;
+    overflow-y: auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.sidebar h3 {
+    border-bottom: 2px solid #ffb24d;
+    padding-bottom: 5px;
+    color: #333;
+}
+
+/* --- Content --- */
+.content {
+    background-repeat: repeat;
+    margin-top: 90px;
+    margin-bottom: 70px;
+    margin-left: 280px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.content p {
+    line-height: 1.8;
+    color: #444;
+    text-align: justify;
+}
+
+/* --- Food Item --- */
+.food-item {
+    max-width: 950px;
+    margin: 0 auto 40px auto;
+    overflow-x: auto;
+}
+
+.food-item img {
+    display: block;
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+    margin: 0 auto;
+    border-radius: 8px;
+    border: 3px solid #ffb24d;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.food-item tr:nth-last-child(n+1) img {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    margin: 10px auto;
+    border: none;
+    box-shadow: none;
+}
+
+/* --- Links --- */
+.food-list a,
+.links a {
+    display: block;
+    padding: 8px;
+    margin-bottom: 6px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #333;
+    transition: all 0.2s ease-in-out;
+}
+
+.food-list a:hover,
+.links a:hover {
+    background: #ffecb3;
+    border-color: #ff9800;
+    transform: translateX(5px);
+}
+
+/* --- Table --- */
+table {
+    margin: 0 auto;
+    border-collapse: collapse;
+    background: white;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.05);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 15px;
+    border: 1px solid #eee;
+    vertical-align: top;
+    text-align: center;
+}

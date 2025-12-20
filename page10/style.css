@@ -1,0 +1,570 @@
+/* ===== CSS 變數 ===== */
+:root {
+    --comic-yellow: #FFE135;
+    --comic-pink: #FF6B9D;
+    --comic-blue: #4ECDC4;
+    --comic-orange: #FF6B35;
+    --comic-purple: #9B5DE5;
+    --comic-green: #7CB518;
+    --comic-red: #E63946;
+    --comic-black: #1A1A2E;
+    --comic-white: #FFFEF2;
+    --border-thick: 4px solid var(--comic-black);
+}
+
+/* ===== 基礎重置 ===== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'LXGW WenKai TC', 'Comic Neue', cursive, sans-serif;
+    background: var(--comic-white);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* ===== 導航欄 ===== */
+.navbar {
+    background: var(--comic-pink);
+    border-bottom: var(--border-thick);
+    padding: 15px 30px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo { display: flex; align-items: center; gap: 15px; }
+.logo-icon { font-size: 2.5rem; }
+.logo-text { font-family: 'LXGW WenKai TC', 'Bangers', cursive; font-size: 2rem; color: var(--comic-white); }
+
+.nav-right { display: flex; align-items: center; gap: 20px; }
+.nav-stats { display: flex; gap: 15px; }
+
+.nav-stat {
+    background: var(--comic-yellow);
+    border: var(--border-thick);
+    border-radius: 12px;
+    padding: 6px 16px;
+}
+
+.nav-stat-value { font-family: 'LXGW WenKai TC', 'Bangers', cursive; font-size: 1.3rem; color: var(--comic-black); }
+.nav-stat-label { font-size: 0.75rem; color: var(--comic-black); font-weight: bold; }
+
+.home-btn {
+    background: var(--comic-orange);
+    border: var(--border-thick);
+    border-radius: 12px;
+    padding: 8px 18px;
+    text-decoration: none;
+    color: var(--comic-white);
+    font-family: 'LXGW WenKai TC', 'Bangers', cursive;
+    font-size: 1rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* ===== 英雄區域 ===== */
+.hero {
+    background: var(--comic-blue);
+    padding: 50px 20px;
+    border-bottom: var(--border-thick);
+}
+
+.hero-content {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.hero-text { flex: 1; min-width: 280px; }
+
+.hero-title {
+    font-family: 'LXGW WenKai TC', 'Bangers', cursive;
+    font-size: 3.5rem;
+    color: var(--comic-white);
+    line-height: 1.2;
+    margin-bottom: 18px;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: var(--comic-white);
+    background: var(--comic-black);
+    display: inline-block;
+    padding: 8px 20px;
+    border-radius: 25px;
+}
+
+/* 對話泡泡 */
+.speech-bubble {
+    background: var(--comic-white);
+    border: var(--border-thick);
+    border-radius: 25px;
+    padding: 22px 30px;
+    max-width: 380px;
+}
+
+.bubble-text {
+    font-family: 'LXGW WenKai TC', 'Comic Neue', cursive;
+    font-size: 1.3rem;
+    color: var(--comic-black);
+    font-weight: bold;
+    line-height: 1.5;
+}
+
+.bubble-emoji { font-size: 1.8rem; margin-right: 8px; }
+
+/* ===== 容器與標題 ===== */
+.container { max-width: 1200px; margin: 0 auto; padding: 35px 20px; }
+
+.section-title {
+    font-family: 'LXGW WenKai TC', 'Bangers', cursive;
+    font-size: 2.5rem;
+    color: var(--comic-black);
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+/* ===== 知識卡片 ===== */
+.knowledge-section { background: #FFF5E1; padding: 50px 0; }
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* 翻轉卡片 */
+.flip-card { height: 300px; perspective: 1000px; cursor: pointer; }
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.flip-card:hover .flip-card-inner,
+.flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+
+.flip-card-front,
+.flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border: var(--border-thick);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.flip-card-front {
+    background: var(--comic-white);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 22px;
+}
+
+.flip-card-back {
+    background: var(--comic-yellow);
+    transform: rotateY(180deg);
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.card-icon { font-size: 4rem; margin-bottom: 12px; }
+.card-title { font-family: 'LXGW WenKai TC', 'Bangers', cursive; font-size: 1.4rem; color: var(--comic-black); margin-bottom: 8px; }
+.card-hint { font-size: 0.85rem; color: #666; display: flex; align-items: center; justify-content: center; gap: 5px; }
+.card-back-title { font-family: 'LXGW WenKai TC', 'Bangers', cursive; font-size: 1.2rem; color: var(--comic-black); margin-bottom: 12px; text-align: center; }
+.card-back-text { font-size: 0.95rem; color: var(--comic-black); line-height: 1.5; }
+.card-back-text li { margin-bottom: 6px; list-style: disc; margin-left: 20px; }
+
+/* ===== 測驗區 ===== */
+.quiz-section {
+    background: var(--comic-purple);
+    padding: 60px 20px;
+    border-top: var(--border-thick);
+    border-bottom: var(--border-thick);
+}
+
+.quiz-container { max-width: 700px; margin: 0 auto; }
+
+.quiz-title {
+    font-family: 'LXGW WenKai TC', 'Bangers', cursive;
+    font-size: 2.5rem;
+    color: var(--comic-white);
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.quiz-card {
+    background: var(--comic-white);
+    border: var(--border-thick);
+    border-radius: 20px;
+    padding: 35px;
+    position: relative;
+}
+
+.quiz-boom {
+    position: absolute;
+    top: -25px;
+    right: -15px;
+    font-family: 'LXGW WenKai TC', 'Bangers', cursive;
+    font-size: 1.6rem;
+    color: var(--comic-white);
+    background: var(--comic-red);
+    border: 3px solid var(--comic-black);
+    padding: 12px 20px;
+    border-radius: 50%;
+    transform: rotate(12deg);
+}
+
+.quiz-progress { display: flex; justify-content: center; gap: 8px; margin-bottom: 25px; }
+
+.progress-dot {
+    width: 16px;
+    height: 16px;
+    border: 3px solid var(--comic-black);
+    border-radius: 50%;
+    background: var(--comic-white);
+}
+
+.progress-dot.active { background: var(--comic-yellow); }
+.progress-dot.correct { background: var(--comic-green); }
+.progress-dot.wrong { background: var(--comic-red); }
+
+.quiz-question {
+    font-family: 'LXGW WenKai TC', 'Comic Neue', cursive;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: var(--comic-black);
+    text-align: center;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+.quiz-question-icon { font-size: 2.5rem; display: block; margin-bottom: 12px; }
+.quiz-options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+
+.quiz-option {
+    background: var(--comic-white);
+    border: 3px solid var(--comic-black);
+    border-radius: 12px;
+    padding: 16px;
+    font-family: 'LXGW WenKai TC', 'Comic Neue', cursive;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.quiz-option.correct { background: var(--comic-green); color: white; }
+.quiz-option.wrong { background: var(--comic-red); color: white; }
+
+.quiz-result { text-align: center; display: none; }
+.quiz-result.show { display: block; }
+.result-icon { font-size: 5rem; margin-bottom: 15px; }
+.result-text { font-family: 'LXGW WenKai TC', 'Bangers', cursive; font-size: 2rem; color: var(--comic-black); margin-bottom: 12px; }
+.result-score { font-size: 1.1rem; color: var(--comic-black); margin-bottom: 25px; }
+
+.quiz-restart {
+    background: var(--comic-yellow);
+    border: 3px solid var(--comic-black);
+    border-radius: 40px;
+    padding: 12px 35px;
+    font-family: 'LXGW WenKai TC', 'Bangers', cursive;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+/* ===== 狗狗品種 ===== */
+.breeds-section { padding: 60px 20px; background: #FFF5E1; }
+
+.breeds-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.breed-card {
+    background: var(--comic-white);
+    border: var(--border-thick);
+    border-radius: 16px;
+    padding: 22px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.breed-icon { font-size: 3.5rem; margin-bottom: 12px; }
+.breed-name { font-family: 'LXGW WenKai TC', 'Bangers', cursive; font-size: 1.3rem; color: var(--comic-black); margin-bottom: 8px; }
+.breed-origin { font-size: 0.8rem; color: #888; margin-bottom: 8px; }
+.breed-traits { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+
+.breed-trait {
+    background: var(--comic-yellow);
+    border: 2px solid var(--comic-black);
+    border-radius: 15px;
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+/* 品種彈窗 */
+.breed-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.breed-modal.show { opacity: 1; visibility: visible; }
+
+.modal-content {
+    background: var(--comic-white);
+    border: var(--border-thick);
+    border-radius: 20px;
+    padding: 35px;
+    max-width: 450px;
+    width: 90%;
+    position: relative;
+}
+
+.modal-close {
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    width: 40px;
+    height: 40px;
+    background: var(--comic-red);
+    border: 3px solid var(--comic-black);
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-icon { font-size: 4rem; text-align: center; margin-bottom: 15px; }
+.modal-title { font-family: 'LXGW WenKai TC', 'Bangers', cursive; font-size: 1.8rem; text-align: center; margin-bottom: 18px; }
+.modal-info { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 18px; }
+
+.modal-info-item {
+    background: var(--comic-yellow);
+    border: 2px solid var(--comic-black);
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+}
+
+.modal-info-label { font-size: 0.75rem; color: #666; margin-bottom: 3px; }
+.modal-info-value { font-family: 'LXGW WenKai TC', 'Bangers', cursive; font-size: 1rem; }
+.modal-description { font-size: 0.95rem; line-height: 1.5; color: var(--comic-black); }
+
+/* ===== 年齡計算器 ===== */
+.calculator-section {
+    background: var(--comic-blue);
+    padding: 60px 20px;
+    border-top: var(--border-thick);
+    border-bottom: var(--border-thick);
+}
+
+.calculator-container { max-width: 550px; margin: 0 auto; }
+
+.calculator-title {
+    font-family: 'LXGW WenKai TC', 'Bangers', cursive;
+    font-size: 2.2rem;
+    color: var(--comic-white);
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.calculator-card {
+    background: var(--comic-white);
+    border: var(--border-thick);
+    border-radius: 20px;
+    padding: 35px;
+}
+
+.calculator-form { display: flex; flex-direction: column; gap: 20px; }
+.form-group { display: flex; flex-direction: column; gap: 8px; }
+
+.form-label {
+    font-family: 'LXGW WenKai TC', 'Comic Neue', cursive;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: var(--comic-black);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.form-input {
+    padding: 12px 18px;
+    border: 3px solid var(--comic-black);
+    border-radius: 12px;
+    font-size: 1rem;
+    font-family: 'LXGW WenKai TC', 'Comic Neue', cursive;
+}
+
+.form-input:focus { outline: none; border-color: var(--comic-purple); }
+
+.calculate-btn {
+    background: var(--comic-yellow);
+    border: 3px solid var(--comic-black);
+    border-radius: 40px;
+    padding: 15px 35px;
+    font-family: 'LXGW WenKai TC', 'Bangers', cursive;
+    font-size: 1.3rem;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+.calculator-result {
+    margin-top: 25px;
+    padding: 22px;
+    background: var(--comic-yellow);
+    border: 3px solid var(--comic-black);
+    border-radius: 16px;
+    text-align: center;
+    display: none;
+}
+
+.calculator-result.show { display: block; }
+.result-dog-age { font-family: 'LXGW WenKai TC', 'Bangers', cursive; font-size: 2.5rem; color: var(--comic-black); margin-bottom: 8px; }
+.result-human-age { font-size: 1.1rem; color: var(--comic-black); }
+
+.result-message {
+    margin-top: 12px;
+    font-size: 0.95rem;
+    padding: 12px;
+    background: var(--comic-white);
+    border-radius: 12px;
+    border: 2px solid var(--comic-black);
+}
+
+/* ===== 時間軸 ===== */
+.timeline-section { padding: 60px 20px; background: #FFF5E1; }
+
+.timeline {
+    max-width: 700px;
+    margin: 0 auto;
+    position: relative;
+    padding-left: 45px;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 18px;
+    top: 0;
+    bottom: 0;
+    width: 5px;
+    background: var(--comic-black);
+    border-radius: 3px;
+}
+
+.timeline-item { position: relative; margin-bottom: 35px; }
+
+.timeline-dot {
+    position: absolute;
+    left: -35px;
+    top: 12px;
+    width: 26px;
+    height: 26px;
+    background: var(--comic-yellow);
+    border: 3px solid var(--comic-black);
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.timeline-content {
+    background: var(--comic-white);
+    border: var(--border-thick);
+    border-radius: 16px;
+    padding: 22px;
+}
+
+.timeline-title {
+    font-family: 'LXGW WenKai TC', 'Bangers', cursive;
+    font-size: 1.3rem;
+    color: var(--comic-black);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.timeline-text { font-size: 0.95rem; color: #555; line-height: 1.5; }
+
+/* ===== 頁尾 ===== */
+.footer {
+    background: var(--comic-black);
+    padding: 40px 20px;
+    color: var(--comic-white);
+}
+
+.footer-content { max-width: 1100px; margin: 0 auto; text-align: center; }
+.footer-logo { font-size: 3rem; margin-bottom: 15px; }
+.footer-text { font-family: 'LXGW WenKai TC', 'Comic Neue', cursive; font-size: 1rem; margin-bottom: 12px; }
+.footer-credit { font-family: 'LXGW WenKai TC', 'Bangers', cursive; font-size: 1.1rem; color: var(--comic-yellow); margin-top: 15px; }
+
+/* ===== 浮動按鈕 ===== */
+.floating-paw {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 55px;
+    height: 55px;
+    background: var(--comic-yellow);
+    border: var(--border-thick);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    cursor: pointer;
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.floating-paw.show { opacity: 1; pointer-events: auto; }
+
+/* ===== 響應式 ===== */
+@media (max-width: 768px) {
+    .logo-text { font-size: 1.4rem; }
+    .nav-stats { display: none; }
+    .hero-title { font-size: 2.2rem; }
+    .hero-content { flex-direction: column; text-align: center; }
+    .speech-bubble { margin-top: 30px; }
+    .quiz-options { grid-template-columns: 1fr; }
+    .quiz-title { font-size: 1.8rem; }
+    .modal-info { grid-template-columns: 1fr; }
+    .timeline { padding-left: 35px; }
+    .timeline::before { left: 12px; }
+    .timeline-dot { left: -28px; width: 22px; height: 22px; }
+}

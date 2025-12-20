@@ -3,1347 +3,33 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>✨ 星空觀測指南 - 探索璀璨星河</title>
+        <title>深海探索之旅 - 潛入藍色秘境</title>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
-        <style>
-            /* ===== CSS 變數定義 ===== */
-            :root {
-                --space-dark: #0a0a1a;
-                --space-blue: #12122a;
-                --space-purple: #1a1035;
-                --nebula-pink: #ff6b9d;
-                --nebula-blue: #4facfe;
-                --star-gold: #ffd700;
-                --star-white: #ffffff;
-                --aurora-green: #00ff88;
-                --aurora-cyan: #00d4ff;
-                --text-primary: #e8e8ff;
-                --text-secondary: #a8a8c8;
-                --card-bg: rgba(20, 20, 45, 0.6);
-                --card-border: rgba(255, 215, 0, 0.2);
-                --glow-gold: 0 0 20px rgba(255, 215, 0, 0.5);
-                --glow-blue: 0 0 30px rgba(79, 172, 254, 0.4);
-                --border-radius: 20px;
-                --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            }
-
-            /* ===== 重置與基礎樣式 ===== */
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-            }
-
-            html {
-                scroll-behavior: smooth;
-            }
-
-            body {
-                font-family: 'Zen Kaku Gothic New', 'Noto Sans TC', sans-serif;
-                background: var(--space-dark);
-                color: var(--text-primary);
-                min-height: 100vh;
-                overflow-x: hidden;
-                line-height: 1.8;
-            }
-
-            /* ===== 統一背景 - 漸層流動 ===== */
-            .page-wrapper {
-                background: linear-gradient(
-                    180deg,
-                    var(--space-dark) 0%,
-                    var(--space-blue) 15%,
-                    var(--space-purple) 30%,
-                    var(--space-blue) 50%,
-                    var(--space-purple) 70%,
-                    var(--space-blue) 85%,
-                    var(--space-dark) 100%
-                );
-                background-attachment: fixed;
-            }
-
-            /* ===== 載入動畫 ===== */
-            .loading-screen {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: linear-gradient(135deg, var(--space-dark) 0%, var(--space-blue) 50%, var(--space-purple) 100%);
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                z-index: 9999;
-                transition: opacity 0.8s ease, visibility 0.8s ease;
-            }
-
-            .loading-screen.hidden {
-                opacity: 0;
-                visibility: hidden;
-            }
-
-            .loading-icon {
-                font-size: 80px;
-                animation: floatStar 3s ease-in-out infinite, rotateStar 8s linear infinite;
-                filter: drop-shadow(0 0 30px var(--star-gold));
-            }
-
-            .loading-text {
-                margin-top: 30px;
-                font-family: 'Orbitron', sans-serif;
-                font-size: 24px;
-                color: var(--star-gold);
-                letter-spacing: 4px;
-                animation: pulseText 2s ease-in-out infinite;
-            }
-
-            .loading-dots {
-                display: flex;
-                gap: 8px;
-                margin-top: 20px;
-            }
-
-            .loading-dot {
-                width: 12px;
-                height: 12px;
-                background: var(--nebula-blue);
-                border-radius: 50%;
-                animation: dotBounce 1.4s ease-in-out infinite;
-            }
-
-            .loading-dot:nth-child(2) { animation-delay: 0.2s; }
-            .loading-dot:nth-child(3) { animation-delay: 0.4s; }
-
-            /* ===== 星空背景 ===== */
-            .starfield {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                pointer-events: none;
-                z-index: 0;
-            }
-
-            .star {
-                position: absolute;
-                background: var(--star-white);
-                border-radius: 50%;
-                animation: twinkleStar 3s infinite ease-in-out;
-            }
-
-            .shooting-star {
-                position: absolute;
-                width: 100px;
-                height: 2px;
-                background: linear-gradient(90deg, var(--star-white), transparent);
-                animation: shootingStar 3s linear infinite;
-                opacity: 0;
-            }
-
-            /* ===== 側邊導航 ===== */
-            .side-nav {
-                position: fixed;
-                right: 30px;
-                top: 50%;
-                transform: translateY(-50%);
-                z-index: 100;
-                display: flex;
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .side-nav-item {
-                width: 12px;
-                height: 12px;
-                border-radius: 50%;
-                background: rgba(255, 255, 255, 0.3);
-                border: 2px solid rgba(255, 255, 255, 0.5);
-                cursor: pointer;
-                transition: var(--transition-smooth);
-                position: relative;
-            }
-
-            .side-nav-item:hover,
-            .side-nav-item.active {
-                background: var(--star-gold);
-                border-color: var(--star-gold);
-                transform: scale(1.3);
-                box-shadow: var(--glow-gold);
-            }
-
-            .side-nav-item::before {
-                content: attr(data-label);
-                position: absolute;
-                right: 25px;
-                top: 50%;
-                transform: translateY(-50%);
-                background: rgba(0, 0, 0, 0.8);
-                color: var(--star-gold);
-                padding: 5px 12px;
-                border-radius: 5px;
-                font-size: 12px;
-                white-space: nowrap;
-                opacity: 0;
-                pointer-events: none;
-                transition: opacity 0.3s ease;
-            }
-
-            .side-nav-item:hover::before {
-                opacity: 1;
-            }
-
-            /* ===== 導航欄 ===== */
-            .navbar {
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                padding: 15px 40px;
-                background: linear-gradient(180deg, rgba(10, 10, 26, 0.95) 0%, rgba(10, 10, 26, 0.7) 100%);
-                backdrop-filter: blur(20px);
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                z-index: 1000;
-                border-bottom: 1px solid rgba(255, 215, 0, 0.1);
-                transition: var(--transition-smooth);
-            }
-
-            .navbar.scrolled {
-                padding: 10px 40px;
-                background: rgba(10, 10, 26, 0.98);
-            }
-
-            .logo {
-                display: flex;
-                align-items: center;
-                gap: 15px;
-                cursor: pointer;
-            }
-
-            .logo-icon {
-                font-size: 40px;
-                animation: spinStar 10s linear infinite;
-                filter: drop-shadow(var(--glow-gold));
-            }
-
-            .logo-text {
-                font-family: 'Orbitron', sans-serif;
-                font-size: 24px;
-                font-weight: 700;
-                background: linear-gradient(135deg, var(--star-gold), var(--nebula-blue));
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                background-clip: text;
-            }
-
-            .home-btn {
-                display: flex;
-                align-items: center;
-                gap: 8px;
-                padding: 12px 24px;
-                background: transparent;
-                border: 2px solid var(--star-gold);
-                border-radius: 30px;
-                color: var(--star-gold);
-                font-size: 14px;
-                font-weight: 600;
-                text-decoration: none;
-                cursor: pointer;
-                transition: var(--transition-smooth);
-            }
-
-            .home-btn:hover {
-                background: var(--star-gold);
-                color: var(--space-dark);
-                transform: scale(1.05);
-                box-shadow: var(--glow-gold);
-            }
-
-            /* ===== 英雄區域 ===== */
-            .hero {
-                min-height: 100vh;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                text-align: center;
-                padding: 120px 20px 60px;
-                position: relative;
-            }
-
-            .hero::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: radial-gradient(ellipse at center, rgba(45, 27, 78, 0.5) 0%, transparent 70%);
-                pointer-events: none;
-            }
-
-            .hero-content {
-                z-index: 1;
-                max-width: 900px;
-            }
-
-            .hero-title {
-                font-family: 'Orbitron', sans-serif;
-                font-size: 72px;
-                font-weight: 900;
-                margin-bottom: 20px;
-                background: linear-gradient(135deg, var(--star-white), var(--star-gold), var(--nebula-blue));
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                background-clip: text;
-                animation: fadeInUp 1s ease 0.2s both;
-            }
-
-            .hero-subtitle {
-                font-size: 24px;
-                color: var(--text-secondary);
-                margin-bottom: 40px;
-                animation: fadeInUp 1s ease 0.4s both;
-            }
-
-            .hero-stats {
-                display: flex;
-                gap: 60px;
-                justify-content: center;
-                margin-top: 60px;
-                animation: fadeInUp 1s ease 0.6s both;
-            }
-
-            .hero-stat {
-                text-align: center;
-            }
-
-            .hero-stat-number {
-                font-family: 'Orbitron', sans-serif;
-                font-size: 48px;
-                font-weight: 900;
-                color: var(--star-gold);
-                display: block;
-            }
-
-            .hero-stat-label {
-                font-size: 14px;
-                color: var(--text-secondary);
-                margin-top: 5px;
-            }
-
-            /* ===== 通用區段樣式 ===== */
-            .section {
-                padding: 100px 40px;
-                position: relative;
-            }
-
-            .section-header {
-                text-align: center;
-                margin-bottom: 60px;
-            }
-
-            .section-icon {
-                font-size: 50px;
-                margin-bottom: 20px;
-                display: block;
-                animation: floatStar 3s ease-in-out infinite;
-            }
-
-            .section-title {
-                font-family: 'Orbitron', sans-serif;
-                font-size: 42px;
-                font-weight: 700;
-                margin-bottom: 15px;
-                background: linear-gradient(135deg, var(--star-gold), var(--nebula-blue));
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                background-clip: text;
-            }
-
-            .section-subtitle {
-                font-size: 18px;
-                color: var(--text-secondary);
-            }
-
-            /* ===== 星座圖鑑 - 展開式卡片 ===== */
-            .constellation-showcase {
-                max-width: 1100px;
-                margin: 0 auto;
-                display: flex;
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .constellation-item {
-                background: var(--card-bg);
-                border-radius: 16px;
-                border: 1px solid var(--card-border);
-                overflow: hidden;
-                transition: var(--transition-smooth);
-                backdrop-filter: blur(10px);
-            }
-
-            .constellation-item:hover {
-                border-color: var(--star-gold);
-            }
-
-            .constellation-item.active {
-                border-color: var(--star-gold);
-                box-shadow: var(--glow-gold);
-            }
-
-            .constellation-header {
-                padding: 25px 30px;
-                display: flex;
-                align-items: center;
-                gap: 20px;
-                cursor: pointer;
-                transition: background 0.3s ease;
-            }
-
-            .constellation-header:hover {
-                background: rgba(255, 215, 0, 0.05);
-            }
-
-            .constellation-icon {
-                font-size: 50px;
-                flex-shrink: 0;
-                width: 70px;
-                height: 70px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                background: rgba(255, 215, 0, 0.1);
-                border-radius: 50%;
-                transition: var(--transition-smooth);
-            }
-
-            .constellation-item.active .constellation-icon {
-                transform: scale(1.1);
-                background: rgba(255, 215, 0, 0.2);
-            }
-
-            .constellation-brief {
-                flex: 1;
-            }
-
-            .constellation-name {
-                font-family: 'Orbitron', sans-serif;
-                font-size: 22px;
-                font-weight: 700;
-                color: var(--star-gold);
-                margin-bottom: 5px;
-            }
-
-            .constellation-latin {
-                font-size: 13px;
-                color: var(--nebula-blue);
-                font-style: italic;
-            }
-
-            .constellation-tags {
-                display: flex;
-                gap: 10px;
-                flex-shrink: 0;
-            }
-
-            .constellation-tag {
-                padding: 6px 14px;
-                background: rgba(255, 215, 0, 0.1);
-                border-radius: 20px;
-                font-size: 12px;
-                color: var(--star-gold);
-            }
-
-            .constellation-toggle {
-                width: 40px;
-                height: 40px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 20px;
-                color: var(--star-gold);
-                transition: transform 0.3s ease;
-                flex-shrink: 0;
-            }
-
-            .constellation-item.active .constellation-toggle {
-                transform: rotate(180deg);
-            }
-
-            .constellation-detail {
-                max-height: 0;
-                overflow: hidden;
-                transition: max-height 0.4s ease, padding 0.4s ease;
-                background: rgba(0, 0, 0, 0.2);
-            }
-
-            .constellation-item.active .constellation-detail {
-                max-height: 300px;
-            }
-
-            .constellation-detail-inner {
-                padding: 0 30px 25px 30px;
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 25px;
-            }
-
-            .constellation-item.active .constellation-detail-inner {
-                padding-top: 25px;
-            }
-
-            .detail-text {
-                color: var(--text-secondary);
-                font-size: 15px;
-                line-height: 1.8;
-            }
-
-            .detail-stats {
-                display: flex;
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .detail-stat {
-                display: flex;
-                align-items: center;
-                gap: 12px;
-                padding: 12px 15px;
-                background: rgba(255, 255, 255, 0.03);
-                border-radius: 10px;
-            }
-
-            .detail-stat-icon {
-                font-size: 24px;
-            }
-
-            .detail-stat-info {
-                display: flex;
-                flex-direction: column;
-            }
-
-            .detail-stat-label {
-                font-size: 12px;
-                color: var(--text-secondary);
-            }
-
-            .detail-stat-value {
-                font-family: 'Orbitron', sans-serif;
-                font-size: 14px;
-                color: var(--star-gold);
-            }
-
-            /* ===== 攝影技巧區 ===== */
-            .tips-grid {
-                display: grid;
-                grid-template-columns: repeat(4, 1fr);
-                gap: 25px;
-                max-width: 1200px;
-                margin: 0 auto;
-            }
-
-            .tip-card {
-                background: var(--card-bg);
-                border-radius: var(--border-radius);
-                padding: 35px 25px;
-                border: 1px solid var(--card-border);
-                transition: var(--transition-smooth);
-                position: relative;
-                backdrop-filter: blur(10px);
-            }
-
-            .tip-card:hover {
-                transform: translateY(-8px);
-                box-shadow: var(--glow-gold);
-            }
-
-            .tip-number {
-                position: absolute;
-                top: 15px;
-                right: 15px;
-                font-family: 'Orbitron', sans-serif;
-                font-size: 48px;
-                font-weight: 900;
-                color: rgba(255, 215, 0, 0.08);
-                line-height: 1;
-            }
-
-            .tip-icon {
-                font-size: 40px;
-                margin-bottom: 15px;
-                display: block;
-            }
-
-            .tip-title {
-                font-family: 'Orbitron', sans-serif;
-                font-size: 18px;
-                color: var(--star-gold);
-                margin-bottom: 12px;
-            }
-
-            .tip-content {
-                color: var(--text-secondary);
-                font-size: 13px;
-                margin-bottom: 15px;
-            }
-
-            .tip-list {
-                list-style: none;
-            }
-
-            .tip-list li {
-                padding: 5px 0;
-                padding-left: 22px;
-                position: relative;
-                color: var(--text-primary);
-                font-size: 13px;
-            }
-
-            .tip-list li::before {
-                content: '⭐';
-                position: absolute;
-                left: 0;
-                font-size: 12px;
-            }
-
-            /* ===== 星座查詢器 - 圓形星盤式 ===== */
-            .finder-container {
-                max-width: 1100px;
-                margin: 0 auto;
-                position: relative;
-            }
-
-            .star-wheel {
-                position: relative;
-                width: 650px;
-                height: 650px;
-                margin: 0 auto 50px;
-            }
-
-            .wheel-center {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                width: 260px;
-                height: 260px;
-                background: var(--card-bg);
-                border-radius: 50%;
-                border: 3px solid var(--star-gold);
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                text-align: center;
-                z-index: 10;
-                backdrop-filter: blur(10px);
-                box-shadow: var(--glow-gold);
-            }
-
-            .wheel-center-icon {
-                font-size: 65px;
-                margin-bottom: 12px;
-                animation: floatStar 3s ease-in-out infinite;
-            }
-
-            .wheel-center-name {
-                font-family: 'Orbitron', sans-serif;
-                font-size: 24px;
-                color: var(--star-gold);
-                margin-bottom: 8px;
-            }
-
-            .wheel-center-hint {
-                font-size: 15px;
-                color: var(--text-secondary);
-            }
-
-            .month-btn {
-                position: absolute;
-                width: 75px;
-                height: 75px;
-                border-radius: 50%;
-                background: var(--card-bg);
-                border: 2px solid var(--card-border);
-                color: var(--text-primary);
-                cursor: pointer;
-                transition: var(--transition-smooth);
-                font-size: 16px;
-                font-weight: 600;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                backdrop-filter: blur(5px);
-            }
-
-            .month-btn:hover {
-                border-color: var(--star-gold);
-                color: var(--star-gold);
-                box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
-                z-index: 5;
-            }
-
-            .month-btn.active {
-                background: var(--star-gold);
-                color: var(--space-dark);
-                border-color: var(--star-gold);
-                box-shadow: 0 0 30px rgba(255, 215, 0, 0.8), 0 0 60px rgba(255, 215, 0, 0.4);
-                z-index: 5;
-            }
-
-            /* 12個月份位置 - 時鐘排列（使用 calc 避免 transform 衝突） */
-            .month-btn[data-month="1"] { top: 3%; left: calc(50% - 37.5px); }
-            .month-btn[data-month="2"] { top: 8%; right: 16%; }
-            .month-btn[data-month="3"] { top: 23%; right: 3%; }
-            .month-btn[data-month="4"] { top: calc(50% - 37.5px); right: -2%; }
-            .month-btn[data-month="5"] { bottom: 23%; right: 3%; }
-            .month-btn[data-month="6"] { bottom: 8%; right: 16%; }
-            .month-btn[data-month="7"] { bottom: 3%; left: calc(50% - 37.5px); }
-            .month-btn[data-month="8"] { bottom: 8%; left: 16%; }
-            .month-btn[data-month="9"] { bottom: 23%; left: 3%; }
-            .month-btn[data-month="10"] { top: calc(50% - 37.5px); left: -2%; }
-            .month-btn[data-month="11"] { top: 23%; left: 3%; }
-            .month-btn[data-month="12"] { top: 8%; left: 16%; }
-
-            /* 連接線 */
-            .wheel-ring {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                width: 460px;
-                height: 460px;
-                border: 1px dashed rgba(255, 215, 0, 0.2);
-                border-radius: 50%;
-                pointer-events: none;
-            }
-
-            /* 結果顯示卡片 */
-            .finder-result-card {
-                background: var(--card-bg);
-                border-radius: var(--border-radius);
-                border: 1px solid var(--card-border);
-                padding: 35px 50px;
-                text-align: center;
-                backdrop-filter: blur(10px);
-                max-width: 750px;
-                margin: 0 auto;
-            }
-
-            .result-desc {
-                color: var(--text-secondary);
-                font-size: 17px;
-                line-height: 1.9;
-            }
-
-            /* ===== 觀星地點 - 交錯式 ===== */
-            .locations-container {
-                max-width: 1100px;
-                margin: 0 auto;
-            }
-
-            .location-row {
-                display: flex;
-                gap: 50px;
-                margin-bottom: 80px;
-                align-items: center;
-            }
-
-            .location-row:last-child {
-                margin-bottom: 0;
-            }
-
-            .location-row:nth-child(even) {
-                flex-direction: row-reverse;
-            }
-
-            .location-image-box {
-                flex: 0 0 40%;
-                aspect-ratio: 4/3;
-                background: linear-gradient(135deg, rgba(45, 27, 78, 0.8), rgba(26, 26, 62, 0.8));
-                border-radius: var(--border-radius);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 70px;
-                position: relative;
-                border: 1px solid var(--card-border);
-            }
-
-            .location-badge {
-                position: absolute;
-                top: 15px;
-                right: 15px;
-                padding: 6px 14px;
-                background: rgba(0, 255, 136, 0.15);
-                border: 1px solid var(--aurora-green);
-                border-radius: 20px;
-                font-size: 11px;
-                color: var(--aurora-green);
-            }
-
-            .location-content-box {
-                flex: 1;
-            }
-
-            .location-name {
-                font-family: 'Orbitron', sans-serif;
-                font-size: 26px;
-                color: var(--star-gold);
-                margin-bottom: 8px;
-            }
-
-            .location-region {
-                color: var(--nebula-blue);
-                font-size: 14px;
-                margin-bottom: 15px;
-                display: flex;
-                align-items: center;
-                gap: 6px;
-            }
-
-            .location-desc {
-                color: var(--text-secondary);
-                font-size: 15px;
-                line-height: 1.8;
-                margin-bottom: 20px;
-            }
-
-            .location-stats {
-                display: flex;
-                gap: 25px;
-            }
-
-            .location-stat {
-                display: flex;
-                align-items: center;
-                gap: 10px;
-            }
-
-            .location-stat-icon {
-                font-size: 22px;
-            }
-
-            .location-stat-info {
-                display: flex;
-                flex-direction: column;
-            }
-
-            .location-stat-label {
-                font-size: 11px;
-                color: var(--text-secondary);
-            }
-
-            .location-stat-value {
-                font-family: 'Orbitron', sans-serif;
-                font-size: 16px;
-                color: var(--star-gold);
-            }
-
-            /* ===== 季節指南 - 橫向時間軸風格 ===== */
-            .seasons-timeline {
-                max-width: 1200px;
-                margin: 0 auto;
-                position: relative;
-            }
-
-            .seasons-line {
-                position: absolute;
-                top: 80px;
-                left: 0;
-                right: 0;
-                height: 2px;
-                background: linear-gradient(90deg, 
-                    var(--nebula-pink), 
-                    var(--star-gold), 
-                    var(--aurora-green), 
-                    var(--nebula-blue)
-                );
-                opacity: 0.5;
-            }
-
-            .seasons-grid {
-                display: grid;
-                grid-template-columns: repeat(4, 1fr);
-                gap: 30px;
-                position: relative;
-            }
-
-            .season-card {
-                text-align: center;
-                padding: 30px 20px;
-            }
-
-            .season-emoji {
-                font-size: 50px;
-                margin-bottom: 15px;
-                display: block;
-                position: relative;
-            }
-
-            .season-emoji::after {
-                content: '';
-                position: absolute;
-                bottom: -25px;
-                left: 50%;
-                transform: translateX(-50%);
-                width: 16px;
-                height: 16px;
-                background: var(--star-gold);
-                border-radius: 50%;
-                border: 3px solid var(--space-dark);
-            }
-
-            .season-name {
-                font-family: 'Orbitron', sans-serif;
-                font-size: 22px;
-                color: var(--star-gold);
-                margin-bottom: 5px;
-                margin-top: 30px;
-            }
-
-            .season-period {
-                color: var(--nebula-blue);
-                font-size: 13px;
-                margin-bottom: 15px;
-            }
-
-            .season-highlight {
-                font-size: 16px;
-                color: var(--text-primary);
-                margin-bottom: 10px;
-                font-weight: 500;
-            }
-
-            .season-desc {
-                color: var(--text-secondary);
-                font-size: 13px;
-                line-height: 1.7;
-            }
-
-            /* ===== 頁尾 ===== */
-            .footer {
-                padding: 60px 40px 30px;
-                border-top: 1px solid rgba(255, 215, 0, 0.1);
-            }
-
-            .footer-content {
-                max-width: 1000px;
-                margin: 0 auto;
-                display: grid;
-                grid-template-columns: 2fr 1fr 1fr;
-                gap: 50px;
-                margin-bottom: 40px;
-            }
-
-            .footer-brand {
-                display: flex;
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .footer-logo {
-                display: flex;
-                align-items: center;
-                gap: 12px;
-            }
-
-            .footer-logo-icon {
-                font-size: 40px;
-                animation: spinStar 15s linear infinite;
-            }
-
-            .footer-logo-text {
-                font-family: 'Orbitron', sans-serif;
-                font-size: 20px;
-                color: var(--star-gold);
-            }
-
-            .footer-desc {
-                color: var(--text-secondary);
-                font-size: 14px;
-                line-height: 1.7;
-            }
-
-            .footer-section h4 {
-                font-family: 'Orbitron', sans-serif;
-                font-size: 14px;
-                color: var(--star-gold);
-                margin-bottom: 20px;
-            }
-
-            .footer-links {
-                list-style: none;
-            }
-
-            .footer-links li {
-                margin-bottom: 12px;
-            }
-
-            .footer-links a {
-                color: var(--text-secondary);
-                text-decoration: none;
-                transition: var(--transition-smooth);
-                display: flex;
-                align-items: center;
-                gap: 8px;
-                font-size: 14px;
-            }
-
-            .footer-links a:hover {
-                color: var(--star-gold);
-                transform: translateX(5px);
-            }
-
-            .footer-bottom {
-                text-align: center;
-                padding-top: 25px;
-                border-top: 1px solid rgba(255, 255, 255, 0.05);
-            }
-
-            .footer-bottom p {
-                color: var(--text-secondary);
-                font-size: 13px;
-            }
-
-            .footer-bottom .highlight {
-                color: var(--star-gold);
-                font-weight: 600;
-            }
-
-            /* ===== 回到頂部按鈕 ===== */
-            .scroll-top {
-                position: fixed;
-                bottom: 30px;
-                right: 80px;
-                width: 50px;
-                height: 50px;
-                background: linear-gradient(135deg, var(--star-gold), #ffaa00);
-                border: none;
-                border-radius: 50%;
-                color: var(--space-dark);
-                font-size: 24px;
-                cursor: pointer;
-                opacity: 0;
-                visibility: hidden;
-                transition: var(--transition-smooth);
-                z-index: 99;
-                box-shadow: var(--glow-gold);
-            }
-
-            .scroll-top.visible {
-                opacity: 1;
-                visibility: visible;
-            }
-
-            .scroll-top:hover {
-                transform: translateY(-5px) scale(1.1);
-            }
-
-            /* ===== 動畫定義 ===== */
-            @keyframes twinkleStar {
-                0%, 100% { opacity: 0.3; transform: scale(1); }
-                50% { opacity: 1; transform: scale(1.2); }
-            }
-
-            @keyframes floatStar {
-                0%, 100% { transform: translateY(0); }
-                50% { transform: translateY(-10px); }
-            }
-
-            @keyframes rotateStar {
-                from { transform: rotate(0deg); }
-                to { transform: rotate(360deg); }
-            }
-
-            @keyframes spinStar {
-                from { transform: rotate(0deg); }
-                to { transform: rotate(360deg); }
-            }
-
-            @keyframes pulseText {
-                0%, 100% { opacity: 1; }
-                50% { opacity: 0.5; }
-            }
-
-            @keyframes dotBounce {
-                0%, 80%, 100% { transform: scale(0); opacity: 0; }
-                40% { transform: scale(1); opacity: 1; }
-            }
-
-            @keyframes shootingStar {
-                0% {
-                    transform: translateX(0) translateY(0) rotate(-45deg);
-                    opacity: 1;
-                }
-                100% {
-                    transform: translateX(500px) translateY(500px) rotate(-45deg);
-                    opacity: 0;
-                }
-            }
-
-            @keyframes fadeInUp {
-                from {
-                    opacity: 0;
-                    transform: translateY(30px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-
-            /* 星座查詢中心圓專用動畫 - 只縮放不位移 */
-            @keyframes pulseIn {
-                from {
-                    opacity: 0;
-                    transform: translate(-50%, -50%) scale(0.8);
-                }
-                to {
-                    opacity: 1;
-                    transform: translate(-50%, -50%) scale(1);
-                }
-            }
-
-            /* ===== 響應式設計 ===== */
-            @media (max-width: 1200px) {
-                .tips-grid {
-                    grid-template-columns: repeat(2, 1fr);
-                }
-
-                .seasons-grid {
-                    grid-template-columns: repeat(2, 1fr);
-                }
-
-                .seasons-line {
-                    display: none;
-                }
-
-                .season-emoji::after {
-                    display: none;
-                }
-
-                .side-nav {
-                    display: none;
-                }
-
-                .star-wheel {
-                    width: 520px;
-                    height: 520px;
-                }
-
-                .wheel-center {
-                    width: 210px;
-                    height: 210px;
-                }
-
-                .wheel-center-icon {
-                    font-size: 55px;
-                }
-
-                .wheel-center-name {
-                    font-size: 20px;
-                }
-
-                .wheel-ring {
-                    width: 370px;
-                    height: 370px;
-                }
-
-                .month-btn {
-                    width: 62px;
-                    height: 62px;
-                    font-size: 14px;
-                }
-            }
-
-            @media (max-width: 768px) {
-                .navbar {
-                    padding: 15px 20px;
-                }
-
-                .logo-text {
-                    font-size: 18px;
-                }
-
-                .hero-title {
-                    font-size: 40px;
-                }
-
-                .hero-subtitle {
-                    font-size: 18px;
-                }
-
-                .hero-stats {
-                    flex-direction: column;
-                    gap: 30px;
-                }
-
-                .section-title {
-                    font-size: 28px;
-                }
-
-                .section {
-                    padding: 60px 20px;
-                }
-
-                .tips-grid {
-                    grid-template-columns: 1fr;
-                }
-
-                /* 星座圖鑑響應式 */
-                .constellation-header {
-                    flex-wrap: wrap;
-                    gap: 15px;
-                }
-
-                .constellation-tags {
-                    width: 100%;
-                    order: 3;
-                }
-
-                .constellation-toggle {
-                    order: 2;
-                }
-
-                .constellation-detail-inner {
-                    grid-template-columns: 1fr;
-                }
-
-                /* 星盤響應式 */
-                .star-wheel {
-                    width: 400px;
-                    height: 400px;
-                }
-
-                .wheel-center {
-                    width: 165px;
-                    height: 165px;
-                }
-
-                .wheel-center-icon {
-                    font-size: 45px;
-                }
-
-                .wheel-center-name {
-                    font-size: 17px;
-                }
-
-                .wheel-center-hint {
-                    font-size: 12px;
-                }
-
-                .wheel-ring {
-                    width: 285px;
-                    height: 285px;
-                }
-
-                .month-btn {
-                    width: 52px;
-                    height: 52px;
-                    font-size: 12px;
-                }
-
-                .location-row,
-                .location-row:nth-child(even) {
-                    flex-direction: column;
-                }
-
-                .location-image-box {
-                    flex: none;
-                    width: 100%;
-                }
-
-                .seasons-grid {
-                    grid-template-columns: 1fr;
-                }
-
-                .footer-content {
-                    grid-template-columns: 1fr;
-                    gap: 30px;
-                    text-align: center;
-                }
-
-                .footer-links a {
-                    justify-content: center;
-                }
-
-                .scroll-top {
-                    right: 20px;
-                }
-            }
-
-            @media (max-width: 400px) {
-                .star-wheel {
-                    width: 320px;
-                    height: 320px;
-                }
-
-                .wheel-center {
-                    width: 130px;
-                    height: 130px;
-                }
-
-                .wheel-center-icon {
-                    font-size: 35px;
-                }
-
-                .wheel-center-name {
-                    font-size: 14px;
-                }
-
-                .wheel-ring {
-                    width: 230px;
-                    height: 230px;
-                }
-
-                .month-btn {
-                    width: 42px;
-                    height: 42px;
-                    font-size: 10px;
-                }
-            }
-        </style>
+        <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Noto+Sans+TC:wght@300;400;500;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+        
+        <!-- 外部樣式表 -->
+        <link rel="stylesheet" href="style.css" />
     </head>
     <body>
-        <!-- 載入動畫 -->
-        <div class="loading-screen" id="loadingScreen">
-            <div class="loading-icon">🌟</div>
-            <div class="loading-text">LOADING STARS</div>
-            <div class="loading-dots">
-                <div class="loading-dot"></div>
-                <div class="loading-dot"></div>
-                <div class="loading-dot"></div>
-            </div>
-        </div>
-
-        <!-- 星空背景 -->
-        <div class="starfield" id="starfield"></div>
+        <!-- 氣泡背景 -->
+        <div class="bubble-field" id="bubbleField"></div>
 
         <!-- 側邊導航 -->
         <nav class="side-nav">
             <div class="side-nav-item active" data-section="hero" data-label="首頁"></div>
-            <div class="side-nav-item" data-section="constellations" data-label="星座圖鑑"></div>
-            <div class="side-nav-item" data-section="tips" data-label="攝影技巧"></div>
-            <div class="side-nav-item" data-section="finder" data-label="星座查詢"></div>
-            <div class="side-nav-item" data-section="locations" data-label="觀星地點"></div>
-            <div class="side-nav-item" data-section="seasons" data-label="季節指南"></div>
+            <div class="side-nav-item" data-section="creatures" data-label="海洋生物"></div>
+            <div class="side-nav-item" data-section="depth" data-label="深度探索"></div>
+            <div class="side-nav-item" data-section="locations" data-label="潛水勝地"></div>
         </nav>
 
         <!-- 導航欄 -->
         <nav class="navbar" id="navbar">
             <div class="logo">
-                <span class="logo-icon">✨</span>
-                <span class="logo-text">STARGAZER</span>
+                <span class="logo-icon">🌊</span>
+                <span class="logo-text">DEEP EXPLORER</span>
             </div>
-            <a href="index.html" class="home-btn">
+            <a href="../index.html" class="home-btn">
                 <span>🏠</span>
                 <span>回首頁</span>
             </a>
@@ -1355,65 +41,65 @@
             <!-- 英雄區域 -->
             <section class="hero" id="hero">
                 <div class="hero-content">
-                    <h1 class="hero-title">星空觀測指南</h1>
-                    <p class="hero-subtitle">捕捉璀璨星河，記錄宇宙之美<br>讓每一顆星星都成為您作品中的主角</p>
+                    <h1 class="hero-title">深海探索之旅</h1>
+                    <p class="hero-subtitle">潛入藍色秘境，探索神秘海底世界<br>讓每一次呼吸都成為與海洋的對話</p>
                     <div class="hero-stats">
                         <div class="hero-stat">
-                            <span class="hero-stat-number" data-count="88">0</span>
-                            <span class="hero-stat-label">已知星座</span>
+                            <span class="hero-stat-number" data-count="230000">0</span>
+                            <span class="hero-stat-label">已知海洋物種</span>
                         </div>
                         <div class="hero-stat">
-                            <span class="hero-stat-number" data-count="12">0</span>
-                            <span class="hero-stat-label">攝影技巧</span>
+                            <span class="hero-stat-number" data-count="11034">0</span>
+                            <span class="hero-stat-label">最深海溝(公尺)</span>
                         </div>
                         <div class="hero-stat">
-                            <span class="hero-stat-number" data-count="8">0</span>
-                            <span class="hero-stat-label">觀星勝地</span>
+                            <span class="hero-stat-number" data-count="71">0</span>
+                            <span class="hero-stat-label">地球海洋覆蓋(%)</span>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- 星座區 - 展開式 -->
-            <section class="section" id="constellations">
+            <!-- 海洋生物區 - 展開式 -->
+            <section class="section" id="creatures">
                 <div class="section-header">
-                    <span class="section-icon">🌠</span>
-                    <h2 class="section-title">經典星座圖鑑</h2>
-                    <p class="section-subtitle">點擊星座查看詳細資訊</p>
+                    <span class="section-icon">🐠</span>
+                    <h2 class="section-title">神奇海洋生物圖鑑</h2>
+                    <p class="section-subtitle">點擊生物查看詳細資訊</p>
                 </div>
-                <div class="constellation-showcase">
-                    <!-- 獵戶座 -->
-                    <div class="constellation-item active">
-                        <div class="constellation-header">
-                            <span class="constellation-icon">⚔️</span>
-                            <div class="constellation-brief">
-                                <h3 class="constellation-name">獵戶座</h3>
-                                <p class="constellation-latin">Orion - The Hunter</p>
+                <div class="creature-showcase">
+                    <!-- 鯨鯊 -->
+                    <div class="creature-item active">
+                        <div class="creature-header">
+                            <span class="creature-icon">🦈</span>
+                            <div class="creature-brief">
+                                <h3 class="creature-name">鯨鯊</h3>
+                                <p class="creature-latin">Rhincodon typus - Whale Shark</p>
                             </div>
-                            <div class="constellation-tags">
-                                <span class="constellation-tag">⭐ 極易辨識</span>
-                                <span class="constellation-tag">🌙 冬季</span>
+                            <div class="creature-tags">
+                                <span class="creature-tag">🏆 最大魚類</span>
+                                <span class="creature-tag">💚 溫和巨人</span>
                             </div>
-                            <span class="constellation-toggle">▼</span>
+                            <span class="creature-toggle">▼</span>
                         </div>
-                        <div class="constellation-detail">
-                            <div class="constellation-detail-inner">
+                        <div class="creature-detail">
+                            <div class="creature-detail-inner">
                                 <div class="detail-text">
-                                    冬季夜空中最顯眼的星座，擁有著名的獵戶座腰帶三星。參宿四和參宿七是其中最亮的兩顆星。獵戶座大星雲（M42）是天文攝影的首選目標，以肉眼即可看見，用望遠鏡觀測更是壯觀無比。
+                                    鯨鯊是目前世界上最大的魚類，體長可達20公尺。儘管體型龐大，鯨鯊卻以浮游生物和小魚為食，性情溫和。牠們獨特的斑點花紋如同指紋般獨一無二，科學家藉此追蹤識別個體。
                                 </div>
                                 <div class="detail-stats">
                                     <div class="detail-stat">
-                                        <span class="detail-stat-icon">🌟</span>
+                                        <span class="detail-stat-icon">📏</span>
                                         <div class="detail-stat-info">
-                                            <span class="detail-stat-label">最亮星</span>
-                                            <span class="detail-stat-value">參宿七 (0.13等)</span>
+                                            <span class="detail-stat-label">最大體長</span>
+                                            <span class="detail-stat-value">18-20 公尺</span>
                                         </div>
                                     </div>
                                     <div class="detail-stat">
-                                        <span class="detail-stat-icon">📸</span>
+                                        <span class="detail-stat-icon">📍</span>
                                         <div class="detail-stat-info">
-                                            <span class="detail-stat-label">攝影目標</span>
-                                            <span class="detail-stat-value">獵戶座大星雲 M42</span>
+                                            <span class="detail-stat-label">分布區域</span>
+                                            <span class="detail-stat-value">熱帶與溫帶海域</span>
                                         </div>
                                     </div>
                                 </div>
@@ -1421,38 +107,38 @@
                         </div>
                     </div>
 
-                    <!-- 大熊座 -->
-                    <div class="constellation-item">
-                        <div class="constellation-header">
-                            <span class="constellation-icon">🐻</span>
-                            <div class="constellation-brief">
-                                <h3 class="constellation-name">大熊座</h3>
-                                <p class="constellation-latin">Ursa Major</p>
+                    <!-- 海龜 -->
+                    <div class="creature-item">
+                        <div class="creature-header">
+                            <span class="creature-icon">🐢</span>
+                            <div class="creature-brief">
+                                <h3 class="creature-name">綠蠵龜</h3>
+                                <p class="creature-latin">Chelonia mydas - Green Sea Turtle</p>
                             </div>
-                            <div class="constellation-tags">
-                                <span class="constellation-tag">⭐ 北斗七星</span>
-                                <span class="constellation-tag">🌙 全年</span>
+                            <div class="creature-tags">
+                                <span class="creature-tag">🌿 草食性</span>
+                                <span class="creature-tag">🛡️ 保育類</span>
                             </div>
-                            <span class="constellation-toggle">▼</span>
+                            <span class="creature-toggle">▼</span>
                         </div>
-                        <div class="constellation-detail">
-                            <div class="constellation-detail-inner">
+                        <div class="creature-detail">
+                            <div class="creature-detail-inner">
                                 <div class="detail-text">
-                                    北半球最著名的星座之一，其中的北斗七星是尋找北極星的重要指引。北斗七星的斗杓指向北極星，自古以來就是航海者和旅行者的導航工具。
+                                    綠蠵龜是大型海龜的一種，名字來自於體內脂肪的顏色而非外表。牠們是極少數成年後以海草和藻類為主食的海龜，對維持海洋生態平衡有重要作用。
                                 </div>
                                 <div class="detail-stats">
                                     <div class="detail-stat">
-                                        <span class="detail-stat-icon">🧭</span>
+                                        <span class="detail-stat-icon">⏱️</span>
                                         <div class="detail-stat-info">
-                                            <span class="detail-stat-label">導航功能</span>
-                                            <span class="detail-stat-value">指向北極星</span>
+                                            <span class="detail-stat-label">壽命</span>
+                                            <span class="detail-stat-value">80-100 年</span>
                                         </div>
                                     </div>
                                     <div class="detail-stat">
-                                        <span class="detail-stat-icon">👁️</span>
+                                        <span class="detail-stat-icon">🏊</span>
                                         <div class="detail-stat-info">
-                                            <span class="detail-stat-label">可見性</span>
-                                            <span class="detail-stat-value">北緯41°以上全年可見</span>
+                                            <span class="detail-stat-label">潛水深度</span>
+                                            <span class="detail-stat-value">可達 200 公尺</span>
                                         </div>
                                     </div>
                                 </div>
@@ -1460,77 +146,77 @@
                         </div>
                     </div>
 
-                    <!-- 天蠍座 -->
-                    <div class="constellation-item">
-                        <div class="constellation-header">
-                            <span class="constellation-icon">🦂</span>
-                            <div class="constellation-brief">
-                                <h3 class="constellation-name">天蠍座</h3>
-                                <p class="constellation-latin">Scorpius</p>
+                    <!-- 水母 -->
+                    <div class="creature-item">
+                        <div class="creature-header">
+                            <span class="creature-icon">🔮</span>
+                            <div class="creature-brief">
+                                <h3 class="creature-name">月亮水母</h3>
+                                <p class="creature-latin">Aurelia aurita - Moon Jellyfish</p>
                             </div>
-                            <div class="constellation-tags">
-                                <span class="constellation-tag">⭐ 銀河中心</span>
-                                <span class="constellation-tag">🌙 夏季</span>
+                            <div class="creature-tags">
+                                <span class="creature-tag">✨ 透明夢幻</span>
+                                <span class="creature-tag">🌙 無腦生物</span>
                             </div>
-                            <span class="constellation-toggle">▼</span>
+                            <span class="creature-toggle">▼</span>
                         </div>
-                        <div class="constellation-detail">
-                            <div class="constellation-detail-inner">
+                        <div class="creature-detail">
+                            <div class="creature-detail-inner">
                                 <div class="detail-text">
-                                    夏季銀河中最壯觀的星座，心宿二（天蠍之心）是一顆紅色超巨星，閃耀著紅寶石般的光芒。天蠍座位於銀河最明亮的區域，是拍攝銀河的絕佳構圖元素。
+                                    月亮水母因其透明圓盤狀傘體而得名，在水中隨波漂流的姿態如夢似幻。雖然沒有大腦、心臟和血液，卻已在地球上生存超過5億年，是最古老的多器官生物之一。
+                                </div>
+                                <div class="detail-stats">
+                                    <div class="detail-stat">
+                                        <span class="detail-stat-icon">💧</span>
+                                        <div class="detail-stat-info">
+                                            <span class="detail-stat-label">身體組成</span>
+                                            <span class="detail-stat-value">95% 水分</span>
+                                        </div>
+                                    </div>
+                                    <div class="detail-stat">
+                                        <span class="detail-stat-icon">⚡</span>
+                                        <div class="detail-stat-info">
+                                            <span class="detail-stat-label">毒性</span>
+                                            <span class="detail-stat-value">輕微刺痛感</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 章魚 -->
+                    <div class="creature-item">
+                        <div class="creature-header">
+                            <span class="creature-icon">🐙</span>
+                            <div class="creature-brief">
+                                <h3 class="creature-name">大章魚</h3>
+                                <p class="creature-latin">Enteroctopus dofleini - Giant Pacific Octopus</p>
+                            </div>
+                            <div class="creature-tags">
+                                <span class="creature-tag">🧠 高智商</span>
+                                <span class="creature-tag">🎨 變色高手</span>
+                            </div>
+                            <span class="creature-toggle">▼</span>
+                        </div>
+                        <div class="creature-detail">
+                            <div class="creature-detail-inner">
+                                <div class="detail-text">
+                                    太平洋巨型章魚是最聰明的無脊椎動物之一，擁有三顆心臟和藍色的血液。牠們能在數秒內改變身體的顏色和紋理以進行偽裝，並能解開容器蓋子和走迷宮。
                                 </div>
                                 <div class="detail-stats">
                                     <div class="detail-stat">
                                         <span class="detail-stat-icon">❤️</span>
                                         <div class="detail-stat-info">
-                                            <span class="detail-stat-label">最亮星</span>
-                                            <span class="detail-stat-value">心宿二（紅超巨星）</span>
+                                            <span class="detail-stat-label">心臟數量</span>
+                                            <span class="detail-stat-value">3 顆心臟</span>
                                         </div>
                                     </div>
                                     <div class="detail-stat">
-                                        <span class="detail-stat-icon">🌌</span>
+                                        <span class="detail-stat-icon">🦑</span>
                                         <div class="detail-stat-info">
-                                            <span class="detail-stat-label">特色</span>
-                                            <span class="detail-stat-value">銀河核心方向</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 仙女座 -->
-                    <div class="constellation-item">
-                        <div class="constellation-header">
-                            <span class="constellation-icon">👸</span>
-                            <div class="constellation-brief">
-                                <h3 class="constellation-name">仙女座</h3>
-                                <p class="constellation-latin">Andromeda</p>
-                            </div>
-                            <div class="constellation-tags">
-                                <span class="constellation-tag">⭐ M31星系</span>
-                                <span class="constellation-tag">🌙 秋季</span>
-                            </div>
-                            <span class="constellation-toggle">▼</span>
-                        </div>
-                        <div class="constellation-detail">
-                            <div class="constellation-detail-inner">
-                                <div class="detail-text">
-                                    秋季代表星座，包含肉眼可見最遠天體——仙女座大星系（M31），距離地球約254萬光年。在無光害的環境下，肉眼可見一團模糊的光斑，是深空攝影的經典目標。
-                                </div>
-                                <div class="detail-stats">
-                                    <div class="detail-stat">
-                                        <span class="detail-stat-icon">🌀</span>
-                                        <div class="detail-stat-info">
-                                            <span class="detail-stat-label">著名天體</span>
-                                            <span class="detail-stat-value">仙女座大星系 M31</span>
-                                        </div>
-                                    </div>
-                                    <div class="detail-stat">
-                                        <span class="detail-stat-icon">📏</span>
-                                        <div class="detail-stat-info">
-                                            <span class="detail-stat-label">距離</span>
-                                            <span class="detail-stat-value">254萬光年</span>
+                                            <span class="detail-stat-label">觸手吸盤</span>
+                                            <span class="detail-stat-value">約 2000 個</span>
                                         </div>
                                     </div>
                                 </div>
@@ -1538,38 +224,38 @@
                         </div>
                     </div>
 
-                    <!-- 天鵝座 -->
-                    <div class="constellation-item">
-                        <div class="constellation-header">
-                            <span class="constellation-icon">🦢</span>
-                            <div class="constellation-brief">
-                                <h3 class="constellation-name">天鵝座</h3>
-                                <p class="constellation-latin">Cygnus</p>
+                    <!-- 小丑魚 -->
+                    <div class="creature-item">
+                        <div class="creature-header">
+                            <span class="creature-icon">🐟</span>
+                            <div class="creature-brief">
+                                <h3 class="creature-name">小丑魚</h3>
+                                <p class="creature-latin">Amphiprioninae - Clownfish</p>
                             </div>
-                            <div class="constellation-tags">
-                                <span class="constellation-tag">⭐ 夏季大三角</span>
-                                <span class="constellation-tag">🌙 夏秋</span>
+                            <div class="creature-tags">
+                                <span class="creature-tag">🤝 共生關係</span>
+                                <span class="creature-tag">🎬 明星物種</span>
                             </div>
-                            <span class="constellation-toggle">▼</span>
+                            <span class="creature-toggle">▼</span>
                         </div>
-                        <div class="constellation-detail">
-                            <div class="constellation-detail-inner">
+                        <div class="creature-detail">
+                            <div class="creature-detail-inner">
                                 <div class="detail-text">
-                                    夏季大三角的一部分，天津四是其最亮的星星。整個星座形狀如同展翅飛翔的天鵝，優雅地橫跨銀河。北美洲星雲就位於天鵝座中。
+                                    小丑魚因電影《海底總動員》而聞名全球，牠們與海葵形成獨特的共生關係。小丑魚身上的黏液可保護自己免受海葵毒刺傷害，同時為海葵帶來食物並驅趕掠食者。
                                 </div>
                                 <div class="detail-stats">
                                     <div class="detail-stat">
-                                        <span class="detail-stat-icon">🌟</span>
+                                        <span class="detail-stat-icon">🌺</span>
                                         <div class="detail-stat-info">
-                                            <span class="detail-stat-label">最亮星</span>
-                                            <span class="detail-stat-value">天津四</span>
+                                            <span class="detail-stat-label">共生夥伴</span>
+                                            <span class="detail-stat-value">海葵</span>
                                         </div>
                                     </div>
                                     <div class="detail-stat">
-                                        <span class="detail-stat-icon">📸</span>
+                                        <span class="detail-stat-icon">🔄</span>
                                         <div class="detail-stat-info">
-                                            <span class="detail-stat-label">攝影目標</span>
-                                            <span class="detail-stat-value">北美洲星雲</span>
+                                            <span class="detail-stat-label">特殊能力</span>
+                                            <span class="detail-stat-value">性別轉換</span>
                                         </div>
                                     </div>
                                 </div>
@@ -1577,38 +263,38 @@
                         </div>
                     </div>
 
-                    <!-- 獅子座 -->
-                    <div class="constellation-item">
-                        <div class="constellation-header">
-                            <span class="constellation-icon">🦁</span>
-                            <div class="constellation-brief">
-                                <h3 class="constellation-name">獅子座</h3>
-                                <p class="constellation-latin">Leo</p>
+                    <!-- 蝠鱝 -->
+                    <div class="creature-item">
+                        <div class="creature-header">
+                            <span class="creature-icon">🦅</span>
+                            <div class="creature-brief">
+                                <h3 class="creature-name">蝠鱝</h3>
+                                <p class="creature-latin">Mobula birostris - Manta Ray</p>
                             </div>
-                            <div class="constellation-tags">
-                                <span class="constellation-tag">⭐ 軒轅十四</span>
-                                <span class="constellation-tag">🌙 春季</span>
+                            <div class="creature-tags">
+                                <span class="creature-tag">🪽 海中飛翔</span>
+                                <span class="creature-tag">🧠 聰明溫柔</span>
                             </div>
-                            <span class="constellation-toggle">▼</span>
+                            <span class="creature-toggle">▼</span>
                         </div>
-                        <div class="constellation-detail">
-                            <div class="constellation-detail-inner">
+                        <div class="creature-detail">
+                            <div class="creature-detail-inner">
                                 <div class="detail-text">
-                                    春季主要星座，軒轅十四是其最亮星，整體形狀像一隻蹲坐的獅子，威風凜凜。獅子座流星雨是每年11月的天文盛事。
+                                    蝠鱝是海洋中最優雅的生物之一，展開雙翼可達7公尺寬，在水中如同飛翔的巨鳥。牠們擁有魚類中最大的腦身比，被認為具有自我意識，是潛水員夢寐以求的邂逅對象。
                                 </div>
                                 <div class="detail-stats">
                                     <div class="detail-stat">
-                                        <span class="detail-stat-icon">👑</span>
+                                        <span class="detail-stat-icon">📐</span>
                                         <div class="detail-stat-info">
-                                            <span class="detail-stat-label">最亮星</span>
-                                            <span class="detail-stat-value">軒轅十四（獅子心）</span>
+                                            <span class="detail-stat-label">翼展寬度</span>
+                                            <span class="detail-stat-value">最大 7 公尺</span>
                                         </div>
                                     </div>
                                     <div class="detail-stat">
-                                        <span class="detail-stat-icon">☄️</span>
+                                        <span class="detail-stat-icon">🍽️</span>
                                         <div class="detail-stat-info">
-                                            <span class="detail-stat-label">流星雨</span>
-                                            <span class="detail-stat-value">獅子座流星雨 (11月)</span>
+                                            <span class="detail-stat-label">食物</span>
+                                            <span class="detail-stat-value">浮游生物</span>
                                         </div>
                                     </div>
                                 </div>
@@ -1618,132 +304,68 @@
                 </div>
             </section>
 
-            <!-- 攝影技巧區 -->
-            <section class="section" id="tips">
+            <!-- 深度探索區 - 圓形深度計 -->
+            <section class="section" id="depth">
                 <div class="section-header">
-                    <span class="section-icon">📸</span>
-                    <h2 class="section-title">星空攝影技巧</h2>
-                    <p class="section-subtitle">從入門到進階，掌握拍攝銀河的關鍵要點</p>
+                    <span class="section-icon">🔬</span>
+                    <h2 class="section-title">深度探索器</h2>
+                    <p class="section-subtitle">點擊深度，探索不同海洋層的奧秘</p>
                 </div>
-                <div class="tips-grid">
-                    <div class="tip-card">
-                        <span class="tip-number">01</span>
-                        <span class="tip-icon">⚙️</span>
-                        <h3 class="tip-title">相機設定</h3>
-                        <p class="tip-content">正確的相機設定是基礎</p>
-                        <ul class="tip-list">
-                            <li>ISO：1600-6400</li>
-                            <li>光圈：f/1.4 - f/2.8</li>
-                            <li>快門：15-30 秒</li>
-                            <li>手動對焦至無限遠</li>
-                        </ul>
-                    </div>
-                    <div class="tip-card">
-                        <span class="tip-number">02</span>
-                        <span class="tip-icon">🌙</span>
-                        <h3 class="tip-title">最佳時機</h3>
-                        <p class="tip-content">選擇適合的時間拍攝</p>
-                        <ul class="tip-list">
-                            <li>新月前後 3-5 天</li>
-                            <li>避開滿月期間</li>
-                            <li>天文薄暮後開始</li>
-                            <li>查詢當地光害指數</li>
-                        </ul>
-                    </div>
-                    <div class="tip-card">
-                        <span class="tip-number">03</span>
-                        <span class="tip-icon">🎯</span>
-                        <h3 class="tip-title">構圖技巧</h3>
-                        <p class="tip-content">好構圖讓照片更有藝術感</p>
-                        <ul class="tip-list">
-                            <li>加入前景增加層次</li>
-                            <li>使用三分法則</li>
-                            <li>銀河與地景結合</li>
-                            <li>嘗試不同角度</li>
-                        </ul>
-                    </div>
-                    <div class="tip-card">
-                        <span class="tip-number">04</span>
-                        <span class="tip-icon">🖼️</span>
-                        <h3 class="tip-title">後期處理</h3>
-                        <p class="tip-content">適當後期讓星空更動人</p>
-                        <ul class="tip-list">
-                            <li>使用 RAW 格式拍攝</li>
-                            <li>調整白平衡色溫</li>
-                            <li>降噪處理很重要</li>
-                            <li>堆疊提升畫質</li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 星座查詢區 - 圓形星盤 -->
-            <section class="section" id="finder">
-                <div class="section-header">
-                    <span class="section-icon">🔍</span>
-                    <h2 class="section-title">星座查詢器</h2>
-                    <p class="section-subtitle">點擊月份，查看當月最佳觀測星座</p>
-                </div>
-                <div class="finder-container">
-                    <!-- 圓形星盤 -->
-                    <div class="star-wheel">
+                <div class="depth-container">
+                    <!-- 圓形深度計 -->
+                    <div class="depth-wheel">
                         <div class="wheel-ring"></div>
                         <div class="wheel-center" id="wheelCenter">
-                            <span class="wheel-center-icon">🌌</span>
-                            <p class="wheel-center-name">點擊月份</p>
-                            <p class="wheel-center-hint">查看最佳觀測星座</p>
+                            <span class="wheel-center-icon">🌊</span>
+                            <p class="wheel-center-name">選擇深度</p>
+                            <p class="wheel-center-hint">探索海洋層</p>
                         </div>
-                        <!-- 12個月份按鈕 -->
-                        <button class="month-btn" data-month="1">1月</button>
-                        <button class="month-btn" data-month="2">2月</button>
-                        <button class="month-btn" data-month="3">3月</button>
-                        <button class="month-btn" data-month="4">4月</button>
-                        <button class="month-btn" data-month="5">5月</button>
-                        <button class="month-btn" data-month="6">6月</button>
-                        <button class="month-btn" data-month="7">7月</button>
-                        <button class="month-btn" data-month="8">8月</button>
-                        <button class="month-btn" data-month="9">9月</button>
-                        <button class="month-btn" data-month="10">10月</button>
-                        <button class="month-btn" data-month="11">11月</button>
-                        <button class="month-btn" data-month="12">12月</button>
+                        <!-- 8個深度按鈕 -->
+                        <button class="depth-btn" data-depth="1">0m</button>
+                        <button class="depth-btn" data-depth="2">20m</button>
+                        <button class="depth-btn" data-depth="3">40m</button>
+                        <button class="depth-btn" data-depth="4">200m</button>
+                        <button class="depth-btn" data-depth="5">1000m</button>
+                        <button class="depth-btn" data-depth="6">4000m</button>
+                        <button class="depth-btn" data-depth="7">6000m</button>
+                        <button class="depth-btn" data-depth="8">11000m</button>
                     </div>
                     <!-- 結果卡片 -->
-                    <div class="finder-result-card" id="finderResult">
-                        <p class="result-desc">選擇上方星盤的月份，查看該月最適合觀測的星座及其特點</p>
+                    <div class="depth-result-card" id="depthResult">
+                        <p class="result-desc">選擇上方深度計的深度，探索該海洋層的生物與特點</p>
                     </div>
                 </div>
             </section>
 
-            <!-- 觀星地點 -->
+            <!-- 潛水勝地 -->
             <section class="section" id="locations">
                 <div class="section-header">
                     <span class="section-icon">📍</span>
-                    <h2 class="section-title">台灣觀星勝地</h2>
-                    <p class="section-subtitle">精選低光害觀星點，尋找最美的星空</p>
+                    <h2 class="section-title">世界潛水勝地</h2>
+                    <p class="section-subtitle">精選全球最夢幻的水下天堂</p>
                 </div>
                 <div class="locations-container">
                     <div class="location-row">
                         <div class="location-image-box">
-                            <span>🏔️</span>
-                            <span class="location-badge">⭐ 首選推薦</span>
+                            <img src="media/Maldives.jpg" alt="馬爾地夫">
                         </div>
                         <div class="location-content-box">
-                            <h3 class="location-name">合歡山暗空公園</h3>
-                            <p class="location-region">📍 南投縣仁愛鄉</p>
-                            <p class="location-desc">台灣首座國際認證暗空公園，海拔3275公尺，是拍攝銀河的絕佳地點。夏季銀河核心清晰可見，冬季可拍攝獵戶座等冬季星座。</p>
+                            <h3 class="location-name">馬爾地夫</h3>
+                            <p class="location-region">📍 印度洋群島</p>
+                            <p class="location-desc">由1200多個珊瑚島嶼組成的天堂，擁有世界上最清澈的海水。在這裡你可以與蝠鱝共游、穿梭於色彩繽紛的珊瑚礁之間，體驗夜潛時螢光珊瑚的夢幻景象。</p>
                             <div class="location-stats">
                                 <div class="location-stat">
-                                    <span class="location-stat-icon">🌡️</span>
+                                    <span class="location-stat-icon">👁️</span>
                                     <div class="location-stat-info">
-                                        <span class="location-stat-label">海拔</span>
-                                        <span class="location-stat-value">3,275m</span>
+                                        <span class="location-stat-label">能見度</span>
+                                        <span class="location-stat-value">30-50m</span>
                                     </div>
                                 </div>
                                 <div class="location-stat">
-                                    <span class="location-stat-icon">💡</span>
+                                    <span class="location-stat-icon">🌡️</span>
                                     <div class="location-stat-info">
-                                        <span class="location-stat-label">光害</span>
-                                        <span class="location-stat-value">極低</span>
+                                        <span class="location-stat-label">水溫</span>
+                                        <span class="location-stat-value">27-30°C</span>
                                     </div>
                                 </div>
                             </div>
@@ -1752,25 +374,25 @@
 
                     <div class="location-row">
                         <div class="location-image-box">
-                            <span>🌊</span>
+                            <img src="media/Great Barrier Reef.jpg" alt="大堡礁">
                         </div>
                         <div class="location-content-box">
-                            <h3 class="location-name">蘭嶼</h3>
-                            <p class="location-region">📍 台東縣蘭嶼鄉</p>
-                            <p class="location-desc">離島零光害環境，搭配獨特的達悟族拼板舟地景，夏季銀河清晰可見。是台灣少數能看到完整南方天空的地點。</p>
+                            <h3 class="location-name">大堡礁</h3>
+                            <p class="location-region">📍 澳洲昆士蘭</p>
+                            <p class="location-desc">世界最大的珊瑚礁系統，綿延2300公里，是唯一從太空可見的生物結構。擁有超過1500種魚類和400種珊瑚，是潛水員此生必訪的聖地。</p>
                             <div class="location-stats">
                                 <div class="location-stat">
-                                    <span class="location-stat-icon">🚢</span>
+                                    <span class="location-stat-icon">📏</span>
                                     <div class="location-stat-info">
-                                        <span class="location-stat-label">交通</span>
-                                        <span class="location-stat-value">船/飛機</span>
+                                        <span class="location-stat-label">長度</span>
+                                        <span class="location-stat-value">2,300km</span>
                                     </div>
                                 </div>
                                 <div class="location-stat">
-                                    <span class="location-stat-icon">💡</span>
+                                    <span class="location-stat-icon">🐠</span>
                                     <div class="location-stat-info">
-                                        <span class="location-stat-label">光害</span>
-                                        <span class="location-stat-value">極低</span>
+                                        <span class="location-stat-label">魚類種類</span>
+                                        <span class="location-stat-value">1,500+種</span>
                                     </div>
                                 </div>
                             </div>
@@ -1779,25 +401,25 @@
 
                     <div class="location-row">
                         <div class="location-image-box">
-                            <span>🌄</span>
+                            <img src="media/Palau.jpg" alt="帛琉">
                         </div>
                         <div class="location-content-box">
-                            <h3 class="location-name">阿里山</h3>
-                            <p class="location-region">📍 嘉義縣阿里山鄉</p>
-                            <p class="location-desc">知名觀日出地點同時也是絕佳星空觀測點。雲海與星空交織，搭配神木群與小火車鐵道，創造獨特的前景元素。</p>
+                            <h3 class="location-name">帛琉</h3>
+                            <p class="location-region">📍 西太平洋密克羅尼西亞</p>
+                            <p class="location-desc">被譽為「潛水者的麥加」，藍角是全球知名的放流潛點。水下能見度極高，鯊魚、蝠鱝、海龜隨處可見，還有獨特的水母湖可以與無毒水母共游。</p>
                             <div class="location-stats">
                                 <div class="location-stat">
-                                    <span class="location-stat-icon">🌡️</span>
+                                    <span class="location-stat-icon">🦈</span>
                                     <div class="location-stat-info">
-                                        <span class="location-stat-label">海拔</span>
-                                        <span class="location-stat-value">2,216m</span>
+                                        <span class="location-stat-label">特色</span>
+                                        <span class="location-stat-value">鯊魚城</span>
                                     </div>
                                 </div>
                                 <div class="location-stat">
-                                    <span class="location-stat-icon">💡</span>
+                                    <span class="location-stat-icon">🔮</span>
                                     <div class="location-stat-info">
-                                        <span class="location-stat-label">光害</span>
-                                        <span class="location-stat-value">低</span>
+                                        <span class="location-stat-label">獨特景點</span>
+                                        <span class="location-stat-value">水母湖</span>
                                     </div>
                                 </div>
                             </div>
@@ -1806,70 +428,28 @@
 
                     <div class="location-row">
                         <div class="location-image-box">
-                            <span>🏜️</span>
+                            <img src="media/Komodo Island.jpg" alt="科莫多島">
                         </div>
                         <div class="location-content-box">
-                            <h3 class="location-name">墾丁龍磐公園</h3>
-                            <p class="location-region">📍 屏東縣恆春鎮</p>
-                            <p class="location-desc">台灣最南端觀星點，可拍攝南十字星，草原與星空相映。開闊的視野讓您能看到更完整的天空。</p>
+                            <h3 class="location-name">科莫多島</h3>
+                            <p class="location-region">📍 印尼</p>
+                            <p class="location-desc">以科莫多龍聞名，水下世界同樣精彩。強勁的海流帶來豐富營養，吸引蝠鱝群聚。粉紅沙灘與藍色海水形成絕美對比，是攝影愛好者的天堂。</p>
                             <div class="location-stats">
                                 <div class="location-stat">
-                                    <span class="location-stat-icon">🌡️</span>
+                                    <span class="location-stat-icon">🌊</span>
                                     <div class="location-stat-info">
-                                        <span class="location-stat-label">海拔</span>
-                                        <span class="location-stat-value">200m</span>
+                                        <span class="location-stat-label">特色</span>
+                                        <span class="location-stat-value">強流放流</span>
                                     </div>
                                 </div>
                                 <div class="location-stat">
-                                    <span class="location-stat-icon">💡</span>
+                                    <span class="location-stat-icon">🦅</span>
                                     <div class="location-stat-info">
-                                        <span class="location-stat-label">光害</span>
-                                        <span class="location-stat-value">低</span>
+                                        <span class="location-stat-label">必看</span>
+                                        <span class="location-stat-value">蝠鱝群</span>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 季節指南 -->
-            <section class="section" id="seasons">
-                <div class="section-header">
-                    <span class="section-icon">🗓️</span>
-                    <h2 class="section-title">銀河拍攝季節指南</h2>
-                    <p class="section-subtitle">一年四季，不同的星空等你探索</p>
-                </div>
-                <div class="seasons-timeline">
-                    <div class="seasons-line"></div>
-                    <div class="seasons-grid">
-                        <div class="season-card">
-                            <span class="season-emoji">🌸</span>
-                            <h3 class="season-name">春季</h3>
-                            <p class="season-period">3月 - 5月</p>
-                            <p class="season-highlight">銀河升起</p>
-                            <p class="season-desc">銀河從東南方升起，獅子座、處女座清晰可見</p>
-                        </div>
-                        <div class="season-card">
-                            <span class="season-emoji">☀️</span>
-                            <h3 class="season-name">夏季</h3>
-                            <p class="season-period">6月 - 8月</p>
-                            <p class="season-highlight">黃金時期</p>
-                            <p class="season-desc">銀河核心高掛夜空，天蠍座、夏季大三角盡收眼底</p>
-                        </div>
-                        <div class="season-card">
-                            <span class="season-emoji">🍂</span>
-                            <h3 class="season-name">秋季</h3>
-                            <p class="season-period">9月 - 11月</p>
-                            <p class="season-highlight">仙女登場</p>
-                            <p class="season-desc">仙女座大星系成為主角，適合深空天體攝影</p>
-                        </div>
-                        <div class="season-card">
-                            <span class="season-emoji">❄️</span>
-                            <h3 class="season-name">冬季</h3>
-                            <p class="season-period">12月 - 2月</p>
-                            <p class="season-highlight">獵戶閃耀</p>
-                            <p class="season-desc">獵戶座成為主角，冬季大三角清晰明亮</p>
                         </div>
                     </div>
                 </div>
@@ -1880,32 +460,23 @@
                 <div class="footer-content">
                     <div class="footer-brand">
                         <div class="footer-logo">
-                            <span class="footer-logo-icon">✨</span>
-                            <span class="footer-logo-text">STARGAZER</span>
+                            <span class="footer-logo-icon">🌊</span>
+                            <span class="footer-logo-text">DEEP EXPLORER</span>
                         </div>
-                        <p class="footer-desc">探索宇宙的奧秘，記錄星空的美麗。讓我們一起仰望星空，感受宇宙的浩瀚與永恆。</p>
-                    </div>
-                    <div class="footer-section">
-                        <h4>快速連結</h4>
-                        <ul class="footer-links">
-                            <li><a href="#constellations">⭐ 星座圖鑑</a></li>
-                            <li><a href="#tips">📸 攝影技巧</a></li>
-                            <li><a href="#locations">📍 觀星地點</a></li>
-                            <li><a href="#seasons">🗓️ 季節指南</a></li>
-                        </ul>
+                        <p class="footer-desc">探索海洋的奧秘，感受深藍的召喚。讓我們一起潛入這片占地球71%的藍色世界，發現生命的另一種可能。</p>
                     </div>
                     <div class="footer-section">
                         <h4>相關資源</h4>
                         <ul class="footer-links">
-                            <li><a href="#">🌙 月相查詢</a></li>
-                            <li><a href="#">☁️ 天氣預報</a></li>
-                            <li><a href="#">💡 光害地圖</a></li>
-                            <li><a href="#">🌠 流星雨日曆</a></li>
+                            <li><a href="#">🌡️ 水溫查詢</a></li>
+                            <li><a href="#">🌊 潮汐預報</a></li>
+                            <li><a href="#">📜 潛水證照</a></li>
+                            <li><a href="#">⚠️ 安全須知</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="footer-bottom">
-                    <p>© 2024 Stargazer | Made with 💫 by <span class="highlight">N1116445 呂宜蓁</span></p>
+                    <p>© 2024 Deep Explorer | Made with 🐋 by <span class="highlight">N1116445 呂宜蓁</span></p>
                 </div>
             </footer>
 
@@ -1914,226 +485,7 @@
         <!-- 回到頂部按鈕 -->
         <button class="scroll-top" id="scrollTop">↑</button>
 
-        <script>
-            // ===== 載入動畫 =====
-            document.addEventListener('DOMContentLoaded', function() {
-                setTimeout(() => {
-                    document.getElementById('loadingScreen').classList.add('hidden');
-                }, 2000);
-            });
-
-            // ===== 生成背景星星 =====
-            const starfield = document.getElementById('starfield');
-            for (let i = 0; i < 150; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = Math.random() * 100 + '%';
-                star.style.width = Math.random() * 3 + 1 + 'px';
-                star.style.height = star.style.width;
-                star.style.animationDelay = Math.random() * 3 + 's';
-                star.style.animationDuration = (Math.random() * 3 + 2) + 's';
-                starfield.appendChild(star);
-            }
-
-            // 生成流星
-            for (let i = 0; i < 3; i++) {
-                const shootingStar = document.createElement('div');
-                shootingStar.className = 'shooting-star';
-                shootingStar.style.left = Math.random() * 100 + '%';
-                shootingStar.style.top = Math.random() * 50 + '%';
-                shootingStar.style.animationDelay = (Math.random() * 15 + i * 8) + 's';
-                starfield.appendChild(shootingStar);
-            }
-
-            // ===== 導航欄滾動效果 =====
-            const navbar = document.getElementById('navbar');
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 100) {
-                    navbar.classList.add('scrolled');
-                } else {
-                    navbar.classList.remove('scrolled');
-                }
-            });
-
-            // ===== 側邊導航功能 =====
-            const sideNavItems = document.querySelectorAll('.side-nav-item');
-            const sections = document.querySelectorAll('section[id]');
-
-            function updateSideNav() {
-                const scrollPos = window.scrollY + window.innerHeight / 3;
-                
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop;
-                    const sectionHeight = section.offsetHeight;
-                    const sectionId = section.getAttribute('id');
-                    
-                    if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
-                        sideNavItems.forEach(item => {
-                            item.classList.remove('active');
-                            if (item.dataset.section === sectionId) {
-                                item.classList.add('active');
-                            }
-                        });
-                    }
-                });
-            }
-
-            window.addEventListener('scroll', updateSideNav);
-
-            sideNavItems.forEach(item => {
-                item.addEventListener('click', () => {
-                    const sectionId = item.dataset.section;
-                    const section = document.getElementById(sectionId);
-                    if (section) {
-                        section.scrollIntoView({ behavior: 'smooth' });
-                    }
-                });
-            });
-
-            // ===== 數字動畫 =====
-            function animateNumbers() {
-                const numbers = document.querySelectorAll('.hero-stat-number');
-                numbers.forEach(num => {
-                    const target = parseInt(num.dataset.count);
-                    const duration = 2000;
-                    const step = target / (duration / 16);
-                    let current = 0;
-                    
-                    const timer = setInterval(() => {
-                        current += step;
-                        if (current >= target) {
-                            num.textContent = target;
-                            clearInterval(timer);
-                        } else {
-                            num.textContent = Math.floor(current);
-                        }
-                    }, 16);
-                });
-            }
-
-            setTimeout(animateNumbers, 2500);
-
-            // ===== 星座圖鑑展開功能 =====
-            const constellationItems = document.querySelectorAll('.constellation-item');
-            
-            constellationItems.forEach(item => {
-                const header = item.querySelector('.constellation-header');
-                header.addEventListener('click', () => {
-                    // 關閉其他展開的項目
-                    constellationItems.forEach(other => {
-                        if (other !== item) {
-                            other.classList.remove('active');
-                        }
-                    });
-                    // 切換當前項目
-                    item.classList.toggle('active');
-                });
-            });
-
-            // ===== 星座查詢功能 =====
-            const monthData = {
-                1: { icon: '⚔️', name: '獵戶座', desc: '一月的夜空中，獵戶座高掛天際，腰帶三星閃耀，獵戶座大星雲清晰可見，是冬季星空攝影的最佳目標。' },
-                2: { icon: '🐶', name: '大犬座', desc: '天狼星作為全天最亮恆星，在二月份的夜空中格外閃耀。大犬座與獵戶座相伴，構成壯觀的冬季星空。' },
-                3: { icon: '🦁', name: '獅子座', desc: '春季來臨，獅子座逐漸升至天頂。軒轅十四明亮耀眼，整個星座如同蹲坐的獅子，威風凜凜。' },
-                4: { icon: '👩', name: '處女座', desc: '四月的處女座位於天空最佳位置，角宿一閃耀奪目。處女座星系團是深空攝影愛好者的寶藏。' },
-                5: { icon: '🐻', name: '大熊座', desc: '北斗七星在五月的夜空中位置最高，是尋找北極星的最佳時機。大熊座整體清晰可見。' },
-                6: { icon: '🦂', name: '天蠍座', desc: '夏季銀河升起，天蠍座心宿二如紅寶石般閃耀。整條銀河從天蠍座延伸，是拍攝銀河核心的開始。' },
-                7: { icon: '🌌', name: '人馬座', desc: '銀河核心位於人馬座方向，七月是拍攝銀河的黃金時期。璀璨的銀河拱橋橫跨夜空，令人嘆為觀止。' },
-                8: { icon: '🦢', name: '天鵝座', desc: '夏季大三角高懸，天鵝座優雅地展翅於銀河之中。天津四是夏夜最美的星星之一。' },
-                9: { icon: '👸', name: '仙女座', desc: '仙女座大星系開始成為夜空焦點，這是肉眼可見最遠的天體。秋季是拍攝M31的最佳時機。' },
-                10: { icon: '🐴', name: '飛馬座', desc: '飛馬座大四邊形清晰可辨，是秋季星空的標誌。搭配仙女座，構成優美的秋夜星空。' },
-                11: { icon: '🐟', name: '雙魚座', desc: '雙魚座雖然較暗，但十一月是觀測的好時機。這個黃道星座承載著許多神話故事。' },
-                12: { icon: '🐂', name: '金牛座', desc: '昴宿星團如珠寶般閃耀，畢宿五橙紅明亮。金牛座是十二月夜空的主角，適合廣角星野攝影。' }
-            };
-
-            const monthBtns = document.querySelectorAll('.month-btn');
-            const wheelCenter = document.getElementById('wheelCenter');
-            const finderResult = document.getElementById('finderResult');
-
-            monthBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    monthBtns.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-
-                    const month = btn.dataset.month;
-                    const data = monthData[month];
-
-                    // 更新中心圓
-                    wheelCenter.innerHTML = `
-                        <span class="wheel-center-icon">${data.icon}</span>
-                        <p class="wheel-center-name">${data.name}</p>
-                        <p class="wheel-center-hint">${month}月最佳</p>
-                    `;
-
-                    // 更新結果卡片
-                    finderResult.innerHTML = `
-                        <p class="result-desc">${data.desc}</p>
-                    `;
-
-                    // 動畫 - 中心圓使用 pulseIn 避免位置跳動
-                    wheelCenter.style.animation = 'none';
-                    finderResult.style.animation = 'none';
-                    setTimeout(() => {
-                        wheelCenter.style.animation = 'pulseIn 0.4s ease forwards';
-                        finderResult.style.animation = 'fadeInUp 0.4s ease';
-                    }, 10);
-                });
-            });
-
-            // ===== 回到頂部按鈕 =====
-            const scrollTopBtn = document.getElementById('scrollTop');
-
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 500) {
-                    scrollTopBtn.classList.add('visible');
-                } else {
-                    scrollTopBtn.classList.remove('visible');
-                }
-            });
-
-            scrollTopBtn.addEventListener('click', () => {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            });
-
-            // ===== 平滑滾動 =====
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                });
-            });
-
-            // ===== 卡片動畫 =====
-            const observerOptions = { threshold: 0.2 };
-            const cardObserver = new IntersectionObserver((entries) => {
-                entries.forEach((entry, index) => {
-                    if (entry.isIntersecting) {
-                        setTimeout(() => {
-                            entry.target.style.opacity = '1';
-                            entry.target.style.transform = 'translateY(0)';
-                        }, index * 80);
-                    }
-                });
-            }, observerOptions);
-
-            document.querySelectorAll('.tip-card, .season-card').forEach(card => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                card.style.transition = 'all 0.5s ease';
-                cardObserver.observe(card);
-            });
-
-            console.log('✨ 星空觀測指南已載入完成！');
-        </script>
+        <!-- 外部腳本 -->
+        <script src="script.js"></script>
     </body>
 </html>

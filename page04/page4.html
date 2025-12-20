@@ -1,554 +1,369 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>太陽系介紹 - 宇宙星辰之旅</title> 
-        <style>
-            /* 整體背景黑色 */
-            body {
-                margin: 0;
-                padding: 0;
-                background-color: #000;
-                color: #fff;
-                font-family: "Microsoft JhengHei", sans-serif;
-                line-height: 1.6;
-            }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>二技學分計算器</title>
 
-            /* 內容最大寬度限制與置中 */
-            .container {
-                max-width: 1200px; /* 限制內容最大寬度 */
-                margin: 0 auto;
-                padding: 0 20px;
-            }
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
 
-            /* Header 區塊 */
-            .header {
-                background-image: url("media/start.jpg"); /* 假設此路徑有效 */
-                background-size: cover; /* 讓圖片覆蓋整個區域，避免拉伸變形 */
-                background-repeat: no-repeat;
-                background-position: center;
-                height: 400px;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                text-align: center;
-                position: relative;
-                /* 覆蓋層讓文字更清晰 */
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); /* 底部陰影 */
-            }
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-            /* 遮罩層，讓背景圖變暗，文字更突出 */
-            .header::after {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: rgba(0, 0, 0, 0.4); /* 輕微黑色透明度 */
-            }
-
-            .header-left {
-                z-index: 10; /* 確保文字在遮罩層之上 */
-            }
-
-            .header-left h1 {
-                font-size: 64px;
-                margin: 0;
-                letter-spacing: 10px; /* 加寬間距 */
-                text-shadow: 0 0 15px rgba(255, 206, 84, 0.8); /* 發光效果 */
-                color: #ffce54; /* 太陽金色 */
-            }
-
-            .header-left p {
-                margin-top: 15px;
-                line-height: 1.8;
-                font-size: 24px;
-                color: #fff;
-                letter-spacing: 5px;
-                font-weight: 300;
-            }
-
-            /* footer 區塊 */
-            footer {
-                background-color: #0d0d0d; /* 顏色更深 */
-                color: #fff;
-                text-align: center;
-                padding: 20px 0;
-                font-size: 14px;
-                opacity: 0.8;
-                border-top: 1px solid #1a1a1a;
-            }
-
-            /* 固定選單列 */
-            .fixed-menu {
-                position: sticky;
-                top: 0;
-                background-color: #111; /* 調整顏色 */
-                padding: 15px 0;
-                text-align: center;
-                z-index: 1000; /* 確保選單在最上層 */
-                border-bottom: 2px solid #ffce54; /* 底部強調色 */
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
-            }
-
-            .fixed-menu a {
-                color: #fff;
-                text-decoration: none;
-                margin: 0 30px;
-                font-size: 18px;
-                transition: color 0.3s, text-shadow 0.3s; /* 加入過渡效果 */
-            }
-
-            .fixed-menu a:hover,
-            .fixed-menu a.active { /* 增加一個 active 狀態，用於 JQuery 顯示當前位置 */
-                color: #ffce54;
-                text-shadow: 0 0 8px rgba(255, 206, 84, 0.5);
-            }
-
-            /* 各區塊的通用樣式 */
-            .section {
-                padding: 100px 0; /* 上下間距加大 */
-                overflow: hidden; 
-            }
-
-            /* 區塊標題樣式 */
-            .section h2 {
-                font-size: 36px;
-                margin-bottom: 50px;
-                text-align: center;
-                color: #ffce54;
-                border-bottom: 3px solid rgba(255, 206, 84, 0.3);
-                display: inline-block;
-                padding-bottom: 10px;
-                letter-spacing: 3px;
-            }
-
-            /* 八大行星區塊背景色 */
-            .section-planets {
-                background-color: #101010;
-                text-align: center;
-            }
-            .section-planets > .container > p {
-                font-size: 18px;
-                color: #ccc;
-                max-width: 800px;
-                margin: 0 auto 60px auto;
-            }
-
-            /* 冷知識區塊背景色 */
-            .section-facts {
-                background-color: #080808;
-            }
-
-            /* === 八大行星卡片區塊 === */
-            .planet-banner {
-                width: 90%;
-                display: block;
-                margin: 40px auto;
-                max-width: 900px;
-                filter: drop-shadow(0 0 40px rgba(255, 255, 255, 0.2));
-            }
-
-            .planet-card {
-                display: flex;
-                align-items: center;
-                background-color: #1a1a1a; /* 卡片背景更深 */
-                border-left: 5px solid #ffce54; /* 側邊條用主色 */
-                padding: 30px;
-                margin: 0 auto 30px auto;
-                border-radius: 12px; /* 圓角加大 */
-                max-width: 900px;
-                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); /* 陰影 */
-                transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-            }
-
-            .planet-card:hover {
-                transform: translateY(-8px); /* 懸停上移 */
-                box-shadow: 0 15px 30px rgba(255, 206, 84, 0.1); /* 懸停陰影強調 */
-            }
-
-            /* 左側文字 */
-            .planet-text {
-                flex: 1;
-                color: #fff;
-                text-align: left;
-                padding-right: 30px;
-            }
-
-            .planet-text h3 {
-                margin: 0 0 15px 0;
-                font-size: 26px;
-                font-weight: bold;
-                color: #b0c4d4; /* 行星名稱用淡藍色 */
-            }
-
-            .planet-text p {
-                margin-top: 8px;
-                color: #aaa;
-                font-style: italic;
-            }
-            
-            /* 行星特色列表 */
-            .planet-text ul {
-                list-style: none; /* 移除預設點 */
-                padding: 0;
-                margin-top: 15px;
-            }
-
-            .planet-text ul li {
-                padding: 5px 0;
-                border-bottom: 1px dashed #333;
-                font-size: 16px;
-                color: #ddd;
-            }
-
-            .planet-text ul li::before {
-                content: "★ "; /* 自定義列表符號 */
-                color: #ffce54;
-                font-weight: bold;
-                margin-right: 5px;
-            }
-
-
-            /* 右側圖片 */
-            .planet-img {
-                width: 160px; /* 圖片尺寸加大 */
-                height: 160px;
-                min-width: 160px;
-                margin-left: 25px;
-                border-radius: 50%;
-                overflow: hidden;
-                background-color: #000;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                box-shadow: 0 0 20px rgba(176, 196, 212, 0.4); /* 圖片光暈效果 */
-            }
-
-            .planet-img img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover; /* 讓圖片填滿圓形區域 */
-            }
-
-            /* === 冷知識區塊 === */
-            .facts-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* 自動調整欄位數 */
-                gap: 25px;
-                margin-top: 40px;
-            }
-
-            .fact-card {
-                background-color: #1a1a1a;
-                padding: 30px;
-                border-radius: 12px;
-                font-size: 16px;
-                line-height: 1.8;
-                color: #fff;
-                text-align: left; /* 改為靠左對齊 */
-                border: 1px solid #333;
-                transition: 0.3s;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            }
-
-            /* hover 效果 */
-            .fact-card:hover {
-                background-color: #2a2a2a;
-                transform: translateY(-8px) scale(1.02);
-                border-color: #ffce54;
-            }
-
-            /* 響應式調整 */
-            @media (max-width: 768px) {
-                .header-left h1 {
-                    font-size: 48px;
-                }
-                .fixed-menu a {
-                    margin: 0 10px;
-                    font-size: 16px;
-                }
-                .planet-card {
-                    flex-direction: column; /* 小螢幕下圖片和文字垂直排列 */
-                    text-align: center;
-                }
-                .planet-text {
-                    padding-right: 0;
-                }
-                .planet-img {
-                    margin: 25px 0 0 0;
-                }
-                .planet-text ul {
-                    text-align: left;
-                }
-            }
-
-        </style>
-        
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        
-        <script>
-            $(document).ready(function() {
-                
-                // 1. 平滑捲動效果 (Smooth Scroll)
-                $('a[href^="#"]').on('click', function(e) {
-                    // 排除非錨點連結 (如 #)
-                    if (this.hash !== "") {
-                        e.preventDefault();
-                        var hash = this.hash;
-
-                        $('html, body').animate({
-                            // 捲動到目標位置，並預留固定選單的高度
-                            scrollTop: $(hash).offset().top - 70 
-                        }, 800); // 800ms 平滑捲動
-                    }
-                });
-
-                // 2. 固定選單 Active 狀態 (Scroll Spy)
-                var sections = $('section');
-                var nav = $('.fixed-menu');
-                var nav_height = nav.outerHeight();
-                var $window = $(window);
-                
-                $window.on('scroll', function () {
-                    var cur_pos = $window.scrollTop();
-                    
-                    sections.each(function() {
-                        var top = $(this).offset().top - nav_height - 10, // 額外多扣 10px 作為緩衝
-                            bottom = top + $(this).outerHeight();
-                        
-                        if (cur_pos >= top && cur_pos <= bottom) {
-                            nav.find('a').removeClass('active');
-                            nav.find('a[href="#'+$(this).attr('id')+'"]').addClass('active');
-                        }
-                    });
-                });
-
-                // 頁面載入時先執行一次，確保選單狀態正確
-                $window.trigger('scroll'); 
-            });
-        </script>
-
-    </head>
+    <!-- JS -->
+    <script src="script.js" defer></script>
+</head>
     <body>
 
-        <header id="top" class="header">
-            <div class="header-left">
-                <h1>太陽系</h1>
-                <p>solar system</p>
-            </div>
-        </header>
+        <header>北商 進二技-資訊管理系 課程與學分計算</header>
 
-        <nav class="fixed-menu">
-            <a href="#top" class="active">Top</a>
-            <a href="#planets">八大行星</a>
-            <a href="#facts">冷知識</a>
-        </nav>
+        <div class="container">
 
-        <section id="planets" class="section section-planets">
-            <div class="container">
-                <p>在無垠的宇宙之中，有一個由光與引力編織而成的舞台——太陽系。<br>
-                    八顆行星沿著軌道運行，圍繞著炙熱的太陽，演奏著永不停歇的星際樂章。<br>
-                    從此刻開始，踏上你的太空之旅吧。</p>
-                <div class="planet-banner-mask">
-                    
-
-[Image of the eight planets orbiting the sun in the Solar System]
-
-                    <img src="media/R-Photoroom.png" class="planet-banner" alt="太陽系八大行星示意圖">
-                </div>
-                <p>太陽系是太陽及其周圍被引力束縛的天體（包括8顆行星、衛星、矮行星、小行星、彗星等）組成的系統，約46億年前由分子雲塌縮形成，分為內太陽系（水金地火）和外太陽系（木土天海），主要包含四大類天體：類地行星（岩石）和類木行星（氣態/冰巨星），以及小行星帶與柯伊伯帶等區域，其中太陽質量佔總質量$99.86\%$。 </p>
-                
-                <h2>八大行星介紹</h2>
-                
-                <div class="planet-card">
-                    <div class="planet-text">
-                        <h3>水星 Mercury</h3>
-                        <p>太陽系中最小、離太陽最近的行星。表面佈滿隕石坑，白天酷熱、夜晚寒冷。</p>
-                        <ul>
-                            <li>平均半徑：$2,439.7 \text{ km}$</li>
-                            <li>質量：$0.055$ 個地球</li>
-                            <li>位置：離太陽最近</li>
-                            <li>特色：沒有大氣層、日夜溫差超大（從 $430^\circ\text{C}$ 到 $-180^\circ\text{C}$）</li>
-                            <li>表面：類似月球，有大量隕石坑</li>
-                            <li>特點：公轉最快，只需 $88$ 天繞太陽一圈</li>
-                        </ul>
+            <section class="semester-block">
+                <h2>📘 課程目標與評分說明</h2>
+                <div class="course-list">
+                    <div class="course">
+                        <div class="type">第一學期：基礎必修</div>
+                        <h3>國文</h3>
+                        <p>使學生認識文學與語言在歷史與生活之重要性，進而提升學生語文能力。</p>
+                        <p>學分：2</p>
                     </div>
-                    <div class="planet-img">
-                        <img src="media/mercury.png" alt="水星">
+                    <div class="course">
+                        <div class="type">第一學期：基礎必修</div>
+                        <h3>英文</h3>
+                        <p>本課程旨在幫助學生提升商務溝通能力，這在當今職場中至關重要。...</p>
+                        <p>學分：2</p>
                     </div>
-                </div>
-                
-                <div class="planet-card">
-                    <div class="planet-text">
-                        <h3>金星 Venus</h3>
-                        <p>表面被濃厚的酸性雲層覆蓋，是太陽系最熱的行星，被稱為地球的姊妹星。</p>
-                        <ul>
-                            <li>平均半徑：$6,051.8 \text{ km}$</li>
-                            <li>質量：$0.815$ 個地球</li>
-                            <li>位置：第二近太陽</li>
-                            <li>特色：全行星最熱，大氣層厚、充滿二氧化碳</li>
-                            <li>表面：溫度高達 $460^\circ\text{C}$，火山多</li>
-                            <li>特點：自轉方向與大多數行星相反</li>
-                        </ul>
+                    <div class="course">
+                        <div class="type">第一學期：專業必修</div>
+                        <h3>程式語言</h3>
+                        <p>本課程的目的是培養使用 Python 的能力。</p>
+                        <p>學分：3</p>
                     </div>
-                    <div class="planet-img">
-                        <img src="media/vens.jpg" alt="金星">
+                    <div class="course">
+                        <div class="type">第一學期：專業必修</div>
+                        <h3>資料倫理與法律</h3>
+                        <p> 本課程旨在培養學生理解資訊科技發展所帶來的倫理與法律挑戰，並具備分析、評估與解決相關問題的能力。</p>
+                        <p>學分：2</p>
                     </div>
-                </div>
-                
-                <div class="planet-card">
-                    <div class="planet-text">
-                        <h3>地球 Earth</h3>
-                        <p>太陽系中唯一已知存在生命的行星，擁有海洋、大氣與適合生物生存的溫度。</p>
-                        <ul>
-                            <li>平均半徑：$6,371 \text{ km}$</li>
-                            <li>位置：太陽第三顆</li>
-                            <li>特色：唯一已知有生命的星球</li>
-                            <li>表面：$70\%$ 海洋、適宜溫度及大氣</li>
-                            <li>特點：有液態水、保護性的磁場與大氣層</li>
-                        </ul>
+                    <div class="course">
+                        <div class="type">第一學期：專業必修</div>
+                        <h3>管理資訊系統</h3>
+                        <p>建立資訊系統功能與架構的基本認識與概念，並融合資訊科技管理的知識與技能，於未來迅速掌握多元系統功能，並進一步增強個人競爭力。</p>
+                        <p>學分：3</p>
                     </div>
-                    <div class="planet-img">
-                        <img src="media/earth.jpg" alt="地球">
+                    <div class="course">
+                        <div class="type">第一學期：專業選修</div>
+                        <h3>統計學</h3>
+                        <p> 針對商學院學生，提供統計學及其應用的觀念介紹。學成後，學生面對各種複雜現象，可運用蒐集、整理、分析、解釋資料等程序，將其轉化為清楚的資訊，並進而推論、預測，以為決策的依據。</p>
+                        <p>學分：3</p>
                     </div>
-                </div>
-
-                <div class="planet-card">
-                    <div class="planet-text">
-                        <h3>火星 Mars</h3>
-                        <p>被稱為紅色星球，地表遍布氧化鐵，過去可能曾有液態水，是研究生命跡象的重要目標。</p>
-                        <ul>
-                            <li>平均半徑：$3,389.5 \text{ km}$</li>
-                            <li>質量：$0.107$ 地球</li>
-                            <li>位置：地球外側</li>
-                            <li>特色：紅色外觀，因富含氧化鐵</li>
-                            <li>表面：太陽系最高的火山「奧林帕斯山」</li>
-                            <li>特點：極地有冰帽，曾有液態水的證據</li>
-                            <li>平均溫度：$-63^\circ\text{C}$</li>
-                        </ul>
+                    <div class="course">
+                        <div class="type">第一學期：專業選修</div>
+                        <h3>資料結構</h3>
+                        <p>本課程介紹資料結構的基本觀念與一般的應用，由最基本的資料結構與演算法概念開始說明，再以 Python 語言加以詮釋陣列結構、堆疊、鏈結串列、佇列、樹狀、圖形、排序、搜尋等重要觀念。特別強調實際應用與演算法的瞭解。</p>
+                        <p>學分：3</p>
                     </div>
-                    <div class="planet-img">
-                        <img src="media/mars.png" alt="火星">
+                    <div class="course">
+                        <div class="type">第一學期：專業選修</div>
+                        <h3>網站應用程式設計</h3>
+                        <p>前端網頁設計為當前網頁設計的主流,透過本課程可使同學們對網頁前端設計的有所認識。</p>
+                        <p>學分：3</p>
                     </div>
-                </div>
-
-                <div class="planet-card">
-                    <div class="planet-text">
-                        <h3>木星 Jupiter</h3>
-                        <p>太陽系中最大的行星，由氣體組成，擁有著名的大紅斑與強烈風暴系統。</p>
-                        <ul>
-                            <li>平均半徑：$69,911 \text{ km}$</li>
-                            <li>質量：$318$ 個地球</li>
-                            <li>位置：太陽系最大行星</li>
-                            <li>特色：巨大的氣體行星</li>
-                            <li>表面：無固體表面，有「大紅斑」巨型風暴</li>
-                            <li>特點：磁場極強，衛星最多（包括著名的四大衛星）</li>
-                        </ul>
+                    <div class="course">
+                        <div class="type">第二學期：專業必修</div>
+                        <h3>應用統計學</h3>
+                        <p> 針對商學院學生，提供統計學及其應用的觀念介紹。學成後，學生面對各種複雜現象，可運用蒐集、整理、分析、解釋資料等程序，將其轉化為清楚的資訊，並進而推論、預測，以為決策的依據。</p>
+                        <p>學分：3</p>
                     </div>
-                    <div class="planet-img">
-                        <img src="media/jupiter.png" alt="木星">
+                    <div class="course">
+                        <div class="type">第二學期：專業必修</div>
+                        <h3>物件導向系統分析與設計</h3>
+                        <p>課程著重於分析方法之應用，並以UML為工具，讓同學可以透過實際的活動，從收集系統需求開始，逐步完成系統分析與設計作業，並為接下來的專題規劃預作準備。...</p>
+                        <p>學分：3</p>
                     </div>
-                </div>
-
-                <div class="planet-card">
-                    <div class="planet-text">
-                        <h3>土星 Saturn</h3>
-                        <p>以壯觀的環形結構聞名，由冰與岩石碎片組成，是太陽系最具代表性的氣態巨行星之一。</p>
-                        <ul>
-                            <li>平均半徑：$58,232 \text{ km}$</li>
-                            <li>質量：$95$ 個地球</li>
-                            <li>位置：第二大行星</li>
-                            <li>特色：最著名的壯麗行星環</li>
-                            <li>表面：氫、氦為主的氣態</li>
-                            <li>特點：密度很低，若有足夠大的水池，理論上能浮起</li>
-                        </ul>
+                    <div class="course">
+                        <div class="type">第二學期：專業必修</div>
+                        <h3>資訊網路</h3>
+                        <p>在網路管理中需要具備對於網路設備原理的介紹，網路設備的設定、操作和管理。並且培養學生解決網路問題的實務課程。</p>
+                        <p>學分：3</p>
                     </div>
-                    <div class="planet-img">
-                        <img src="media/saturn.jpg" alt="土星">
+                    <div class="course">
+                        <div class="type">第二學期：專業選修</div>
+                        <h3>國際認證管理進階</h3>
+                        <p>提供對網絡安全的深入的理論理解，為學生提供設計和支持網絡安全所需的知識和技能，提供以體驗為導向的課程，採用與行業相關的教學方法，讓學生為行業的入門級工作做好準備...。</p>
+                        <p>學分：3</p>
                     </div>
-                </div>
-
-                <div class="planet-card">
-                    <div class="planet-text">
-                        <h3>天王星 Uranus</h3>
-                        <p>自轉軸大幅傾斜幾乎橫躺著自轉，外觀呈淡藍色，是冰巨行星的代表。</p>
-                        <ul>
-                            <li>平均半徑：$25,362 \text{ km}$</li>
-                            <li>質量：$14.5$ 個地球</li>
-                            <li>位置：外側冰巨星之一</li>
-                            <li>特色：自轉軸幾乎水平，像「躺著轉」</li>
-                            <li>表面：主要由冰（甲烷、氨、水）構成</li>
-                            <li>特點：藍色來自甲烷吸收光線</li>
-                        </ul>
+                    <div class="course">
+                        <div class="type">第二學期：專業選修</div>
+                        <h3>行動應用開發</h3>
+                        <p>引導學生進入Android手機應用程式開發的領域，提供相關知識及實用的學習方法。課程涵蓋Android開發環境的設置、SDK的運用、使用者介面設計，以及程式撰寫的基礎和進階技巧。</p>
+                        <p>學分：3</p>
                     </div>
-                    <div class="planet-img">
-                        <img src="media/Uranus.png" alt="天王星">
+                    <div class="course">
+                        <div class="type">第二學期：專業選修</div>
+                        <h3>作業系統</h3>
+                        <p>本課程在一般性地介紹作業系統相關的原理與技術。涵蓋的主題包括作業系統的功能和結構、CPU排班、死結（預防、避免、恢復）等。...</p>
+                        <p>學分：3</p>
                     </div>
-                </div>
-
-                <div class="planet-card">
-                    <div class="planet-text">
-                        <h3>海王星 Neptune</h3>
-                        <p>自轉軸大幅傾斜幾乎橫躺著自轉，外觀呈淡藍色，是冰巨行星的代表。</p>
-                        <ul>
-                            <li>平均半徑：$24,622 \text{ km}$</li>
-                            <li>質量：$17$ 個地球</li>
-                            <li>位置：太陽系最外側行星</li>
-                            <li>特色：風速可達每秒 $600$ 公尺，是太陽系最強風</li>
-                            <li>表面：冰巨星，藍色因甲烷反射</li>
-                            <li>特點：公轉 $165$ 年繞太陽一圈</li>
-                        </ul>
+                    <div class="course">
+                        <div class="type">第三學期：專業必修</div>
+                        <h3>資料庫管理</h3>
+                        <p> 本課程將介紹資料庫概念，並強調關聯式資料庫模型。課程也將闡述實體關聯模型(ERD)的概念和應用與正規化的原則和應用。...</p>
+                        <p>學分：3</p>
                     </div>
-                    <div class="planet-img">
-                        <img src="media/Neptune.png" alt="海王星">
+                    <div class="course">
+                        <div class="type">第三學期：專業必修</div>
+                        <h3>電子商務與網路行銷</h3>
+                        <p>從企業經營與策略的角度，融合個案、理論、實務解說電子商務與網路行銷的樣貌，探討數位轉型、商業模式創新、服務生態系、服務創新工作坊、後疫情時代的電子商務創新、SDGs企業永續等議題...。</p>
+                        <p>學分：3</p>
+                    </div>
+                    <div class="course">
+                        <div class="type">第三學期：專業選修</div>
+                        <h3>國際認證管理進階</h3>
+                        <p>提供對網絡安全的深入的理論理解，為學生提供設計和支持網絡安全所需的知識和技能...。</p>
+                        <p>學分：3</p>
+                    </div>
+                    <div class="course">
+                        <div class="type">第三學期：專業選修</div>
+                        <h3>行動應用程式設計</h3>
+                        <p>學習行動應用程式開發方法與技術，能設計、實作並測試跨平台或特定平台的應用程式。</p>
+                        <p>學分：3</p>
+                    </div>
+                    <div class="course">
+                        <div class="type">第三學期：專業選修</div>
+                        <h3>消費者行為</h3>
+                        <p>現代企業面對多變的市場與消費者需求，行銷人員必須透過市場調查與行銷資訊掌握市場脈動...。</p>
+                        <p>學分：3</p>
+                    </div>
+                    <div class="course">
+                        <div class="type">第三學期：專業選修</div>
+                        <h3>資訊安全</h3>
+                        <p>本課程介紹電腦和網路安全的基礎知識。包含基礎觀念、技術、管理與應用。課程內容將包括基礎密碼學、作業系統安全、安全存取控制措施、安全程式編碼...。</p>
+                        <p>學分：3</p>
+                    </div>
+                    <div class="course">
+                        <div class="type">第三學期：專業選修</div>
+                        <h3>多媒體應用</h3>
+                        <p> 本課程目標為讓學習者能夠了解多媒體內容及數位媒體的種類與其基礎原理；並輔以實例介紹與技巧教學，讓同學了解國內外多媒體發展趨勢...。</p>
+                        <p>學分：3</p>
+                    </div>
+                    <div class="course">
+                        <div class="type">第四學期：專業必修</div>
+                        <h3>行動應用商務</h3>
+                        <p>本課程的目標在於介紹行動商務的相關應用，包括從行動商務的基本概念、技術及應用，以及目前基於行動裝置所發展出的社群行銷、社群商務等應用。...</p>
+                        <p>學分：3</p>
+                    </div>
+                    <div class="course">
+                        <div class="type">第四學期：專業選修</div>
+                        <h3>商業智慧與資料科學</h3>
+                        <p> 1. 理解「商用大數據分析」在企業／商業環境中的角色與應用價值。<br> 2. 能掌握從資料收集、處理、分析到報告／決策支援的完整大數據分析流程...。</p>
+                        <p>學分：3</p>
+                    </div>
+                    <div class="course">
+                        <div class="type">第四學期：專業選修</div>
+                        <h3>資料庫管理系統實作</h3>
+                        <p>掌握資料庫設計與操作技巧，能建構、管理與維護資料庫系統，並運用 SQL 進行資料查詢與分析。</p>
+                        <p>學分：3</p>
+                    </div>
+                    <div class="course">
+                        <div class="type">第四學期：專業選修</div>
+                        <h3>區塊鏈導論</h3>
+                        <p>本課程介紹區塊鏈技術和應用，透過解析實際應用案例，由淺入深地介紹區塊鏈技術緣起、演進過程、技術原理和發展趨勢。...</p>
+                        <p>學分：3</p>
+                    </div>
+                    <div class="course">
+                        <div class="type">第四學期：專業選修</div>
+                        <h3>企業資源規劃</h3>
+                        <p>了解企業資源規劃的概念與流程，學習如何整合企業內部資源以提升管理效率與決策能力。</p>
+                        <p>學分：3</p>
+                    </div>
+                    <div class="course">
+                        <div class="type">第四學期：專業選修</div>
+                        <h3>資訊科技管理</h3>
+                        <p>讓同學了解如何使用資訊科技管理，科技管理上目前使用主流的技術。</p>
+                        <p>學分：3</p>
                     </div>
                 </div>
+            </section>
 
-            </div>
-        </section>
+            <section class="semester-block">
+                <h2>📝 四學期學分選擇與計算</h2>
 
-        <section id="facts" class="section section-facts">
-            <div class="container">
-                <h2>太空冷知識</h2>
-                <div class="facts-grid">
-                    <div class="fact-card">太空沒有空氣，所以太陽的聲音聽不到。</div>
-                    <div class="fact-card">太空人不能哭，眼淚會變成水球。</div>
-                    <div class="fact-card">太空中金屬會自動融合（冷焊）。</div>
-                    <div class="fact-card">金星的一天比一年還長。</div>
-                    <div class="fact-card">金星是太陽系唯一自轉方向相反的行星。</div>
-                    <div class="fact-card">金星表面溫度比水星還高，是太陽系真正的「烤箱」。</div> 
-                    <div class="fact-card">土星密度比水小，如果有巨型浴缸，它能浮起來。</div>
-                    <div class="fact-card">土星光環其實非常非常薄，厚度不到一公里。</div>
-                    <div class="fact-card">土星光環主要由冰粒組成，反光度非常高。</div>
-                    <div class="fact-card">火星天空是橘紅色，夕陽會變藍。</div> 
-                    <div class="fact-card">火星看起來紅，是因為表面被鐵鏽覆蓋。</div> 
-                    <div class="fact-card">火星日長約 $24$ 小時 $37$ 分鐘，跟地球很像。</div> 
-                    <div class="fact-card">木星磁場是地球的 $14$ 倍，是太陽系最強的。</div>
-                    <div class="fact-card">木星一天只要 $10$ 小時，是太陽系自轉最快的行星。</div>
-                    <div class="fact-card">木星沒有真正的固體表面，是一顆巨大氣體球。</div>
-                    <div class="fact-card">海王星是太陽系風速最快的行星，風速可達時速 $2000$ 公里。</div>
-                    <div class="fact-card">海王星也是最遠且最冷的行星，陽光到它要 $4$ 小時以上。</div>
-                    <div class="fact-card">海王星比天王星更遠，但溫度通常比天王星略高一些。</div>
-                    <div class="fact-card">天王星的自轉像躺著轉。</div>
-                    <div class="fact-card">天王星的大氣含大量甲烷，所以看起來藍藍的。</div>
-                    <div class="fact-card">天王星是太陽系最冷的行星，最低可到 $-224^\circ\text{C}$。</div>
-                    <div class="fact-card">太陽佔整個太陽系質量的 $99.86\%$。</div>
-                    <div class="fact-card">光從太陽到地球只要 $8$ 分 $20$ 秒。</div>
-                    <div class="fact-card">太陽其實是白色的，只因地球大氣散射才看起來偏黃。</div>
-                    <div class="fact-card">月球正在慢慢遠離地球，每年約 $3.8$ 公分。</div>
-                    <div class="fact-card">如果地球沒有月亮，地球自轉會更快，一天可能只有 $6$ 小時。</div>
-                    <div class="fact-card">地球上潮汐大多由月亮造成，太陽則負責較小幅的潮汐。</div> 
+                <div class="semester-block">
+                    <div class="semester-title">第一學期</div>
+                    <div class="course-item">
+                        <input type="checkbox" class="proRequired1" value="3" checked disabled> <span>專業必修：程式語言（3學分）</span>
+                    </div>
+                    <div class="course-item">
+                        <input type="checkbox" class="proRequired1" value="3" checked disabled> <span>專業必修：管理資訊系統（3學分）</span>
+                    </div>
+                    <div class="course-item">
+                        <input type="checkbox" class="proRequired1" value="2" checked disabled> <span>專業必修：資訊倫理與法律（2學分）</span>
+                    </div>
+                    <div class="course-item">
+                        <input type="checkbox" class="proElective1" value="3"> <span>專業選修：統計學（3學分）</span>
+                    </div>
+                    <div class="course-item">
+                        <input type="checkbox" class="proElective1" value="3"> <span>專業選修：資料結構（3學分）</span>
+                    </div>
+                    <div class="course-item">
+                        <input type="checkbox" class="proElective1" value="3"> <span>專業選修：網站應用程式設計（3學分）</span>
+                    </div>
+                    <div class="course-item">
+                        <input type="checkbox" class="Fou1" value="2" checked disabled> <span>通識：國文（基礎必修）— 古文介紹（2學分）</span>
+                    </div><div class="course-item">
+                        <input type="checkbox" class="Fou1" value="2" checked disabled> <span>通識：英文（基礎必修）— 基本介紹（2學分）</span>
+                    </div>
+                    <div class="course-item">
+                        <input type="checkbox" checked disabled> <span>通識：體育（必修，0學分）</span>
+                    </div>
+                    <div class="credit-result" id="sem1-total">本學期學分：0</div>
                 </div>
-            </div>
-        </section>
-        
-        <footer>
-            <div>資料來源示意：NASA / ChatGPT / 維基百科</div>
-            <div style="margin-top:8px;color:var(--muted)">© 2025 太陽系小百科</div>
-        </footer>
+
+                <div class="semester-block">
+                    <div class="semester-title">第二學期</div>
+                    <div class="course-item">
+                        <input type="checkbox" class="proRequired2" value="3" checked disabled> <span>專業必修：應用統計學（3學分）</span>
+                    </div>
+                    <div class="course-item">
+                        <input type="checkbox" class="proRequired2" value="3" checked disabled> <span>專業必修：物件導向系統分析與設計（3學分）</span>
+                    </div>
+                    <div class="course-item">
+                        <input type="checkbox" class="proRequired2" value="3" checked disabled> <span>專業必修：資訊網路（3學分）</span>
+                    </div>
+                    <div class="course-item">
+                        <input type="checkbox" class="proElective2" value="3"> <span>專業選修：行動應用開發（3學分）</span>
+                    </div>
+                    <div class="course-item">
+                        <input type="checkbox" class="proElective2" value="3"> <span>專業選修：作業系統（3學分）</span>
+                    </div>
+                    <div class="course-item">
+                        <input type="checkbox" class="proElective2" value="3"> <span>專業選修：國際認證管理（3學分）</span>
+                    </div>
+                    <div class="course-item">
+                        <input type="checkbox" class="core2" value="2"> <span>核心必修：公民意識/永續發展領域（2學分）</span>
+                    </div>
+                    <div class="course-item">
+                        <input type="checkbox" class="core2" value="2"> <span>核心必修：生活美學領域（2學分）</span>
+                    </div>
+                    <div class="course-item">
+                        <input type="checkbox" class="interest2" value="2"> <span>興趣選修：跨領域選修（2學分）</span>
+                    </div>
+                    <div class="course-item">
+                        <input type="checkbox" checked disabled> <span>體育（必修，0學分）</span>
+                    </div>
+                    <div class="credit-result" id="sem2-total">本學期學分：0</div>
+                </div>
+
+                <div class="semester-block">
+                    <div class="semester-title">第三學期</div>
+                    <div class="course-item">
+                        <input type="checkbox" class="proRequired3" value="3" checked disabled> <span>專業必修：電子商務與網路行銷（3學分）</span>
+                    </div>
+                    <div class="course-item">
+                        <input type="checkbox" class="proRequired3" value="3" checked disabled> <span>專業必修：資料庫管理（3學分）</span>
+                    </div>
+                    <div class="course-item">
+                        <input type="checkbox" class="proElective3" value="3"> <span>專業選修：國際認證管理進階（3學分）</span>
+                    </div>
+                    <div class="course-item">
+                        <input type="checkbox" class="proElective3" value="3"> <span>專業選修：行動應用程式設計（3學分）</span>
+                    </div>
+                    <div class="course-item">
+                        <input type="checkbox" class="proElective3" value="3"> <span>專業選修：消費者行為（3學分）</span>
+                    </div>
+                    <div class="course-item">
+                        <input type="checkbox" class="proElective3" value="3"> <span>專業選修：資訊安全（3學分）</span>
+                    </div>
+                    <div class="course-item">
+                        <input type="checkbox" class="proElective3" value="3"> <span>專業選修：多媒體應用（3學分）</span>
+                    </div>
+                    <div class="course-item">
+                        <input type="checkbox" class="core1" value="2"> <span>核心必修：人文科學領域（2學分）</span>
+                    </div>
+                    <div class="course-item">
+                        <input type="checkbox" class="core1" value="2"> <span>核心必修：社會科學領域（2學分）</span>
+                    </div>
+                    <div class="course-item">
+                        <input type="checkbox" class="core2" value="2"> <span>核心必修：公民意識/永續發展領域（2學分）</span>
+                    </div>
+                    <div class="course-item">
+                        <input type="checkbox" class="core2" value="2"> <span>核心必修：生活美學領域（2學分）</span>
+                    </div>
+                    <div class="course-item">
+                        <input type="checkbox" class="interest1" value="2"> <span>興趣選修：跨領域選修（2學分）</span>
+                    </div>
+                    <div class="course-item">
+                        <input type="checkbox" class="interest2" value="2"> <span>興趣選修：跨領域選修（2學分）</span>
+                    </div>
+                    <div class="course-item">
+                        <input type="checkbox" class="sport3" value="2"> <span>通識：體育（選修 2 學分）</span>
+                    </div>
+                    <div class="credit-result" id="sem3-total">本學期學分：0</div>
+                </div>
+
+                <div class="semester-block">
+                    <div class="semester-title">第四學期</div>
+                    <div class="course-item">
+                        <input type="checkbox" class="proRequired4" value="3" checked disabled> <span>專業必修：行動應用商務（3學分）</span>
+                    </div>
+                    <div class="course-item">
+                        <input type="checkbox" class="proElective4" value="3"> <span>專業選修：商業智慧與資料科學（3學分）</span>
+                    </div>
+                    <div class="course-item">
+                        <input type="checkbox" class="proElective4" value="3"> <span>專業選修：資料庫管理系統實作（3學分）</span>
+                    </div>
+                    <div class="course-item">
+                        <input type="checkbox" class="proElective4" value="3"> <span>專業選修：區塊鏈導論（3學分）</span>
+                    </div>
+                    <div class="course-item">
+                        <input type="checkbox" class="proElective4" value="3"> <span>專業選修：企業資源規劃（3學分）</span>
+                    </div>
+                    <div class="course-item">
+                        <input type="checkbox" class="proElective4" value="3"> <span>專業選修：資訊科技管理（3學分）</span>
+                    </div>
+                    <div class="course-item">
+                        <input type="checkbox" class="core1" value="2"> <span>核心必修：人文科學領域（2學分）</span>
+                    </div>
+                    <div class="course-item">
+                        <input type="checkbox" class="core1" value="2"> <span>核心必修：社會科學領域（2學分）</span>
+                    </div>
+                    <div class="course-item">
+                        <input type="checkbox" class="core2" value="2"> <span>核心必修：公民意識/永續發展領域（2學分）</span>
+                    </div>
+                    <div class="course-item">
+                        <input type="checkbox" class="core2" value="2"> <span>核心必修：生活美學領域（2學分）</span>
+                    </div>
+                    <div class="course-item">
+                        <input type="checkbox" class="interest1" value="2"> <span>興趣選修：跨領域選修（2學分）</span>
+                    </div>
+                    <div class="course-item">
+                        <input type="checkbox" class="interest2" value="2"> <span>興趣選修：跨領域選修（2學分）</span>
+                    </div>
+                    <div class="course-item">
+                        <input type="checkbox" class="sport4" value="2"> <span>通識：體育（選修 2 學分）</span>
+                    </div>
+                    <div class="credit-result" id="sem4-total">本學期學分：0</div>
+                </div>
+
+                <div class="total-credit-box">
+                    總學分：<span id="total-credit">0</span> ／ 畢業門檻 72
+                </div>
+
+                <button type="button" onclick="calculate()">🚀 計算是否能畢業</button>
+                <div id="result" class="result-box" style="display:none;"></div>
+            </section>
+
+        </div>
+        <p style="text-align: center; font-size: 0.8em; color: #888;">
+            參考資料：
+            <a href="https://ntcbadm.ntub.edu.tw/pub/Cur_Class.aspx" target="_blank">
+                北商課表查詢
+            </a>
+        </p>
+        <footer>© 114 學年度 - 學分計算器</footer>
+
     </body>
 </html>

@@ -1,0 +1,446 @@
+/* ===== 基礎重置 ===== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Microsoft JhengHei', 'PingFang TC', sans-serif;
+    background: #f8f5f2;
+    min-height: 100vh;
+}
+
+/* ===== 導航欄 ===== */
+.navbar {
+    background: linear-gradient(135deg, #6b4423, #3e2723);
+    padding: 18px 35px;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-content {
+    max-width: 1500px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: white;
+}
+
+.logo-icon { font-size: 2.2rem; }
+
+.logo-text h1 { font-size: 1.6rem; margin-bottom: 3px; }
+.logo-text p { font-size: 0.85rem; opacity: 0.9; }
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.nav-stats { display: flex; gap: 25px; }
+
+.home-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #d4a574, #c19660);
+    color: #3e2723;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    transition: all 0.3s;
+}
+
+.home-btn:hover {
+    background: linear-gradient(135deg, #e8c49a, #d4a574);
+    transform: translateY(-2px);
+}
+
+.home-btn-icon { font-size: 1.1rem; }
+
+.nav-stat-item { text-align: center; color: white; }
+.nav-stat-number { font-size: 1.4rem; font-weight: bold; color: #d4a574; }
+.nav-stat-label { font-size: 0.75rem; opacity: 0.9; margin-top: 3px; }
+
+/* ===== 主要內容 ===== */
+.container {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 35px 20px 20px;
+}
+
+.content-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 25px;
+    margin-bottom: 25px;
+}
+
+/* ===== 地圖區 ===== */
+.map-section {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+}
+
+.map-header {
+    background: linear-gradient(135deg, #8d6e63, #6b4423);
+    padding: 22px 28px;
+    color: white;
+}
+
+.map-header h2 { font-size: 1.6rem; margin-bottom: 6px; }
+.map-header p { opacity: 0.9; font-size: 0.9rem; }
+
+.map-container {
+    width: 100%;
+    height: 650px;
+    background: #e0e0e0;
+    border-radius: 0 0 16px 16px;
+}
+
+.map-container #map {
+    width: 100%;
+    height: 100%;
+    border-radius: 0 0 16px 16px;
+}
+
+/* Leaflet 標記 */
+.custom-marker { background: none; border: none; }
+
+.marker-pin {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #d4a574, #b8935f);
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+}
+
+.marker-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    font-size: 1.1rem;
+}
+
+/* ===== 咖啡廳側邊欄 ===== */
+.cafes-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    height: 740px;
+}
+
+/* 篩選器 */
+.filter-section {
+    background: white;
+    padding: 18px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+}
+
+.filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 12px;
+    padding: 4px 0;
+}
+
+.filter-title {
+    font-size: 0.95rem;
+    color: #5d4037;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.3s;
+}
+
+.filter-header:hover .filter-title { color: #d4a574; }
+
+.filter-toggle {
+    font-size: 1.1rem;
+    color: #8d6e63;
+    transition: transform 0.3s;
+}
+
+.filter-toggle.collapsed { transform: rotate(-90deg); }
+
+.filter-content {
+    overflow: hidden;
+    transition: max-height 0.3s, opacity 0.3s;
+    max-height: 400px;
+    opacity: 1;
+}
+
+.filter-content.collapsed { max-height: 0; opacity: 0; }
+
+.filter-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+}
+
+.filter-btn {
+    padding: 7px 10px;
+    background: #f5f5f5;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    color: #666;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+    font-weight: 500;
+}
+
+.filter-btn:hover {
+    background: #efebe9;
+    border-color: #d7ccc8;
+    color: #5d4037;
+}
+
+.filter-btn.active {
+    background: linear-gradient(135deg, #d4a574, #b8935f);
+    border-color: #d4a574;
+    color: white;
+    font-weight: bold;
+}
+
+.filter-btn.all {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, #8d6e63, #6b4423);
+    color: white;
+    font-weight: bold;
+}
+
+.filter-btn.all:hover {
+    background: linear-gradient(135deg, #6b4423, #5d4037);
+}
+
+.filter-btn.all.active {
+    background: linear-gradient(135deg, #d4a574, #b8935f);
+}
+
+.filter-count {
+    margin-top: 8px;
+    text-align: center;
+    color: #8d6e63;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+/* 咖啡廳列表 */
+.cafes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+    overflow-y: auto;
+    padding: 4px;
+}
+
+.cafes-list::-webkit-scrollbar { width: 5px; }
+.cafes-list::-webkit-scrollbar-track { background: rgba(139, 110, 99, 0.1); border-radius: 8px; }
+.cafes-list::-webkit-scrollbar-thumb { background: rgba(139, 110, 99, 0.5); border-radius: 8px; }
+
+/* 咖啡廳卡片 */
+.cafe-card {
+    background: white;
+    border-radius: 10px;
+    padding: 18px;
+    border-left: 4px solid #8d6e63;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+}
+
+.cafe-card:hover {
+    transform: translateX(4px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+    border-left-color: #d4a574;
+}
+
+.cafe-card.active {
+    border-left-color: #d4a574;
+    box-shadow: 0 6px 25px rgba(212, 165, 116, 0.35);
+    background: linear-gradient(135deg, #fff, #faf8f6);
+}
+
+.cafe-number {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 26px;
+    height: 26px;
+    background: linear-gradient(135deg, #8d6e63, #6b4423);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.cafe-name {
+    font-size: 1.1rem;
+    color: #3e2723;
+    font-weight: bold;
+    margin-bottom: 6px;
+    padding-right: 35px;
+}
+
+.cafe-rating {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 10px;
+}
+
+.stars { color: #ffa726; font-size: 0.85rem; }
+.rating-number { color: #666; font-size: 0.8rem; font-weight: bold; }
+
+.cafe-location {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    color: #666;
+    font-size: 0.8rem;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.location-icon { color: #8d6e63; font-size: 0.95rem; margin-top: 1px; }
+
+.cafe-tags { display: flex; gap: 5px; flex-wrap: wrap; }
+
+.tag {
+    padding: 3px 8px;
+    background: linear-gradient(135deg, #efebe9, #d7ccc8);
+    color: #5d4037;
+    border-radius: 10px;
+    font-size: 0.7rem;
+    font-weight: 500;
+}
+
+.tag.highlight {
+    background: linear-gradient(135deg, #d4a574, #b8935f);
+    color: white;
+}
+
+/* ===== 底部資訊卡片 ===== */
+.info-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 22px;
+}
+
+.info-card {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    transition: transform 0.3s;
+    border-top: 3px solid transparent;
+}
+
+.info-card:nth-child(1) { border-top-color: #8d6e63; }
+.info-card:nth-child(2) { border-top-color: #d4a574; }
+.info-card:nth-child(3) { border-top-color: #a1887f; }
+.info-card:nth-child(4) { border-top-color: #bcaaa4; }
+
+.info-card:hover { transform: translateY(-5px); }
+
+.info-icon { font-size: 2.5rem; margin-bottom: 12px; }
+
+.info-title {
+    font-size: 1rem;
+    color: #5d4037;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.info-description {
+    font-size: 0.85rem;
+    color: #666;
+    line-height: 1.5;
+}
+
+/* ===== 頁尾 ===== */
+.footer {
+    margin-top: 50px;
+    padding: 25px 20px;
+    text-align: center;
+    background: linear-gradient(135deg, #6b4423, #3e2723);
+    color: white;
+}
+
+.footer-content { max-width: 1500px; margin: 0 auto; }
+.footer p { margin-bottom: 8px; opacity: 0.9; }
+.footer a { color: #d4a574; text-decoration: none; transition: color 0.3s; }
+.footer a:hover { color: #ffa726; }
+
+/* ===== 浮動按鈕 ===== */
+.floating-btn {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #d4a574, #b8935f);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    color: white;
+    box-shadow: 0 4px 15px rgba(212, 165, 116, 0.35);
+    cursor: pointer;
+    transition: all 0.3s;
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.floating-btn:hover {
+    transform: scale(1.08);
+}
+
+/* ===== 響應式 ===== */
+@media (max-width: 1200px) {
+    .content-wrapper { grid-template-columns: 1fr; }
+    .cafes-sidebar { order: -1; height: auto; }
+    .cafes-list {
+        max-height: none;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+    .map-container { height: 450px; }
+}
+
+@media (max-width: 768px) {
+    .navbar { padding: 14px 18px; }
+    .logo-text h1 { font-size: 1.2rem; }
+    .logo-icon { font-size: 1.8rem; }
+    .nav-stats { display: none; }
+    .container { padding: 18px 12px; }
+    .cafes-list { grid-template-columns: 1fr; }
+    .map-container { height: 350px; }
+    .info-cards { grid-template-columns: 1fr; }
+}

@@ -4,211 +4,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>台灣特色小吃</title>
-        <style>
-            /* 1. 全域與背景優化 */
-            body {
-                margin: 0;
-                font-family: '微軟正黑體', 'Arial', sans-serif; /* 增加中文字體 */
-                background: #fdfdf5; /* 淺奶油色 */
-            }
-
-            /* --- Header --- */
-            header {
-                width: 100%;
-                background-color: #ffb24d;
-                color: #fff;
-                padding: 20px;
-                box-sizing: border-box;
-                position: fixed;
-                top: 0;
-                left: 0;
-                text-align: center;
-                z-index: 1000;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 增加陰影 */
-            }
-            
-            header h1 {
-                margin: 0;
-                font-size: 28px;
-            }
-            header p {
-                margin: 0;
-                font-size: 14px;
-            }
-            /* --- Footer --- */
-            footer {
-                width: 100%;
-                background: #333;
-                color: #eee;
-                text-align: center;
-                padding: 15px;
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                box-sizing: border-box;
-            }
-            
-            /* --- Sidebar --- */
-            .sidebar {
-                position: fixed;
-                top: 90px;
-                bottom: 70px;
-                width: 260px;
-                background: #ffffff; /* 改為白色，更清晰 */
-                border-right: 1px solid #ffb24d; /* 使用主題色作為邊框 */
-                overflow-y: auto;
-                padding: 20px;
-                box-sizing: border-box;
-            }
-            
-            /* 側邊欄標題 */
-            .sidebar h3 {
-                border-bottom: 2px solid #ffb24d;
-                padding-bottom: 5px;
-                color: #333;
-            }
-
-            /* 右側內容區 */
-            .content {
-                /* 移除 background-color: aqua; */
-                background-image: url("XX"); /* 保持您的圖片設定，但建議移除或替換為更淡的紋理 */
-                background-repeat: repeat;
-                margin-top: 90px;
-                margin-bottom: 70px;
-                margin-left: 280px;
-                padding: 20px;
-                box-sizing: border-box;
-            }
-            
-            /* 讓內容區的文字更舒適閱讀 */
-            .content p {
-                line-height: 1.8; /* 增加行高 */
-                color: #444; /* 讓字體顏色更柔和 */
-                text-align: justify; /* 內文兩端對齊 */
-            }
-
-            .food-item {
-                max-width: 950px;
-                margin: 0 auto 40px auto; /* 增加下方間距 */
-                overflow-x: auto;
-            }
-
-            /* 2. 圖片統一大小與美化 */
-            /* 針對主要的食物圖片 (放在表格左側的) */
-            .food-item img {
-                display: block;
-                width: 300px; 
-                height: 200px; /* 固定高度，讓所有圖片區塊大小統一 */
-                object-fit: cover; /* 讓圖片等比例填充容器，並裁切多餘部分 */
-                margin: 0 auto;
-                border-radius: 8px; /* 增加圓角 */
-                border: 3px solid #ffb24d; /* 增加邊框，突出圖片 */
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 圖片陰影 */
-            }
-
-            /* 針對內文中的推薦店家圖片 (放在表格下方的) */
-            .food-item tr:nth-last-child(n+1) img {
-                width: 100%;
-                max-width: 400px; /* 限制最大寬度 */
-                height: auto;
-                display: block;
-                margin: 10px auto;
-                border: none;
-                border-radius: 4px;
-                box-shadow: none; /* 移除店家圖片的陰影和邊框 */
-            }
-            
-            .food-list a, .link-list a {
-                display: block;
-                padding: 8px;
-                margin-bottom: 6px;
-                background: #fff;
-                border: 1px solid #ddd;
-                border-radius: 6px;
-                text-decoration: none;
-                color: #333;
-                transition: all 0.2s ease-in-out; /* 新增動畫效果 */
-            }
-            
-            .food-list a:hover, .link-list a:hover {
-                background: #ffecb3; /* 更柔和的 hover 背景色 */
-                border-color: #ff9800; /* 更深的主題色邊框 */
-                transform: translateX(5px); /* 輕微移動效果 */
-            }
-            
-            /* 3. 表格和文字凸顯優化 */
-            table {
-                margin: 0 auto;
-                border-collapse: collapse;
-                text-align: center;
-                background-color: white;
-                border: 1px solid #ccc; /* 表格邊框 */
-                box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.05);
-                border-radius: 10px; /* 圓角表格 */
-                overflow: hidden; /* 確保圓角生效 */
-            }
-
-            /* 凸顯各小吃的標題 */
-            .food-item caption h3 {
-                font-size: 28px;
-                color: #d84315; /* 更深、更紅的主題色 */
-                border-bottom: 3px solid #ffb24d;
-                padding-bottom: 15px;
-                margin: 30px 0 20px 0; /* 調整間距 */
-                font-weight: bold;
-            }
-            
-            /* 讓表格內容置中（包含 th 與 td） */
-            th, td {
-                text-align: center;
-                vertical-align: top; /* 讓內容靠上對齊 */
-                padding: 15px; /* 增加內邊距 */
-                border: 1px solid #eee; /* 使用淺色格線 */
-            }
-            
-            /* 讓第一個欄位（圖片那欄）的寬度固定 */
-            .food-item tr th:first-child {
-                width: 320px;
-                vertical-align: top;
-                padding: 10px;
-                background: #f7f7f7; /* 圖片區塊背景微灰 */
-            }
-
-            /* 凸顯表格內的重要標題，例如「認識豬血糕和熱量」 */
-            .food-item td b {
-                font-size: 18px; 
-                color: #333; 
-                display: block; 
-                margin-top: 10px;
-                text-align: left; /* 讓粗體標題靠左 */
-            }
-            
-            /* 針對「介紹」和「熱量」這兩個區塊的標題 */
-            .food-item td b:first-child {
-                font-size: 20px;
-                color: #00796b; /* 使用不同顏色來區分 */
-                margin-bottom: 5px;
-                font-weight: 900;
-            }
-
-            /* 推薦店家資訊文字 */
-            .food-item td:last-child p {
-                text-align: center;
-                margin: 5px 0;
-            }
-            
-            /* 推薦店家大標題 */
-            .food-item tr:nth-last-child(n+1) td:first-child b {
-                font-size: 22px;
-                color: #d84315;
-            }
-
-            /* 內文中的列表樣式 */
-            .food-item ul {
-                text-align: left; /* 列表內容靠左 */
-                padding-left: 20px;
-            }
-        </style>
+        <link rel="stylesheet" href="styles.css">
+        <!-- <script src="script.js" defer></script> -->
     </head>
     <body>
         <header>
@@ -221,7 +18,7 @@
                 <h3>小吃列表</h3>
                 <ul class="food-list">
                     <li><a href="#top10">豬血糕</a></li>
-                    <li><a href="#top09">芋園</a></li>
+                    <li><a href="#top09">芋圓</a></li>
                     <li><a href="#top08">蚵仔麵線</a></li>
                     <li><a href="#top07">小籠包</a></li>
                     <li><a href="#top06">臭豆腐</a></li>
@@ -245,12 +42,36 @@
         </aside>
         <!-- 右側內容 -->
         <section class="content">
-            <div>
-                <p>台灣小吃（臺灣話：小點，臺羅：sió-tiám），是台灣富有文化特色的街頭小吃的總稱。與離島澎湖小吃、馬祖小吃以及金門小吃等共同組成了台灣美食文化的重要部分。台灣小吃的特色是就地取材。因為台灣四面環海、漁產豐富，因此海鮮是街頭常見的料理種類之一。<br>
-                    詳盡地定義「台灣小吃」並不容易。<br>
-                    習慣上，一般有如下區分：狹義而言，台灣小吃僅指「發源於台灣的小吃」，但由於小吃的變化性極高，易隨地域、時間而突破性地發展，因此廣義上，台灣小吃亦可以包括那些從中國大陸、日本、東南亞地區傳入台灣後興盛、創新，而在台灣隨處可見、乃至在此的平民美食，如刈包、炸饅頭、烤肉、水煎包、蚵仔煎、肉粽、擔仔麵、滷肉飯、炸雞排、鹹酥雞、烤玉米、烤番薯、烤香腸、蔥油餅、紅豆餅、臭豆腐、肉圓、蚵仔麵線、碗粿、黑輪、筒仔米糕、豬血糕、滷味、胡椒餅、剉冰、麻糬、小籠包、雞肉飯、棺材板、砂鍋魚頭、地瓜球等。<br>
-                    同時受到在日本治臺時期的影響，出現貢丸味噌湯等的飲食。 除了在台灣創造的新品，如鳳梨酥、牛肉麵等外。台灣小吃在飲料方面亦十分發達，如珍珠奶茶、芒果冰等。因內容豐富，台灣小吃最廣義的定義幾乎可包括任何在台灣十分普及的小吃、飲料或甜品。</p>
-                <p>為了讓大家更了解台灣小吃，以下整理十種最受歡迎的經典小吃。</p>
+            <div class="intro">
+                <div class="intro-text">
+                    <p>
+                        <strong>台灣小吃</strong>（臺語：小點，羅馬拼音：sió-tiám），
+                        是台灣街頭文化中最具代表性的飲食形式，
+                        也是許多人記憶中最熟悉、最溫暖的味道。
+                        由於台灣四面環海、農漁產豐富，
+                        小吃的食材來源多元，
+                        從海鮮、米食到各式炸物與甜點，
+                        都能就地取材、靈活變化。
+                    </p>
+
+                    <p>
+                        不論是蚵仔煎、滷肉飯、臭豆腐，
+                        或是珍珠奶茶、芒果冰等飲品甜品，
+                        台灣小吃不只是填飽肚子，
+                        更承載著生活節奏與在地文化。
+                    </p>
+                </div>
+
+                <div class="highlight-box">
+                    台灣小吃的最大特色在於「價格親民、種類多元、貼近日常生活」，
+                    無論白天或深夜，都能找到屬於自己的那一味。
+                </div>
+
+                <p class="intro-text">
+                    為了讓大家更深入了解台灣小吃文化，
+                    以下整理出 <strong>十種最受歡迎的經典台灣小吃</strong>，
+                    一起來看看吧！
+                </p>
             </div>
             <div class="food-item" id="top10">
                 <table>
@@ -326,7 +147,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <p><b>芋圓熱量</b><br>
+                            <p></p><b>芋圓熱量</b><br>
                                純芋圓的熱量熱量大約在150-250大卡左右，但如果加入了煉乳、奶球、更多糖漿、粉圓、布丁等高熱量配料,熱量就可能輕鬆破300-500大卡甚至至更高。<br>
                                所以芋國本身雖然有澱粉,但適量攝取,並選擇健康的烹調方式和配料,仍然可以是一種享受。最重要的是了解清楚您所吃的芋圓「組合」的熱量,才能更聰明地選擇,讓美味與健康兼得!<br>
                             </p>

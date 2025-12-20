@@ -1,638 +1,180 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>二技學分計算器</title>
-
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
-<style>
-    body {
-        margin: 0;
-        font-family: "Microsoft JhengHei", "Noto Sans TC", sans-serif;
-        background: #f1f4f9;
-        color: #333;
-    }
-
-    header {
-        background: #3f72af;
-        color: white;
-        padding: 20px;
-        text-align: center;
-        font-size: 28px;
-        font-weight: bold;
-    }
-
-    footer {
-        background: #3f72af;
-        color: white;
-        text-align: center;
-        padding: 20px;
-        margin-top: 40px;
-    }
-
-    .container {
-        width: 90%;
-        max-width: 1100px;
-        margin: auto;
-        padding: 20px 0;
-    }
-
-    /* 課程介紹 */
-    .course-list {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        gap: 20px;
-    }
-    .course {
-        background: #f8fbff;
-        border-left: 5px solid #1e6ba8;
-        padding: 15px;
-        border-radius: 10px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* 新增陰影 */
-    }
-    .course h3 {
-        margin-top: 0;
-        font-size: 18px;
-        color: #1e6ba8;
-    }
-    .type {
-        display: inline-block;
-        background: #d9ecff;
-        color: #1e6ba8;
-        padding: 3px 8px;
-        border-radius: 5px;
-        font-size: 12px;
-        margin-bottom: 8px;
-    }
-    /* 移除重複的 .type2 樣式，只保留一個 class 即可 */
-
-    /* 四學期區塊 */
-    .semester-block {
-        background: white;
-        padding: 20px;
-        border-radius: 10px;
-        margin-bottom: 25px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    }
-    .semester-title {
-        font-size: 22px;
-        font-weight: bold;
-        margin-bottom: 15px;
-        color: #112d4e;
-        border-bottom: 2px solid #3f72af; /* 增加分隔線 */
-        padding-bottom: 5px;
-    }
-    .course-item {
-        margin-bottom: 8px;
-        padding: 5px 0;
-        display: flex; /* 讓 checkbox 和文字對齊 */
-        align-items: center;
-        transition: background-color 0.2s;
-    }
-    .course-item:hover {
-        background-color: #f6faff;
-    }
-    /* 美化：課程被選中時的視覺回饋 */
-    .course-item input[type="checkbox"]:checked + span {
-        font-weight: bold;
-        color: #0d6efd;
-    }
-    .credit-result {
-        font-weight: bold;
-        color: #112d4e;
-        margin-top: 10px;
-        padding-top: 10px;
-        border-top: 1px dashed #ccc;
-    }
-
-    .total-credit-box {
-        background: #dbe2ef;
-        padding: 20px;
-        border-radius: 10px;
-        margin-top: 30px;
-        font-size: 20px;
-        font-weight: bold;
-        color: #112d4e;
-        text-align: center;
-    }
-    #total-credit {
-        color: #d83a56; /* 總學分數字使用更鮮明的顏色 */
-        font-size: 1.5em;
-    }
-
-    button {
-        background: #3f72af;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        font-size: 16px;
-        border-radius: 6px;
-        cursor: pointer;
-        margin-top: 10px;
-        width: 100%; /* 讓按鈕寬度拉滿 */
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-    button:hover {
-        background: #335580;
-    }
-
-    .result-box {
-        background: #e3f1ff;
-        padding: 20px;
-        border-radius: 12px;
-        margin-top: 20px;
-        font-size: 18px;
-        font-weight: 600;
-        color: #1e4e7b;
-        border: 2px solid #3f72af;
-    }
-</style>
-
-<script>
-    // 使用 jQuery 的 $() 確保 DOM 準備好後執行
-    $(function() {
-
-        // 輔助函式：計算特定類別課程的學分總和
-        function getCreditSum(className) {
-            let sum = 0;
-            // 選擇所有具有指定 class 的 checkbox
-            $(`.${className}:checked`).each(function() {
-                // 使用 .val() 取得值並轉換為數字
-                sum += parseInt($(this).val(), 10) || 0;
-            });
-            return sum;
-        }
-
-        // 負責更新四個學期的學分總和（即時顯示）
-        function updateCredits() {
-
-            // --- 第一學期 ---
-            const sem1_proRequired = getCreditSum('proRequired1');
-            const sem1_proElective = getCreditSum('proElective1');
-            const sem1_foundation = getCreditSum('Fou1');
-            const sem1_core = getCreditSum('core1');
-            const sem1_interest = getCreditSum('interest1');
-            const sem1_total = sem1_proRequired + sem1_proElective + sem1_foundation + sem1_core + sem1_interest;
-
-            // --- 第二學期 ---
-            const sem2_proRequired = getCreditSum('proRequired2');
-            const sem2_proElective = getCreditSum('proElective2');
-            const sem2_core = getCreditSum('core2');
-            const sem2_interest = getCreditSum('interest2');
-            // 第二學期沒有 Fou1/sport
-            const sem2_total = sem2_proRequired + sem2_proElective + sem2_core + sem2_interest;
-
-            // --- 第三學期 ---
-            const sem3_proRequired = getCreditSum('proRequired3');
-            const sem3_proElective = getCreditSum('proElective3');
-            const sem3_sportElective = getCreditSum('sport3');
-            // 第三學期沒有 Fou/core/interest
-            const sem3_total = sem3_proRequired + sem3_proElective + sem3_sportElective;
-
-            // --- 第四學期 ---
-            const sem4_proRequired = getCreditSum('proRequired4');
-            const sem4_proElective = getCreditSum('proElective4');
-            const sem4_sportElective = getCreditSum('sport4');
-            // 第四學期沒有 Fou/core/interest
-            const sem4_total = sem4_proRequired + sem4_proElective + sem4_sportElective;
-
-            // 更新各學期顯示 (使用 .text() 替代 textContent)
-            $('#sem1-total').text(`本學期學分：${sem1_total}`);
-            $('#sem2-total').text(`本學期學分：${sem2_total}`);
-            $('#sem3-total').text(`本學期學分：${sem3_total}`);
-            $('#sem4-total').text(`本學期學分：${sem4_total}`);
-
-            // 更新總學分顯示
-            const totalCredit = sem1_total + sem2_total + sem3_total + sem4_total;
-            $('#total-credit').text(totalCredit);
-        }
-
-        // 負責計算並判斷是否能畢業（由按鈕觸發）
-        window.calculate = function() {
-            // 重新執行更新計算，確保總學分為最新
-            updateCredits();
-
-            // 取得總學分
-            const totalCredit = parseInt($('#total-credit').text(), 10);
-
-            // ----------------------------------------------------
-            // 1. 各類課程學分統計 (用於結果細項顯示)
-            // ----------------------------------------------------
-            const totalProRequired = getCreditSum('proRequired1') + getCreditSum('proRequired2') + getCreditSum('proRequired3') + getCreditSum('proRequired4');
-            const totalProElective = getCreditSum('proElective1') + getCreditSum('proElective2') + getCreditSum('proElective3') + getCreditSum('proElective4');
-            const totalFoundation = getCreditSum('Fou1');
-            const totalSportElective = getCreditSum('sport3') + getCreditSum('sport4');
-
-            // ----------------------------------------------------
-            // 2. 通識課程學分統計 (用於門檻判斷)
-            // ----------------------------------------------------
-            const totalCoreCredit = getCreditSum('core1') + getCreditSum('core2'); // 核心必修
-            const totalInterestCredit = getCreditSum('interest1') + getCreditSum('interest2'); // 興趣選修
-
-            // 通識畢業門檻判斷 (核心必修 >= 6) 或 (核心必修 >= 4 且 興趣選修 >= 2)
-            const passGenEdCondition1 = (totalCoreCredit >= 6);
-            const passGenEdCondition2 = (totalCoreCredit >= 4 && totalInterestCredit >= 2);
-            const passGenEd = passGenEdCondition1 || passGenEdCondition2;
-
-            let generalEducationStatus = passGenEd
-                ? `✅ 通識課程門檻**通過**！`
-                : `❌ 通識課程門檻**未通過**！`;
-
-            generalEducationStatus += `<br> (核心必修: ${totalCoreCredit} 學分, 興趣選修: ${totalInterestCredit} 學分)`;
-
-
-            // ----------------------------------------------------
-            // 3. 總學分門檻判斷
-            // ----------------------------------------------------
-            const graduationThreshold = 72;
-            const passTotalCredit = (totalCredit >= graduationThreshold);
-
-            // 最終畢業判斷
-            const finalGraduationStatus = (passTotalCredit && passGenEd)
-                ? "🎉 **恭喜！您已達到所有畢業門檻！**"
-                : "⚠️ **很抱歉，您尚未完全達到畢業門檻。**";
-
-            // ----------------------------------------------------
-            // 4. 更新結果區塊 (使用 .html() 替代 innerHTML)
-            // ----------------------------------------------------
-            const resultBox = $('#result');
-            resultBox.html(`
-                <h3>🎓 畢業門檻判斷</h3>
-                <p><strong>總學分門檻:</strong> ${totalCredit} / ${graduationThreshold} 學分 ${passTotalCredit ? '✅ 達標' : '❌ 未達標'}</p>
-                <p><strong>通識課程門檻:</strong> ${generalEducationStatus}</p>
-
-                <hr style="border-color: #bbd3e6;">
-                <h4>各類學分細項 (僅供參考):</h4>
-                <ul>
-                    <li>專業必修總計: ${totalProRequired} 學分</li>
-                    <li>專業選修總計: ${totalProElective} 學分</li>
-                    <li>基礎必修總計 (國文/英文): ${totalFoundation} 學分</li>
-                    <li>體育選修總計: ${totalSportElective} 學分</li>
-                </ul>
-
-                <hr style="border-color: #bbd3e6;">
-                <p style="font-size: 1.2em; text-align: center;"><strong>${finalGraduationStatus}</strong></p>
-            `);
-            // 使用 .show() 顯示結果區塊
-            resultBox.show();
-        }
-
-        // 監聽所有 checkbox 的變動，即時更新學分總和 (使用 jQuery 的 .on('change') 處理事件)
-        $('.semester-block').on('change', 'input[type="checkbox"]', updateCredits);
-
-        // 頁面載入時先執行一次計算，顯示初始學分
-        updateCredits();
-    });
-</script>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>侏羅紀恐龍介紹</title>
+    <link rel="stylesheet" href="styles.css">
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <script src="script.js" defer></script>
 </head>
 <body>
+    <header class="main-header">
+        <h1>侏羅紀時期的奇幻巨獸：恐龍世界</h1>
+        <p>一個橫跨數千萬年的中生代傳奇</p>
+    </header>
 
-<header>北商 進二技-資訊管理系 課程與學分計算</header>
+    <nav class="horizontal-nav">
+        <ul class="nav-list">
+            <li><a href="#intro-era" class="nav-link">時代概覽</a></li>
+            <li><a href="#dino-types" class="nav-link">恐龍分類</a></li>
+            <li><a href="#sauropods-group" class="nav-link">蜥腳類 (長頸)</a></li>
+            <li><a href="#theropods-group" class="nav-link">獸腳類 (肉食)</a></li>
+            <li><a href="#armored-group" class="nav-link">裝甲類 (劍龍)</a></li>
+            <li><a href="#conclusion" class="nav-link">專題結語</a></li>
+        </ul>
+    </nav>
 
-<div class="container">
+    <main class="main-content-wrapper">
+        <section id="intro-era" class="content-section era-intro-card">
+            <h2 class="section-title">I. 宏偉的開始：侏羅紀時代 (The Jurassic Period)</h2>
+            <div class="content-body">
+                <p>侏羅紀是中生代的第二個紀，時間約從 2.01 億年前持續到 1.45 億年前。它得名於歐洲的侏羅山。在這個時期，地球環境主要由溫暖濕潤的氣候主導，茂密的針葉林、蘇鐵和蕨類植物遍佈大陸，為恐龍的繁盛提供了理想的棲息地。大陸板塊開始分裂，形成了今日大西洋的雛形。</p>
+                <p class="highlight-text"><strong>重點特色：</strong> 蜥腳類恐龍達到體型和數量的巔峰，鳥類始祖（始祖鳥）的出現。</p>
+            </div>
+        </section>
+        
+        <hr class="section-divider">
 
-    <section class="semester-block">
-        <h2>📘 課程目標與評分說明</h2>
-        <div class="course-list">
-            <div class="course">
-                <div class="type">第一學期：基礎必修</div>
-                <h3>國文</h3>
-                <p>使學生認識文學與語言在歷史與生活之重要性，進而提升學生語文能力。</p>
-                <p>學分：2</p>
+        <section id="dino-types" class="content-section dino-intro-card">
+            <h2 class="section-title">II. 侏羅紀恐龍：種類與生態</h2>
+            <div class="content-body">
+                <p>侏羅紀被譽為恐龍的「黃金時代」。恐龍在這時期體型達到最大，分化出多種形態以適應不同的生態位。我們將重點介紹三大類群：巨大的植食性蜥腳類、兇猛的肉食性獸腳類和獨特的裝甲類。</p>
             </div>
-             <div class="course">
-                <div class="type">第一學期：基礎必修</div>
-                <h3>英文</h3>
-                 <p>本課程旨在幫助學生提升商務溝通能力，這在當今職場中至關重要。...</p>
-                 <p>學分：2</p>
-             </div>
-             <div class="course">
-                 <div class="type">第一學期：專業必修</div>
-                 <h3>程式語言</h3>
-                 <p>本課程的目的是培養使用 Python 的能力。</p>
-                 <p>學分：3</p>
-             </div>
-             <div class="course">
-                 <div class="type">第一學期：專業必修</div>
-                 <h3>資料倫理與法律</h3>
-                 <p> 本課程旨在培養學生理解資訊科技發展所帶來的倫理與法律挑戰，並具備分析、評估與解決相關問題的能力。</p>
-                 <p>學分：2</p>
-             </div>
-             <div class="course">
-                 <div class="type">第一學期：專業必修</div>
-                 <h3>管理資訊系統</h3>
-                 <p>建立資訊系統功能與架構的基本認識與概念，並融合資訊科技管理的知識與技能，於未來迅速掌握多元系統功能，並進一步增強個人競爭力。</p>
-                 <p>學分：3</p>
-             </div>
-             <div class="course">
-                 <div class="type">第一學期：專業選修</div>
-                 <h3>統計學</h3>
-                 <p> 針對商學院學生，提供統計學及其應用的觀念介紹。學成後，學生面對各種複雜現象，可運用蒐集、整理、分析、解釋資料等程序，將其轉化為清楚的資訊，並進而推論、預測，以為決策的依據。</p>
-                 <p>學分：3</p>
-             </div>
-             <div class="course">
-                 <div class="type">第一學期：專業選修</div>
-                 <h3>資料結構</h3>
-                 <p>本課程介紹資料結構的基本觀念與一般的應用，由最基本的資料結構與演算法概念開始說明，再以 Python 語言加以詮釋陣列結構、堆疊、鏈結串列、佇列、樹狀、圖形、排序、搜尋等重要觀念。特別強調實際應用與演算法的瞭解。</p>
-                 <p>學分：3</p>
-             </div>
-             <div class="course">
-                 <div class="type">第一學期：專業選修</div>
-                 <h3>網站應用程式設計</h3>
-                 <p>前端網頁設計為當前網頁設計的主流,透過本課程可使同學們對網頁前端設計的有所認識。</p>
-                 <p>學分：3</p>
-             </div>
-             <div class="course">
-                 <div class="type">第二學期：專業必修</div>
-                 <h3>應用統計學</h3>
-                 <p> 針對商學院學生，提供統計學及其應用的觀念介紹。學成後，學生面對各種複雜現象，可運用蒐集、整理、分析、解釋資料等程序，將其轉化為清楚的資訊，並進而推論、預測，以為決策的依據。</p>
-                 <p>學分：3</p>
-             </div>
-             <div class="course">
-                 <div class="type">第二學期：專業必修</div>
-                 <h3>物件導向系統分析與設計</h3>
-                 <p>課程著重於分析方法之應用，並以UML為工具，讓同學可以透過實際的活動，從收集系統需求開始，逐步完成系統分析與設計作業，並為接下來的專題規劃預作準備。...</p>
-                 <p>學分：3</p>
-             </div>
-             <div class="course">
-                 <div class="type">第二學期：專業必修</div>
-                 <h3>資訊網路</h3>
-                 <p>在網路管理中需要具備對於網路設備原理的介紹，網路設備的設定、操作和管理。並且培養學生解決網路問題的實務課程。</p>
-                 <p>學分：3</p>
-             </div>
-             <div class="course">
-                 <div class="type">第二學期：專業選修</div>
-                 <h3>國際認證管理進階</h3>
-                 <p>提供對網絡安全的深入的理論理解，為學生提供設計和支持網絡安全所需的知識和技能，提供以體驗為導向的課程，採用與行業相關的教學方法，讓學生為行業的入門級工作做好準備...。</p>
-                 <p>學分：3</p>
-             </div>
-             <div class="course">
-                 <div class="type">第二學期：專業選修</div>
-                 <h3>行動應用開發</h3>
-                 <p>引導學生進入Android手機應用程式開發的領域，提供相關知識及實用的學習方法。課程涵蓋Android開發環境的設置、SDK的運用、使用者介面設計，以及程式撰寫的基礎和進階技巧。</p>
-                 <p>學分：3</p>
-             </div>
-             <div class="course">
-                 <div class="type">第二學期：專業選修</div>
-                 <h3>作業系統</h3>
-                 <p>本課程在一般性地介紹作業系統相關的原理與技術。涵蓋的主題包括作業系統的功能和結構、CPU排班、死結（預防、避免、恢復）等。...</p>
-                 <p>學分：3</p>
-             </div>
-             <div class="course">
-                 <div class="type">第三學期：專業必修</div>
-                 <h3>資料庫管理</h3>
-                 <p> 本課程將介紹資料庫概念，並強調關聯式資料庫模型。課程也將闡述實體關聯模型(ERD)的概念和應用與正規化的原則和應用。...</p>
-                 <p>學分：3</p>
-             </div>
-             <div class="course">
-                 <div class="type">第三學期：專業必修</div>
-                 <h3>電子商務與網路行銷</h3>
-                 <p>從企業經營與策略的角度，融合個案、理論、實務解說電子商務與網路行銷的樣貌，探討數位轉型、商業模式創新、服務生態系、服務創新工作坊、後疫情時代的電子商務創新、SDGs企業永續等議題...。</p>
-                 <p>學分：3</p>
-             </div>
-             <div class="course">
-                 <div class="type">第三學期：專業選修</div>
-                 <h3>國際認證管理進階</h3>
-                 <p>提供對網絡安全的深入的理論理解，為學生提供設計和支持網絡安全所需的知識和技能...。</p>
-                 <p>學分：3</p>
-             </div>
-             <div class="course">
-                 <div class="type">第三學期：專業選修</div>
-                 <h3>行動應用程式設計</h3>
-                 <p>學習行動應用程式開發方法與技術，能設計、實作並測試跨平台或特定平台的應用程式。</p>
-                 <p>學分：3</p>
-             </div>
-             <div class="course">
-                 <div class="type">第三學期：專業選修</div>
-                 <h3>消費者行為</h3>
-                 <p>現代企業面對多變的市場與消費者需求，行銷人員必須透過市場調查與行銷資訊掌握市場脈動...。</p>
-                 <p>學分：3</p>
-             </div>
-             <div class="course">
-                 <div class="type">第三學期：專業選修</div>
-                 <h3>資訊安全</h3>
-                 <p>本課程介紹電腦和網路安全的基礎知識。包含基礎觀念、技術、管理與應用。課程內容將包括基礎密碼學、作業系統安全、安全存取控制措施、安全程式編碼...。</p>
-                 <p>學分：3</p>
-             </div>
-             <div class="course">
-                 <div class="type">第三學期：專業選修</div>
-                 <h3>多媒體應用</h3>
-                 <p> 本課程目標為讓學習者能夠了解多媒體內容及數位媒體的種類與其基礎原理；並輔以實例介紹與技巧教學，讓同學了解國內外多媒體發展趨勢...。</p>
-                 <p>學分：3</p>
-             </div>
-             <div class="course">
-                 <div class="type">第四學期：專業必修</div>
-                 <h3>行動應用商務</h3>
-                 <p>本課程的目標在於介紹行動商務的相關應用，包括從行動商務的基本概念、技術及應用，以及目前基於行動裝置所發展出的社群行銷、社群商務等應用。...</p>
-                 <p>學分：3</p>
-             </div>
-             <div class="course">
-                 <div class="type">第四學期：專業選修</div>
-                 <h3>商業智慧與資料科學</h3>
-                 <p> 1. 理解「商用大數據分析」在企業／商業環境中的角色與應用價值。<br> 2. 能掌握從資料收集、處理、分析到報告／決策支援的完整大數據分析流程...。</p>
-                 <p>學分：3</p>
-             </div>
-             <div class="course">
-                 <div class="type">第四學期：專業選修</div>
-                 <h3>資料庫管理系統實作</h3>
-                 <p>掌握資料庫設計與操作技巧，能建構、管理與維護資料庫系統，並運用 SQL 進行資料查詢與分析。</p>
-                 <p>學分：3</p>
-             </div>
-             <div class="course">
-                 <div class="type">第四學期：專業選修</div>
-                 <h3>區塊鏈導論</h3>
-                 <p>本課程介紹區塊鏈技術和應用，透過解析實際應用案例，由淺入深地介紹區塊鏈技術緣起、演進過程、技術原理和發展趨勢。...</p>
-                 <p>學分：3</p>
-             </div>
-             <div class="course">
-                 <div class="type">第四學期：專業選修</div>
-                 <h3>企業資源規劃</h3>
-                 <p>了解企業資源規劃的概念與流程，學習如何整合企業內部資源以提升管理效率與決策能力。</p>
-                 <p>學分：3</p>
-             </div>
-             <div class="course">
-                 <div class="type">第四學期：專業選修</div>
-                 <h3>資訊科技管理</h3>
-                 <p>讓同學了解如何使用資訊科技管理，科技管理上目前使用主流的技術。</p>
-                 <p>學分：3</p>
-             </div>
-        </div>
-    </section>
+        </section>
+        
+        <section id="sauropods-group" class="dino-group-section">
+            <h2 class="group-title sauropod-color">A. 長頸巨獸：蜥腳類 (Sauropods) - 植食性</h2>
 
-    <section class="semester-block">
-        <h2>📝 四學期學分選擇與計算</h2>
+            <div id="diplodocus" class="dino-card sauropod-card">
+                <h3 class="dino-name">1. 梁龍 (Diplodocus)</h3>
+                <div class="dino-info-container">
+                    <div class="dino-text">
+                        <p><strong>特色：</strong> 擁有極長的鞭狀尾巴，用來防禦或發出聲音。是侏羅紀晚期北美洲的經典代表，體長可達 25 米。</p>
+                        <p><strong>食性：</strong> 主要以低矮的蕨類植物為食。</p>
+                        <button class="info-button" data-dino="Diplodocus">點擊查看生態資訊</button>
+                        <div id="Diplodocus-info" class="dino-info-box hidden-info"></div>
+                    </div>
+                    <div class="dino-image-placeholder">
+                        <img src="media/A1.png" alt="梁龍">
+                        </div>
+                </div>
+            </div>
 
-        <div class="semester-block">
-            <div class="semester-title">第一學期</div>
-            <div class="course-item">
-                <input type="checkbox" class="proRequired1" value="3" checked disabled> <span>專業必修：程式語言（3學分）</span>
+            <div id="brachiosaurus" class="dino-card sauropod-card">
+                <h3 class="dino-name">2. 腕龍 (Brachiosaurus)</h3>
+                <div class="dino-info-container">
+                    <div class="dino-text">
+                        <p><strong>特色：</strong> 前腿比後腿長，使得肩膀比臀部高，外形像長頸鹿。是最高的恐龍之一，適合啃食高處的樹冠葉子。</p>
+                        <p><strong>食性：</strong> 高位植食動物，攝取針葉樹和蘇鐵。</p>
+                        <button class="info-button" data-dino="Brachiosaurus">點擊查看生態資訊</button>
+                        <div id="Brachiosaurus-info" class="dino-info-box hidden-info"></div>
+                    </div>
+                    <div class="dino-image-placeholder">
+                        <img src="media/A2.png" alt="腕龍">
+                    </div>
+                </div>
             </div>
-            <div class="course-item">
-                <input type="checkbox" class="proRequired1" value="3" checked disabled> <span>專業必修：管理資訊系統（3學分）</span>
-            </div>
-            <div class="course-item">
-                <input type="checkbox" class="proRequired1" value="2" checked disabled> <span>專業必修：資訊倫理與法律（2學分）</span>
-            </div>
-            <div class="course-item">
-                <input type="checkbox" class="proElective1" value="3"> <span>專業選修：統計學（3學分）</span>
-            </div>
-            <div class="course-item">
-                <input type="checkbox" class="proElective1" value="3"> <span>專業選修：資料結構（3學分）</span>
-            </div>
-            <div class="course-item">
-                <input type="checkbox" class="proElective1" value="3"> <span>專業選修：網站應用程式設計（3學分）</span>
-            </div>
-            <div class="course-item">
-                <input type="checkbox" class="Fou1" value="2" checked disabled> <span>通識：國文（基礎必修）— 古文介紹（2學分）</span>
-            </div><div class="course-item">
-                <input type="checkbox" class="Fou1" value="2" checked disabled> <span>通識：英文（基礎必修）— 基本介紹（2學分）</span>
-            </div>
-            <div class="course-item">
-                <input type="checkbox" checked disabled> <span>通識：體育（必修，0學分）</span>
-            </div>
-            <div class="credit-result" id="sem1-total">本學期學分：0</div>
-        </div>
 
-        <div class="semester-block">
-            <div class="semester-title">第二學期</div>
-            <div class="course-item">
-                <input type="checkbox" class="proRequired2" value="3" checked disabled> <span>專業必修：應用統計學（3學分）</span>
+            <div id="apatosaurus" class="dino-card sauropod-card">
+                <h3 class="dino-name">3. 迷惑龍 (Apatosaurus)</h3>
+                <div class="dino-info-container">
+                    <div class="dino-text">
+                        <p><strong>特色：</strong> 體型粗壯，原名「雷龍」，體重驚人，是地球上曾出現過最大的動物之一。</p>
+                        <p><strong>食性：</strong> 低矮和中層的植物。</p>
+                        <button class="info-button" data-dino="Apatosaurus">點擊查看生態資訊</button>
+                        <div id="Apatosaurus-info" class="dino-info-box hidden-info"></div>
+                    </div>
+                    <div class="dino-image-placeholder">
+                        <img src="/page3/page3media/A3.jpg" alt="迷惑龍">
+                    </div>
+                </div>
             </div>
-            <div class="course-item">
-                <input type="checkbox" class="proRequired2" value="3" checked disabled> <span>專業必修：物件導向系統分析與設計（3學分）</span>
-            </div>
-            <div class="course-item">
-                <input type="checkbox" class="proRequired2" value="3" checked disabled> <span>專業必修：資訊網路（3學分）</span>
-            </div>
-            <div class="course-item">
-                <input type="checkbox" class="proElective2" value="3"> <span>專業選修：行動應用開發（3學分）</span>
-            </div>
-            <div class="course-item">
-                <input type="checkbox" class="proElective2" value="3"> <span>專業選修：作業系統（3學分）</span>
-            </div>
-            <div class="course-item">
-                <input type="checkbox" class="proElective2" value="3"> <span>專業選修：國際認證管理（3學分）</span>
-            </div>
-            <div class="course-item">
-                <input type="checkbox" class="core2" value="2"> <span>核心必修：公民意識/永續發展領域（2學分）</span>
-            </div>
-            <div class="course-item">
-                <input type="checkbox" class="core2" value="2"> <span>核心必修：生活美學領域（2學分）</span>
-            </div>
-            <div class="course-item">
-                <input type="checkbox" class="interest2" value="2"> <span>興趣選修：跨領域選修（2學分）</span>
-            </div>
-            <div class="course-item">
-                <input type="checkbox" checked disabled> <span>體育（必修，0學分）</span>
-            </div>
-            <div class="credit-result" id="sem2-total">本學期學分：0</div>
-        </div>
 
-        <div class="semester-block">
-            <div class="semester-title">第三學期</div>
-            <div class="course-item">
-                <input type="checkbox" class="proRequired3" value="3" checked disabled> <span>專業必修：電子商務與網路行銷（3學分）</span>
-            </div>
-            <div class="course-item">
-                <input type="checkbox" class="proRequired3" value="3" checked disabled> <span>專業必修：資料庫管理（3學分）</span>
-            </div>
-            <div class="course-item">
-                <input type="checkbox" class="proElective3" value="3"> <span>專業選修：國際認證管理進階（3學分）</span>
-            </div>
-            <div class="course-item">
-                <input type="checkbox" class="proElective3" value="3"> <span>專業選修：行動應用程式設計（3學分）</span>
-            </div>
-            <div class="course-item">
-                <input type="checkbox" class="proElective3" value="3"> <span>專業選修：消費者行為（3學分）</span>
-            </div>
-            <div class="course-item">
-                <input type="checkbox" class="proElective3" value="3"> <span>專業選修：資訊安全（3學分）</span>
-            </div>
-            <div class="course-item">
-                <input type="checkbox" class="proElective3" value="3"> <span>專業選修：多媒體應用（3學分）</span>
-            </div>
-            <div class="course-item">
-                <input type="checkbox" class="core1" value="2"> <span>核心必修：人文科學領域（2學分）</span>
-            </div>
-            <div class="course-item">
-                <input type="checkbox" class="core1" value="2"> <span>核心必修：社會科學領域（2學分）</span>
-            </div>
-            <div class="course-item">
-                <input type="checkbox" class="core2" value="2"> <span>核心必修：公民意識/永續發展領域（2學分）</span>
-            </div>
-            <div class="course-item">
-                <input type="checkbox" class="core2" value="2"> <span>核心必修：生活美學領域（2學分）</span>
-            </div>
-            <div class="course-item">
-                <input type="checkbox" class="interest1" value="2"> <span>興趣選修：跨領域選修（2學分）</span>
-            </div>
-            <div class="course-item">
-                <input type="checkbox" class="interest2" value="2"> <span>興趣選修：跨領域選修（2學分）</span>
-            </div>
-            <div class="course-item">
-                <input type="checkbox" class="sport3" value="2"> <span>通識：體育（選修 2 學分）</span>
-            </div>
-            <div class="credit-result" id="sem3-total">本學期學分：0</div>
-        </div>
+        </section>
 
-        <div class="semester-block">
-            <div class="semester-title">第四學期</div>
-            <div class="course-item">
-                <input type="checkbox" class="proRequired4" value="3" checked disabled> <span>專業必修：行動應用商務（3學分）</span>
-            </div>
-            <div class="course-item">
-                <input type="checkbox" class="proElective4" value="3"> <span>專業選修：商業智慧與資料科學（3學分）</span>
-            </div>
-            <div class="course-item">
-                <input type="checkbox" class="proElective4" value="3"> <span>專業選修：資料庫管理系統實作（3學分）</span>
-            </div>
-            <div class="course-item">
-                <input type="checkbox" class="proElective4" value="3"> <span>專業選修：區塊鏈導論（3學分）</span>
-            </div>
-            <div class="course-item">
-                <input type="checkbox" class="proElective4" value="3"> <span>專業選修：企業資源規劃（3學分）</span>
-            </div>
-            <div class="course-item">
-                <input type="checkbox" class="proElective4" value="3"> <span>專業選修：資訊科技管理（3學分）</span>
-            </div>
-            <div class="course-item">
-                <input type="checkbox" class="core1" value="2"> <span>核心必修：人文科學領域（2學分）</span>
-            </div>
-            <div class="course-item">
-                <input type="checkbox" class="core1" value="2"> <span>核心必修：社會科學領域（2學分）</span>
-            </div>
-            <div class="course-item">
-                <input type="checkbox" class="core2" value="2"> <span>核心必修：公民意識/永續發展領域（2學分）</span>
-            </div>
-            <div class="course-item">
-                <input type="checkbox" class="core2" value="2"> <span>核心必修：生活美學領域（2學分）</span>
-            </div>
-            <div class="course-item">
-                <input type="checkbox" class="interest1" value="2"> <span>興趣選修：跨領域選修（2學分）</span>
-            </div>
-            <div class="course-item">
-                <input type="checkbox" class="interest2" value="2"> <span>興趣選修：跨領域選修（2學分）</span>
-            </div>
-            <div class="course-item">
-                <input type="checkbox" class="sport4" value="2"> <span>通識：體育（選修 2 學分）</span>
-            </div>
-            <div class="credit-result" id="sem4-total">本學期學分：0</div>
-        </div>
+        <section id="theropods-group" class="dino-group-section">
+            <h2 class="group-title theropod-color">B. 兇猛獵手：獸腳類 (Theropods) - 肉食性</h2>
 
-        <div class="total-credit-box">
-            總學分：<span id="total-credit">0</span> ／ 畢業門檻 72
-        </div>
+            <div id="allosaurus" class="dino-card theropod-card">
+                <h3 class="dino-name">4. 異特龍 (Allosaurus)</h3>
+                <div class="dino-info-container">
+                    <div class="dino-text">
+                        <p><strong>特色：</strong> 侏羅紀晚期的頂級掠食者，體型龐大，頭部有裝飾性的角。被認為是群體獵食者。</p>
+                        <p><strong>食性：</strong> 肉食，捕食中大型植食性恐龍。</p>
+                        <button class="info-button" data-dino="Allosaurus">點擊查看生態資訊</button>
+                        <div id="Allosaurus-info" class="dino-info-box hidden-info"></div>
+                    </div>
+                    <div class="dino-image-placeholder">
+                        <img src="media/B4.jpg" alt="異特龍">
+                    </div>
+                </div>
+            </div>
 
-        <button type="button" onclick="calculate()">🚀 計算是否能畢業</button>
-        <div id="result" class="result-box" style="display:none;"></div>
-    </section>
+            <div id="ceratosaurus" class="dino-card theropod-card">
+                <h3 class="dino-name">5. 角鼻龍 (Ceratosaurus)</h3>
+                <div class="dino-info-container">
+                    <div class="dino-text">
+                        <p><strong>特色：</strong> 鼻子上長有一個明顯的短角，牙齒較長且呈刀狀。常與異特龍共享棲息地。</p>
+                        <p><strong>食性：</strong> 肉食，捕食魚類或小型恐龍。</p>
+                        <button class="info-button" data-dino="Ceratosaurus">點擊查看生態資訊</button>
+                        <div id="Ceratosaurus-info" class="dino-info-box hidden-info"></div>
+                    </div>
+                    <div class="dino-image-placeholder">
+                        <img src="media/B5.jpg" alt="角鼻龍">
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="armored-group" class="dino-group-section">
+            <h2 class="group-title armored-color">C. 裝甲與板片：裝甲類 (Stegosaurids) - 植食性</h2>
 
-</div>
-<p style="text-align: center; font-size: 0.8em; color: #888;">參考資料：<a href="https://ntcbadm.ntub.edu.tw/pub/Cur_Class.aspx" target="_blank">北商課表查詢</a></p>
-<footer>© 114 學年度 - 學分計算器</footer>
+            <div id="stegosaurus" class="dino-card armored-card">
+                <h3 class="dino-name">6. 劍龍 (Stegosaurus)</h3>
+                <div class="dino-info-container">
+                    <div class="dino-text">
+                        <p><strong>特色：</strong> 背部有兩排巨大的骨板，尾部有四根長刺用於防禦。腦袋相對於身體極小。</p>
+                        <p><strong>食性：</strong> 低位植食動物，可能吞食胃石幫助消化。</p>
+                        <button class="info-button" data-dino="Stegosaurus">點擊查看生態資訊</button>
+                        <div id="Stegosaurus-info" class="dino-info-box hidden-info"></div>
+                    </div>
+                    <div class="dino-image-placeholder">
+                        <img src="media/C6.jpg" alt="劍龍">
+                    </div>
+                </div>
+            </div>
+            
+            <div id="kentrosaurus" class="dino-card armored-card">
+                <h3 class="dino-name">7. 肯龍 (Kentrosaurus)</h3>
+                <div class="dino-info-container">
+                    <div class="dino-text">
+                        <p><strong>特色：</strong> 類似劍龍，但其背部後方和尾部擁有更多的尖刺，比劍龍更側重於主動防禦。</p>
+                        <p><strong>食性：</strong> 植食，以低矮的灌木為生。</p>
+                        <button class="info-button" data-dino="Kentrosaurus">點擊查看生態資訊</button>
+                        <div id="Kentrosaurus-info" class="dino-info-box hidden-info"></div>
+                    </div>
+                    <div class="dino-image-placeholder">
+                        <img src="media/C7.jpg" alt="肯龍">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="conclusion" class="content-section conclusion-card">
+            <h2 class="section-title">III. 結語</h2>
+            <div class="content-body">
+                <p>侏羅紀時代是生命演化史上一個充滿力量與奇蹟的篇章。恐龍在這一時期達到了體型和多樣性的頂峰，留下了無數的化石記錄，讓我們得以一窺這個失落的世界。它們的生存策略和演化適應性，至今仍是科學家們不斷探索的課題。</p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="main-footer">
+        <p>&copy; 2025 侏羅紀恐龍 | 僅供學術用途</p>
+    </footer>
 
 </body>
 </html>
