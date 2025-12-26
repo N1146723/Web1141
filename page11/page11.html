@@ -4,26 +4,18 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>深海探索之旅 - 潛入藍色秘境</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Noto+Sans+TC:wght@300;400;500;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
-        
-        <!-- 外部樣式表 -->
-        <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" href="style.css">
+        <script src="script.js" defer></script>
     </head>
     <body>
-        <!-- 氣泡背景 -->
         <div class="bubble-field" id="bubbleField"></div>
 
-        <!-- 側邊導航 -->
         <nav class="side-nav">
-            <div class="side-nav-item active" data-section="hero" data-label="首頁"></div>
-            <div class="side-nav-item" data-section="creatures" data-label="海洋生物"></div>
-            <div class="side-nav-item" data-section="depth" data-label="深度探索"></div>
-            <div class="side-nav-item" data-section="locations" data-label="潛水勝地"></div>
+            <div class="side-nav-item active" data-section="hero"></div>
+            <div class="side-nav-item" data-section="creatures"></div>
+            <div class="side-nav-item" data-section="depth"></div>
         </nav>
 
-        <!-- 導航欄 -->
         <nav class="navbar" id="navbar">
             <div class="logo">
                 <span class="logo-icon">🌊</span>
@@ -35,32 +27,29 @@
             </a>
         </nav>
 
-        <!-- 頁面包裝器 - 統一背景 -->
         <div class="page-wrapper">
 
-            <!-- 英雄區域 -->
             <section class="hero" id="hero">
                 <div class="hero-content">
                     <h1 class="hero-title">深海探索之旅</h1>
                     <p class="hero-subtitle">潛入藍色秘境，探索神秘海底世界<br>讓每一次呼吸都成為與海洋的對話</p>
                     <div class="hero-stats">
                         <div class="hero-stat">
-                            <span class="hero-stat-number" data-count="230000">0</span>
+                            <span class="hero-stat-number">230,000</span>
                             <span class="hero-stat-label">已知海洋物種</span>
                         </div>
                         <div class="hero-stat">
-                            <span class="hero-stat-number" data-count="11034">0</span>
+                            <span class="hero-stat-number">11,034</span>
                             <span class="hero-stat-label">最深海溝(公尺)</span>
                         </div>
                         <div class="hero-stat">
-                            <span class="hero-stat-number" data-count="71">0</span>
+                            <span class="hero-stat-number">71</span>
                             <span class="hero-stat-label">地球海洋覆蓋(%)</span>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- 海洋生物區 - 展開式 -->
             <section class="section" id="creatures">
                 <div class="section-header">
                     <span class="section-icon">🐠</span>
@@ -68,10 +57,11 @@
                     <p class="section-subtitle">點擊生物查看詳細資訊</p>
                 </div>
                 <div class="creature-showcase">
-                    <!-- 鯨鯊 -->
                     <div class="creature-item active">
                         <div class="creature-header">
-                            <span class="creature-icon">🦈</span>
+                            <div class="creature-icon">
+                                <img src="media/Whale Shark.jpg" alt="鯨鯊">
+                            </div>
                             <div class="creature-brief">
                                 <h3 class="creature-name">鯨鯊</h3>
                                 <p class="creature-latin">Rhincodon typus - Whale Shark</p>
@@ -107,10 +97,11 @@
                         </div>
                     </div>
 
-                    <!-- 海龜 -->
                     <div class="creature-item">
                         <div class="creature-header">
-                            <span class="creature-icon">🐢</span>
+                            <div class="creature-icon">
+                                <img src="media/Green Sea Turtle.jpg" alt="綠蠵龜">
+                            </div>
                             <div class="creature-brief">
                                 <h3 class="creature-name">綠蠵龜</h3>
                                 <p class="creature-latin">Chelonia mydas - Green Sea Turtle</p>
@@ -146,10 +137,11 @@
                         </div>
                     </div>
 
-                    <!-- 水母 -->
                     <div class="creature-item">
                         <div class="creature-header">
-                            <span class="creature-icon">🔮</span>
+                            <div class="creature-icon">
+                                <img src="media/Moon Jellyfish.jpg" alt="月亮水母">
+                            </div>
                             <div class="creature-brief">
                                 <h3 class="creature-name">月亮水母</h3>
                                 <p class="creature-latin">Aurelia aurita - Moon Jellyfish</p>
@@ -185,10 +177,11 @@
                         </div>
                     </div>
 
-                    <!-- 章魚 -->
                     <div class="creature-item">
                         <div class="creature-header">
-                            <span class="creature-icon">🐙</span>
+                            <div class="creature-icon">
+                                <img src="media/Giant Pacific Octopus.jpg" alt="大章魚">
+                            </div>
                             <div class="creature-brief">
                                 <h3 class="creature-name">大章魚</h3>
                                 <p class="creature-latin">Enteroctopus dofleini - Giant Pacific Octopus</p>
@@ -224,10 +217,11 @@
                         </div>
                     </div>
 
-                    <!-- 小丑魚 -->
                     <div class="creature-item">
                         <div class="creature-header">
-                            <span class="creature-icon">🐟</span>
+                            <div class="creature-icon">
+                                <img src="media/Clownfish.jpg" alt="小丑魚">
+                            </div>
                             <div class="creature-brief">
                                 <h3 class="creature-name">小丑魚</h3>
                                 <p class="creature-latin">Amphiprioninae - Clownfish</p>
@@ -263,10 +257,11 @@
                         </div>
                     </div>
 
-                    <!-- 蝠鱝 -->
                     <div class="creature-item">
                         <div class="creature-header">
-                            <span class="creature-icon">🦅</span>
+                            <div class="creature-icon">
+                                <img src="media/Manta Ray.jpg" alt="蝠鱝">
+                            </div>
                             <div class="creature-brief">
                                 <h3 class="creature-name">蝠鱝</h3>
                                 <p class="creature-latin">Mobula birostris - Manta Ray</p>
@@ -304,7 +299,6 @@
                 </div>
             </section>
 
-            <!-- 深度探索區 - 圓形深度計 -->
             <section class="section" id="depth">
                 <div class="section-header">
                     <span class="section-icon">🔬</span>
@@ -312,15 +306,12 @@
                     <p class="section-subtitle">點擊深度，探索不同海洋層的奧秘</p>
                 </div>
                 <div class="depth-container">
-                    <!-- 圓形深度計 -->
                     <div class="depth-wheel">
-                        <div class="wheel-ring"></div>
                         <div class="wheel-center" id="wheelCenter">
                             <span class="wheel-center-icon">🌊</span>
                             <p class="wheel-center-name">選擇深度</p>
                             <p class="wheel-center-hint">探索海洋層</p>
                         </div>
-                        <!-- 8個深度按鈕 -->
                         <button class="depth-btn" data-depth="1">0m</button>
                         <button class="depth-btn" data-depth="2">20m</button>
                         <button class="depth-btn" data-depth="3">40m</button>
@@ -330,132 +321,12 @@
                         <button class="depth-btn" data-depth="7">6000m</button>
                         <button class="depth-btn" data-depth="8">11000m</button>
                     </div>
-                    <!-- 結果卡片 -->
                     <div class="depth-result-card" id="depthResult">
                         <p class="result-desc">選擇上方深度計的深度，探索該海洋層的生物與特點</p>
                     </div>
                 </div>
             </section>
 
-            <!-- 潛水勝地 -->
-            <section class="section" id="locations">
-                <div class="section-header">
-                    <span class="section-icon">📍</span>
-                    <h2 class="section-title">世界潛水勝地</h2>
-                    <p class="section-subtitle">精選全球最夢幻的水下天堂</p>
-                </div>
-                <div class="locations-container">
-                    <div class="location-row">
-                        <div class="location-image-box">
-                            <img src="media/Maldives.jpg" alt="馬爾地夫">
-                        </div>
-                        <div class="location-content-box">
-                            <h3 class="location-name">馬爾地夫</h3>
-                            <p class="location-region">📍 印度洋群島</p>
-                            <p class="location-desc">由1200多個珊瑚島嶼組成的天堂，擁有世界上最清澈的海水。在這裡你可以與蝠鱝共游、穿梭於色彩繽紛的珊瑚礁之間，體驗夜潛時螢光珊瑚的夢幻景象。</p>
-                            <div class="location-stats">
-                                <div class="location-stat">
-                                    <span class="location-stat-icon">👁️</span>
-                                    <div class="location-stat-info">
-                                        <span class="location-stat-label">能見度</span>
-                                        <span class="location-stat-value">30-50m</span>
-                                    </div>
-                                </div>
-                                <div class="location-stat">
-                                    <span class="location-stat-icon">🌡️</span>
-                                    <div class="location-stat-info">
-                                        <span class="location-stat-label">水溫</span>
-                                        <span class="location-stat-value">27-30°C</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="location-row">
-                        <div class="location-image-box">
-                            <img src="media/Great Barrier Reef.jpg" alt="大堡礁">
-                        </div>
-                        <div class="location-content-box">
-                            <h3 class="location-name">大堡礁</h3>
-                            <p class="location-region">📍 澳洲昆士蘭</p>
-                            <p class="location-desc">世界最大的珊瑚礁系統，綿延2300公里，是唯一從太空可見的生物結構。擁有超過1500種魚類和400種珊瑚，是潛水員此生必訪的聖地。</p>
-                            <div class="location-stats">
-                                <div class="location-stat">
-                                    <span class="location-stat-icon">📏</span>
-                                    <div class="location-stat-info">
-                                        <span class="location-stat-label">長度</span>
-                                        <span class="location-stat-value">2,300km</span>
-                                    </div>
-                                </div>
-                                <div class="location-stat">
-                                    <span class="location-stat-icon">🐠</span>
-                                    <div class="location-stat-info">
-                                        <span class="location-stat-label">魚類種類</span>
-                                        <span class="location-stat-value">1,500+種</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="location-row">
-                        <div class="location-image-box">
-                            <img src="media/Palau.jpg" alt="帛琉">
-                        </div>
-                        <div class="location-content-box">
-                            <h3 class="location-name">帛琉</h3>
-                            <p class="location-region">📍 西太平洋密克羅尼西亞</p>
-                            <p class="location-desc">被譽為「潛水者的麥加」，藍角是全球知名的放流潛點。水下能見度極高，鯊魚、蝠鱝、海龜隨處可見，還有獨特的水母湖可以與無毒水母共游。</p>
-                            <div class="location-stats">
-                                <div class="location-stat">
-                                    <span class="location-stat-icon">🦈</span>
-                                    <div class="location-stat-info">
-                                        <span class="location-stat-label">特色</span>
-                                        <span class="location-stat-value">鯊魚城</span>
-                                    </div>
-                                </div>
-                                <div class="location-stat">
-                                    <span class="location-stat-icon">🔮</span>
-                                    <div class="location-stat-info">
-                                        <span class="location-stat-label">獨特景點</span>
-                                        <span class="location-stat-value">水母湖</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="location-row">
-                        <div class="location-image-box">
-                            <img src="media/Komodo Island.jpg" alt="科莫多島">
-                        </div>
-                        <div class="location-content-box">
-                            <h3 class="location-name">科莫多島</h3>
-                            <p class="location-region">📍 印尼</p>
-                            <p class="location-desc">以科莫多龍聞名，水下世界同樣精彩。強勁的海流帶來豐富營養，吸引蝠鱝群聚。粉紅沙灘與藍色海水形成絕美對比，是攝影愛好者的天堂。</p>
-                            <div class="location-stats">
-                                <div class="location-stat">
-                                    <span class="location-stat-icon">🌊</span>
-                                    <div class="location-stat-info">
-                                        <span class="location-stat-label">特色</span>
-                                        <span class="location-stat-value">強流放流</span>
-                                    </div>
-                                </div>
-                                <div class="location-stat">
-                                    <span class="location-stat-icon">🦅</span>
-                                    <div class="location-stat-info">
-                                        <span class="location-stat-label">必看</span>
-                                        <span class="location-stat-value">蝠鱝群</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 頁尾 -->
             <footer class="footer">
                 <div class="footer-content">
                     <div class="footer-brand">
@@ -465,27 +336,14 @@
                         </div>
                         <p class="footer-desc">探索海洋的奧秘，感受深藍的召喚。讓我們一起潛入這片占地球71%的藍色世界，發現生命的另一種可能。</p>
                     </div>
-                    <div class="footer-section">
-                        <h4>相關資源</h4>
-                        <ul class="footer-links">
-                            <li><a href="#">🌡️ 水溫查詢</a></li>
-                            <li><a href="#">🌊 潮汐預報</a></li>
-                            <li><a href="#">📜 潛水證照</a></li>
-                            <li><a href="#">⚠️ 安全須知</a></li>
-                        </ul>
-                    </div>
                 </div>
                 <div class="footer-bottom">
                     <p>© 2024 Deep Explorer | Made with 🐋 by <span class="highlight">N1116445 呂宜蓁</span></p>
                 </div>
             </footer>
 
-        </div><!-- end page-wrapper -->
+        </div>
 
-        <!-- 回到頂部按鈕 -->
         <button class="scroll-top" id="scrollTop">↑</button>
-
-        <!-- 外部腳本 -->
-        <script src="script.js"></script>
     </body>
 </html>

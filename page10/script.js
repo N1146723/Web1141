@@ -1,5 +1,5 @@
-// 測驗題目資料
-const quizData = [
+// 問答題庫
+const questions = [
     {
         question: "狗狗的嗅覺比人類強多少倍？",
         options: ["10 倍", "100 倍", "10,000 倍以上", "1,000 倍"],
@@ -32,35 +32,37 @@ const quizData = [
     }
 ];
 
-let currentQuestion = 0;
-let score = 0;
+let qIndex = 0;
+let totalScore = 0;
 let answered = false;
 
-// 更新題目
 function updateQuestion() {
-    const question = quizData[currentQuestion];
-    document.getElementById('questionText').textContent = question.question;
-    document.querySelector('.quiz-question-icon').textContent = question.icon;
+    const q = questions[qIndex];
+    document.getElementById('questionText').textContent = q.question;
+    document.querySelector('.quiz-question-icon').textContent = q.icon;
     
-    const optionsContainer = document.getElementById('optionsContainer');
-    optionsContainer.innerHTML = '';
+    const container = document.getElementById('optionsContainer');
+    container.innerHTML = '';
     
-    question.options.forEach((option, index) => {
+    for (let i = 0; i < q.options.length; i++) {
         const btn = document.createElement('button');
         btn.className = 'quiz-option';
-        btn.dataset.answer = index;
-        btn.textContent = option;
-        btn.onclick = () => selectAnswer(index);
-        optionsContainer.appendChild(btn);
-    });
+        btn.dataset.answer = i;
+        btn.textContent = q.options[i];
+        btn.onclick = function() {
+            selectAnswer(parseInt(this.dataset.answer));
+        };
+        container.appendChild(btn);
+    }
 
-    // 更新進度點
-    document.querySelectorAll('.progress-dot').forEach((dot, index) => {
-        dot.classList.remove('active');
-        if (index === currentQuestion) {
-            dot.classList.add('active');
+    const dots = document.querySelectorAll('.progress-dot');
+    for (let i = 0; i < dots.length; i++) {
+        if (i === qIndex) {
+            dots[i].classList.add('active');
+        } else {
+            dots[i].classList.remove('active');
         }
-    });
+    }
 
     answered = false;
 }
@@ -69,29 +71,29 @@ function selectAnswer(selected) {
     if (answered) return;
     answered = true;
 
-    const question = quizData[currentQuestion];
-    const options = document.querySelectorAll('.quiz-option');
-    const progressDots = document.querySelectorAll('.progress-dot');
+    const q = questions[qIndex];
+    const opts = document.querySelectorAll('.quiz-option');
+    const dots = document.querySelectorAll('.progress-dot');
 
-    options.forEach((option, index) => {
-        option.style.pointerEvents = 'none';
-        if (index === question.correct) {
-            option.classList.add('correct');
-        } else if (index === selected && selected !== question.correct) {
-            option.classList.add('wrong');
+    for (let i = 0; i < opts.length; i++) {
+        opts[i].style.pointerEvents = 'none';
+        if (i === q.correct) {
+            opts[i].classList.add('correct');
+        } else if (i === selected && selected !== q.correct) {
+            opts[i].classList.add('wrong');
         }
-    });
-
-    if (selected === question.correct) {
-        score++;
-        progressDots[currentQuestion].classList.add('correct');
-    } else {
-        progressDots[currentQuestion].classList.add('wrong');
     }
 
-    setTimeout(() => {
-        currentQuestion++;
-        if (currentQuestion < quizData.length) {
+    if (selected === q.correct) {
+        totalScore++;
+        dots[qIndex].classList.add('correct');
+    } else {
+        dots[qIndex].classList.add('wrong');
+    }
+
+    setTimeout(function() {
+        qIndex++;
+        if (qIndex < questions.length) {
             updateQuestion();
         } else {
             showResult();
@@ -101,48 +103,51 @@ function selectAnswer(selected) {
 
 function showResult() {
     document.getElementById('quizContent').style.display = 'none';
-    const result = document.getElementById('quizResult');
-    result.classList.add('show');
+    const resultDiv = document.getElementById('quizResult');
+    resultDiv.classList.add('show');
 
-    const percentage = (score / quizData.length) * 100;
-    let icon, text;
+    const pct = (totalScore / questions.length) * 100;
+    let icon, txt;
 
-    if (percentage >= 80) {
+    if (pct >= 80) {
         icon = '🏆';
-        text = '狗狗知識達人！';
-    } else if (percentage >= 60) {
+        txt = '狗狗知識達人！';
+    } else if (pct >= 60) {
         icon = '🎉';
-        text = '表現不錯！';
-    } else if (percentage >= 40) {
+        txt = '表現不錯！';
+    } else if (pct >= 40) {
         icon = '😊';
-        text = '繼續加油！';
+        txt = '繼續加油！';
     } else {
         icon = '📚';
-        text = '多學習狗狗知識吧！';
+        txt = '多學習狗狗知識吧！';
     }
 
     document.getElementById('resultIcon').textContent = icon;
-    document.getElementById('resultText').textContent = text;
-    document.getElementById('resultScore').textContent = `你答對了 ${score} / ${quizData.length} 題`;
+    document.getElementById('resultText').textContent = txt;
+    document.getElementById('resultScore').textContent = '你答對了 ' + totalScore + ' / ' + questions.length + ' 題';
 }
 
+// 重新開始測驗
 function restartQuiz() {
-    currentQuestion = 0;
+    currentQ = 0;
     score = 0;
-    answered = false;
+    hasAnswered = false;
 
     document.getElementById('quizContent').style.display = 'block';
     document.getElementById('quizResult').classList.remove('show');
     
-    document.querySelectorAll('.progress-dot').forEach(dot => {
-        dot.classList.remove('correct', 'wrong');
-    });
+    // 清除進度點的狀態
+    var allDots = document.querySelectorAll('.progress-dot');
+    for (var i = 0; i < allDots.length; i++) {
+        allDots[i].classList.remove('correct', 'wrong');
+    }
 
     updateQuestion();
 }
 
-// 狗狗品種資料
-const breedData = {
+// 狗品種資料庫
+var dogBreeds = {
     golden: {
         icon: '🦮',
         name: '黃金獵犬',
@@ -217,95 +222,82 @@ const breedData = {
     }
 };
 
-// 開啟品種彈窗
+// 開啟品種詳細資訊彈窗
 function openModal(breed) {
-    const data = breedData[breed];
-    if (!data) return;
+    var dogInfo = dogBreeds[breed];
+    if (!dogInfo) return;
 
-    document.getElementById('modalIcon').textContent = data.icon;
-    document.getElementById('modalTitle').textContent = data.name;
-    document.getElementById('modalSize').textContent = data.size;
-    document.getElementById('modalLife').textContent = data.life;
-    document.getElementById('modalExercise').textContent = data.exercise;
-    document.getElementById('modalShedding').textContent = data.shedding;
-    document.getElementById('modalDesc').textContent = data.desc;
+    document.getElementById('modalIcon').textContent = dogInfo.icon;
+    document.getElementById('modalTitle').textContent = dogInfo.name;
+    document.getElementById('modalSize').textContent = dogInfo.size;
+    document.getElementById('modalLife').textContent = dogInfo.life;
+    document.getElementById('modalExercise').textContent = dogInfo.exercise;
+    document.getElementById('modalShedding').textContent = dogInfo.shedding;
+    document.getElementById('modalDesc').textContent = dogInfo.desc;
 
     document.getElementById('breedModal').classList.add('show');
 }
 
+// 關閉彈窗
 function closeModal() {
     document.getElementById('breedModal').classList.remove('show');
 }
 
-// 點擊彈窗外部關閉
-document.getElementById('breedModal').addEventListener('click', function(e) {
-    if (e.target === this) {
-        closeModal();
-    }
-});
 
-// 品種卡片點擊事件
-document.querySelectorAll('.breed-card').forEach(card => {
-    card.addEventListener('click', function() {
-        const breed = this.dataset.breed;
-        openModal(breed);
-    });
-});
-
-// 狗狗年齡計算
+// 計算狗狗年齡對應人類年齡
 function calculateAge() {
-    const dogAge = parseFloat(document.getElementById('dogAge').value);
-    const dogSize = document.getElementById('dogSize').value;
+    var age = parseFloat(document.getElementById('dogAge').value);
+    var size = document.getElementById('dogSize').value;
 
-    if (isNaN(dogAge) || dogAge < 0) {
+    if (isNaN(age) || age < 0) {
         alert('請輸入有效的狗狗年齡！');
         return;
     }
 
-    let humanAge;
-    let stage;
-    let message;
+    var humanYears;
+    var lifeStage;
+    var msg;
 
-    // 根據體型計算人類年齡（更精確的換算方式）
-    if (dogAge <= 1) {
-        humanAge = dogAge * 15;
-    } else if (dogAge <= 2) {
-        humanAge = 15 + (dogAge - 1) * 9;
+    // 計算公式
+    if (age <= 1) {
+        humanYears = age * 15;
+    } else if (age <= 2) {
+        humanYears = 15 + (age - 1) * 9;
     } else {
-        let yearMultiplier;
-        if (dogSize === 'small') {
-            yearMultiplier = 4;
-        } else if (dogSize === 'medium') {
-            yearMultiplier = 5;
+        var multiplier;
+        if (size === 'small') {
+            multiplier = 4;
+        } else if (size === 'medium') {
+            multiplier = 5;
         } else {
-            yearMultiplier = 6;
+            multiplier = 6;
         }
-        humanAge = 24 + (dogAge - 2) * yearMultiplier;
+        humanYears = 24 + (age - 2) * multiplier;
     }
 
-    humanAge = Math.round(humanAge);
+    humanYears = Math.round(humanYears);
 
     // 判斷生命階段
-    if (humanAge <= 15) {
-        stage = '🐣 幼年期';
-        message = '就像小朋友一樣充滿好奇心，需要很多學習和社會化訓練！';
-    } else if (humanAge <= 25) {
-        stage = '🎒 青少年期';
-        message = '精力旺盛、活潑好動，可能有點叛逆，需要耐心引導！';
-    } else if (humanAge <= 50) {
-        stage = '💪 壯年期';
-        message = '身體最健康的時期，保持規律運動和均衡飲食很重要！';
-    } else if (humanAge <= 70) {
-        stage = '🌟 中年期';
-        message = '活動量可能開始減少，要注意體重控制和定期健檢！';
+    if (humanYears <= 15) {
+        lifeStage = '🐣 幼年期';
+        msg = '就像小朋友一樣充滿好奇心，需要很多學習和社會化訓練！';
+    } else if (humanYears <= 25) {
+        lifeStage = '🎒 青少年期';
+        msg = '精力旺盛、活潑好動，可能有點叛逆，需要耐心引導！';
+    } else if (humanYears <= 50) {
+        lifeStage = '💪 壯年期';
+        msg = '身體最健康的時期，保持規律運動和均衡飲食很重要！';
+    } else if (humanYears <= 70) {
+        lifeStage = '🌟 中年期';
+        msg = '活動量可能開始減少，要注意體重控制和定期健檢！';
     } else {
-        stage = '👴 老年期';
-        message = '需要更多的愛與照顧，適度運動和舒適的休息環境很重要！';
+        lifeStage = '👴 老年期';
+        msg = '需要更多的愛與照顧，適度運動和舒適的休息環境很重要！';
     }
 
-    document.getElementById('humanAge').textContent = `相當於人類 ${humanAge} 歲`;
-    document.getElementById('ageStage').textContent = stage;
-    document.getElementById('ageMessage').textContent = message;
+    document.getElementById('humanAge').textContent = '相當於人類 ' + humanYears + ' 歲';
+    document.getElementById('ageStage').textContent = lifeStage;
+    document.getElementById('ageMessage').textContent = msg;
     document.getElementById('calcResult').classList.add('show');
 }
 
@@ -314,29 +306,44 @@ function scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// 翻轉卡片觸摸支援
-document.querySelectorAll('.flip-card').forEach(card => {
-    card.addEventListener('click', function() {
-        this.classList.toggle('flipped');
+// 頁面載入完成後執行
+window.addEventListener('load', function() {
+    // 初始化測驗
+    updateQuestion();
+    
+    // 翻轉卡片
+    var cards = document.querySelectorAll('.flip-card');
+    for (var i = 0; i < cards.length; i++) {
+        cards[i].addEventListener('click', function() {
+            this.classList.toggle('flipped');
+        });
+    }
+    
+    // 品種卡片點擊
+    var breedCards = document.querySelectorAll('.breed-card');
+    for (var i = 0; i < breedCards.length; i++) {
+        breedCards[i].addEventListener('click', function() {
+            openModal(this.dataset.breed);
+        });
+    }
+    
+    // 點擊背景關閉彈窗
+    document.getElementById('breedModal').addEventListener('click', function(e) {
+        if (e.target === this) closeModal();
     });
 });
 
-// 初始化
-window.addEventListener('load', function() {
-    updateQuestion();
-});
-
-// 滾動事件監聽 - 控制浮動按鈕顯示/隱藏
+// 滾動事件
 window.addEventListener('scroll', function() {
-    const floatingPaw = document.querySelector('.floating-paw');
+    var btn = document.querySelector('.floating-paw');
     if (window.pageYOffset > 300) {
-        floatingPaw.classList.add('show');
+        btn.classList.add('show');
     } else {
-        floatingPaw.classList.remove('show');
+        btn.classList.remove('show');
     }
 });
 
-// ESC 鍵關閉彈窗
+// ESC鍵關閉彈窗
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
         closeModal();

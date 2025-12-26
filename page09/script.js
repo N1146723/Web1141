@@ -1,5 +1,5 @@
-// 咖啡廳資料（26間）
-const cafes = [
+// 咖啡廳資料
+var cafes = [
     { name: 'Tropo Coffee', lat: 25.0330, lng: 121.5654, district: '信義區', desc: '摩登復古的迷人空間' },
     { name: '汩咖啡', lat: 25.0590, lng: 121.5570, district: '松山區', desc: '鐵皮屋裡的日式侘寂空間' },
     { name: '真拾生活', lat: 25.0600, lng: 121.5580, district: '松山區', desc: '北歐鄉村風Brunch Cafe' },
@@ -28,186 +28,173 @@ const cafes = [
     { name: '山上聊', lat: 25.1520, lng: 121.5150, district: '北投區', desc: '呼吸芬多精擼貓的祕密花園' }
 ];
 
-// 初始化地圖
-let map;
-let markers = [];
+var myMap;
+var allMarkers = [];
 
 window.addEventListener('load', function() {
-    // 初始化地圖（台北市中心）
-    map = L.map('map').setView([25.0478, 121.5318], 12);
+    // 初始化地圖 (中心點設在台北市中心)
+    myMap = L.map('map').setView([25.0478, 121.5318], 12);
     
-    // 添加地圖圖層（使用 OpenStreetMap）
+    // 載入地圖圖層
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         maxZoom: 19
-    }).addTo(map);
+    }).addTo(myMap);
     
-    // 添加咖啡廳標記
-    cafes.forEach((cafe, index) => {
-        // 創建自定義圖標
-        const coffeeIcon = L.divIcon({
+    // 在地圖上加標記
+    for (var i = 0; i < cafes.length; i++) {
+        var cafe = cafes[i];
+        var icon = L.divIcon({
             className: 'custom-marker',
-            html: `<div class="marker-pin"><span class="marker-icon">☕</span></div>`,
+            html: '<div class="marker-pin"><span class="marker-icon">☕</span></div>',
             iconSize: [40, 40],
             iconAnchor: [20, 40],
             popupAnchor: [0, -40]
         });
         
-        // 添加標記
-        const marker = L.marker([cafe.lat, cafe.lng], { icon: coffeeIcon })
-            .addTo(map)
-            .bindPopup(`
-                <div style="text-align: center; min-width: 180px;">
-                    <strong style="font-size: 1.1rem; color: #5d4037; display: block; margin-bottom: 8px;">${cafe.name}</strong>
-                    <span style="font-size: 0.85rem; color: #8d6e63; display: block; margin-bottom: 5px;">📍 ${cafe.district}</span>
-                    <span style="font-size: 0.85rem; color: #666; display: block; margin-bottom: 10px;">${cafe.desc}</span>
-                    <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(cafe.name + ' ' + cafe.district + ' 台北')}" 
-                    target="_blank" 
-                    style="color: #d4a574; text-decoration: none; font-weight: bold; font-size: 0.85rem;">
-                    🗺️ 在 Google 地圖中查看
-                    </a>
-                </div>
-            `);
+        var m = L.marker([cafe.lat, cafe.lng], { icon: icon })
+            .addTo(myMap)
+            .bindPopup(
+                '<div style="text-align: center; min-width: 180px;">' +
+                    '<strong style="font-size: 1.1rem; color: #5d4037; display: block; margin-bottom: 8px;">' + cafe.name + '</strong>' +
+                    '<span style="font-size: 0.85rem; color: #8d6e63; display: block; margin-bottom: 5px;">📍 ' + cafe.district + '</span>' +
+                    '<span style="font-size: 0.85rem; color: #666; display: block; margin-bottom: 10px;">' + cafe.desc + '</span>' +
+                    '<a href="https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(cafe.name + ' ' + cafe.district + ' 台北') + '" ' +
+                    'target="_blank" ' +
+                    'style="color: #d4a574; text-decoration: none; font-weight: bold; font-size: 0.85rem;">' +
+                    '🗺️ 在 Google 地圖中查看' +
+                    '</a>' +
+                '</div>'
+            );
         
-        markers.push(marker);
-    });
+        allMarkers.push(m);
+    }
     
-});
-
-// 咖啡廳卡片點擊互動
-const cards = document.querySelectorAll('.cafe-card');
-
-cards.forEach((card, index) => {
-    card.addEventListener('click', function() {
-        // 移除所有active狀態
-        cards.forEach(c => c.classList.remove('active'));
-        
-        // 添加當前active狀態
-        this.classList.add('active');
-        
-        // 獲取位置資料
-        const location = this.getAttribute('data-location');
-        const name = this.getAttribute('data-name');
-        
-        // 更新地圖到對應位置
-        if (location && map) {
-            const [lat, lng] = location.split(',');
-            map.setView([parseFloat(lat), parseFloat(lng)], 16, {
-                animate: true,
-                duration: 1
-            });
-            
-            // 找到並打開對應的標記彈出視窗
-            const markerIndex = cafes.findIndex(cafe => cafe.name === name);
-            if (markerIndex !== -1 && markers[markerIndex]) {
-                markers[markerIndex].openPopup();
+    // 點擊卡片(地圖會移動到對應位置)
+    var cards = document.querySelectorAll('.cafe-card');
+    for (var i = 0; i < cards.length; i++) {
+        cards[i].addEventListener('click', function() {
+            // 清除其他卡片的 active
+            for (var j = 0; j < cards.length; j++) {
+                cards[j].classList.remove('active');
             }
-        }
-
-        // 手機/平板版：滾動到地圖區域
-        if (window.innerWidth <= 1200) {
-            const mapSection = document.querySelector('.map-section');
-            const navbar = document.querySelector('.navbar');
-            if (mapSection) {
-                const navbarHeight = navbar ? navbar.offsetHeight : 0;
-                const targetTop = mapSection.getBoundingClientRect().top + window.pageYOffset - navbarHeight - 10;
-                window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
-                // Leaflet 在尺寸/位置變動後偶爾需要重算，避免出現空白或裁切
-                if (map) {
-                    setTimeout(() => map.invalidateSize(), 400);
+            this.classList.add('active');
+            
+            var loc = this.getAttribute('data-location');
+            var name = this.getAttribute('data-name');
+            
+            if (loc && myMap) {
+                var coords = loc.split(',');
+                var lat = parseFloat(coords[0]);
+                var lng = parseFloat(coords[1]);
+                
+                // 地圖移動到所選卡片位置並放大
+                myMap.setView([lat, lng], 16, {
+                    animate: true,
+                    duration: 1
+                });
+                
+                // 打開對應卡片標記的popup
+                for (var k = 0; k < cafes.length; k++) {
+                    if (cafes[k].name === name) {
+                        allMarkers[k].openPopup();
+                        break;
+                    }
                 }
             }
-        }
-    });
-});
 
-// 區域篩選功能
-const filterBtns = document.querySelectorAll('.filter-btn');
-const currentCount = document.getElementById('currentCount');
-const filterHeader = document.getElementById('filterHeader');
-const filterContent = document.getElementById('filterContent');
-const filterToggle = filterHeader.querySelector('.filter-toggle');
-
-// 摺疊/展開功能
-filterHeader.addEventListener('click', function() {
-    filterContent.classList.toggle('collapsed');
-    filterToggle.classList.toggle('collapsed');
-});
-
-// 篩選按鈕功能
-filterBtns.forEach(btn => {
-    btn.addEventListener('click', function() {
-        // 移除所有按鈕的 active 狀態
-        filterBtns.forEach(b => b.classList.remove('active'));
-        
-        // 添加當前按鈕的 active 狀態
-        this.classList.add('active');
-        
-        // 獲取篩選的區域
-        const district = this.getAttribute('data-district');
-        
-        let visibleCount = 0;
-        
-        // 篩選咖啡廳卡片
-        cards.forEach((card, index) => {
-            const cardDistrict = card.getAttribute('data-district');
-            
-            if (district === 'all' || cardDistrict === district) {
-                card.style.display = 'block';
-                visibleCount++;
-                
-                // 顯示對應的地圖標記
-                if (markers[index]) {
-                    markers[index].addTo(map);
-                }
-            } else {
-                card.style.display = 'none';
-                
-                // 隱藏對應的地圖標記
-                if (markers[index]) {
-                    markers[index].remove();
+            // 手機版自動跳到地圖
+            if (window.innerWidth <= 1200) {
+                var mapSection = document.querySelector('.map-section');
+                var navbar = document.querySelector('.navbar');
+                if (mapSection && navbar) {
+                    var targetTop = mapSection.getBoundingClientRect().top + window.pageYOffset - navbar.offsetHeight - 10;
+                    window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
+                    setTimeout(function() {
+                        myMap.invalidateSize();
+                    }, 400);
                 }
             }
         });
-        
-        // 更新計數
-        currentCount.textContent = visibleCount;
-        
-        // 調整地圖視角以顯示所有可見標記
-        if (district !== 'all' && visibleCount > 0) {
-            // 創建包含所有可見標記的邊界
-            const visibleMarkers = [];
-            cards.forEach((card, index) => {
-                const cardDistrict = card.getAttribute('data-district');
-                if (cardDistrict === district && markers[index]) {
-                    visibleMarkers.push(markers[index]);
-                }
-            });
-            
-            if (visibleMarkers.length > 0) {
-                const group = L.featureGroup(visibleMarkers);
-                map.fitBounds(group.getBounds(), { padding: [50, 50] });
+    }
+    
+    // 篩選按鈕功能
+    var filterBtns = document.querySelectorAll('.filter-btn');
+    var countDisplay = document.getElementById('currentCount');
+    var filterHead = document.getElementById('filterHeader');
+    var filterBody = document.getElementById('filterContent');
+    var toggleIcon = filterHead.querySelector('.filter-toggle');
+
+    // 篩選器展開收合
+    filterHead.addEventListener('click', function() {
+        filterBody.classList.toggle('collapsed');
+        toggleIcon.classList.toggle('collapsed');
+    });
+
+    // 行政區篩選
+    for (var i = 0; i < filterBtns.length; i++) {
+        filterBtns[i].addEventListener('click', function() {
+            // 更新active狀態
+            for (var j = 0; j < filterBtns.length; j++) {
+                filterBtns[j].classList.remove('active');
             }
-        } else if (district === 'all') {
-            // 重置到台北市中心視角
-            map.setView([25.0478, 121.5318], 12);
-        }
+            this.classList.add('active');
+            
+            var dist = this.getAttribute('data-district');
+            var count = 0;
+            
+            // 顯示或隱藏卡片和標記
+            for (var k = 0; k < cards.length; k++) {
+                var cardDist = cards[k].getAttribute('data-district');
+                
+                if (dist === 'all' || cardDist === dist) {
+                    cards[k].style.display = 'block';
+                    count++;
+                    if (allMarkers[k]) allMarkers[k].addTo(myMap);
+                } else {
+                    cards[k].style.display = 'none';
+                    if (allMarkers[k]) allMarkers[k].remove();
+                }
+            }
+            
+            countDisplay.textContent = count;
+            
+            // 調整地圖顯示範圍
+            if (dist !== 'all' && count > 0) {
+                var visibleMarkers = [];
+                for (var m = 0; m < cards.length; m++) {
+                    if (cards[m].getAttribute('data-district') === dist && allMarkers[m]) {
+                        visibleMarkers.push(allMarkers[m]);
+                    }
+                }
+                
+                if (visibleMarkers.length > 0) {
+                    var group = L.featureGroup(visibleMarkers);
+                    myMap.fitBounds(group.getBounds(), { padding: [50, 50] });
+                }
+            } else if (dist === 'all') {
+                myMap.setView([25.0478, 121.5318], 12);
+            }
+        });
+    }
+    
+    // 回到頂部按鈕
+    var backToTop = document.querySelector('.floating-btn');
+    backToTop.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 });
 
-// 浮動按鈕功能
-const floatingBtn = document.querySelector('.floating-btn');
-floatingBtn.addEventListener('click', function() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-});
-
-// 滾動時顯示/隱藏浮動按鈕
+// 滾動一段距離顯示回到頂部按鈕
 window.addEventListener('scroll', function() {
-    if (window.pageYOffset > 300) {
-        floatingBtn.style.opacity = '1';
-        floatingBtn.style.pointerEvents = 'auto';
-    } else {
-        floatingBtn.style.opacity = '0';
-        floatingBtn.style.pointerEvents = 'none';
+    var btn = document.querySelector('.floating-btn');
+    if (btn) {
+        if (window.pageYOffset > 300) {
+            btn.style.opacity = '1';
+            btn.style.pointerEvents = 'auto';
+        } else {
+            btn.style.opacity = '0';
+            btn.style.pointerEvents = 'none';
+        }
     }
 });

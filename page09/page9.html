@@ -5,14 +5,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>台北咖啡地圖 - 探索城市中的咖啡香</title>
         
-        <!-- Leaflet CSS -->
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-        
-        <!-- 外部樣式表 -->
         <link rel="stylesheet" href="style.css" />
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+        <script src="script.js"></script>
     </head>
     <body>
-        <!-- 頂部導航欄 -->
         <nav class="navbar">
             <div class="nav-content">
                 <div class="logo">
@@ -45,24 +43,19 @@
             </div>
         </nav>
 
-        <!-- 主要內容 -->
         <div class="container">
             <div class="content-wrapper">
-                <!-- 地圖區域 -->
                 <div class="map-section">
                     <div class="map-header">
                         <h2>📍 咖啡廳地圖</h2>
                         <p>點擊右側咖啡廳卡片，在地圖上查看位置</p>
                     </div>
                     <div class="map-container">
-                        <!-- OpenStreetMap -->
                         <div id="map"></div>
                     </div>
                 </div>
 
-                <!-- 咖啡廳列表側邊欄 -->
                 <div class="cafes-sidebar">
-                    <!-- 區域篩選器 -->
                     <div class="filter-section">
                         <div class="filter-header" id="filterHeader">
                             <div class="filter-title">
@@ -89,7 +82,6 @@
                     </div>
 
                     <div class="cafes-list">
-                        <!-- 信義區 -->
                         <div class="cafe-card" data-location="25.0330,121.5654" data-name="Tropo Coffee" data-district="信義區">
                             <div class="cafe-number">1</div>
                             <div class="cafe-card-header">
@@ -111,7 +103,6 @@
                             </div>
                         </div>
 
-                        <!-- 松山區 -->
                         <div class="cafe-card" data-location="25.0590,121.5570" data-name="汩咖啡" data-district="松山區">
                             <div class="cafe-number">2</div>
                             <div class="cafe-card-header">
@@ -259,7 +250,6 @@
                             </div>
                         </div>
 
-                        <!-- 中山區 -->
                         <div class="cafe-card" data-location="25.0539,121.5246" data-name="春秋書店" data-district="中山區">
                             <div class="cafe-number">9</div>
                             <div class="cafe-card-header">
@@ -344,7 +334,6 @@
                             </div>
                         </div>
 
-                        <!-- 大安區 -->
                         <div class="cafe-card" data-location="25.0340,121.5440" data-name="好物 Spirit" data-district="大安區">
                             <div class="cafe-number">13</div>
                             <div class="cafe-card-header">
@@ -387,7 +376,6 @@
                             </div>
                         </div>
 
-                        <!-- 大同區 -->
                         <div class="cafe-card" data-location="25.0539,121.5195" data-name="幻猻家咖啡" data-district="大同區">
                             <div class="cafe-number">15</div>
                             <div class="cafe-card-header">
@@ -472,7 +460,6 @@
                             </div>
                         </div>
 
-                        <!-- 中正區 -->
                         <div class="cafe-card" data-location="25.0420,121.5180" data-name="直物文具Cafe" data-district="中正區">
                             <div class="cafe-number">19</div>
                             <div class="cafe-card-header">
@@ -515,7 +502,6 @@
                             </div>
                         </div>
 
-                        <!-- 士林區 -->
                         <div class="cafe-card" data-location="25.1019,121.5512" data-name="野人花園" data-district="士林區">
                             <div class="cafe-number">21</div>
                             <div class="cafe-card-header">
@@ -579,7 +565,6 @@
                             </div>
                         </div>
 
-                        <!-- 內湖區 -->
                         <div class="cafe-card" data-location="25.0820,121.5880" data-name="文心藝所" data-district="內湖區">
                             <div class="cafe-number">24</div>
                             <div class="cafe-card-header">
@@ -601,7 +586,6 @@
                             </div>
                         </div>
 
-                        <!-- 北投區 -->
                         <div class="cafe-card" data-location="25.1370,121.5010" data-name="穠咖啡" data-district="北投區">
                             <div class="cafe-number">25</div>
                             <div class="cafe-card-header">
@@ -647,37 +631,12 @@
                 </div>
             </div>
 
-            <!-- 底部資訊卡片 -->
-            <div class="info-cards">
-                <div class="info-card">
-                    <div class="info-icon">☕</div>
-                    <h3 class="info-title">精選咖啡廳</h3>
-                    <p class="info-description">嚴選台北市各區特色咖啡廳，每間都有獨特風格和故事</p>
-                </div>
-                <div class="info-card">
-                    <div class="info-icon">⭐</div>
-                    <h3 class="info-title">高評分推薦</h3>
-                    <p class="info-description">所有咖啡廳平均評分4.7以上，品質有保證</p>
-                </div>
-                <div class="info-card">
-                    <div class="info-icon">🕐</div>
-                    <h3 class="info-title">不限時空間</h3>
-                    <p class="info-description">多間咖啡廳提供不限時服務，適合工作與閱讀</p>
-                </div>
-                <div class="info-card">
-                    <div class="info-icon">📸</div>
-                    <h3 class="info-title">IG打卡熱點</h3>
-                    <p class="info-description">精選多間適合拍照的特色空間，留下美好回憶</p>
-                </div>
-            </div>
         </div>
 
-        <!-- 浮動按鈕 -->
         <div class="floating-btn" title="回到頂部">
             ↑
         </div>
 
-        <!-- 頁尾 -->
         <footer class="footer">
             <div class="footer-content">
                 <p>資料來源：<a href="https://iceoffice.com.tw/taipeicafemap/" target="_blank">食攝人生 - 台北咖啡廳地圖</a></p>
@@ -685,11 +644,5 @@
                 <p style="margin-top: 15px; font-size: 0.9rem;">製作者：呂宜蓁 N1116445</p>
             </div>
         </footer>
-
-        <!-- Leaflet JS -->
-        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-        
-        <!-- 外部腳本 -->
-        <script src="script.js"></script>
     </body>
 </html>

@@ -1,5 +1,9 @@
-/* ===== 基礎重置 ===== */
-* { margin: 0; padding: 0; box-sizing: border-box; }
+/* 基本設定 */
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
 
 body {
     font-family: 'Microsoft JhengHei', 'PingFang TC', sans-serif;
@@ -7,7 +11,7 @@ body {
     min-height: 100vh;
 }
 
-/* ===== 導航欄 ===== */
+/* 導覽列 */
 .navbar {
     background: linear-gradient(135deg, #6b4423, #3e2723);
     padding: 18px 35px;
@@ -28,14 +32,22 @@ body {
 .logo {
     display: flex;
     align-items: center;
-    gap: 12px;
     color: white;
 }
 
-.logo-icon { font-size: 2.2rem; }
+.logo-icon { 
+    font-size: 2.2rem;
+    margin-right: 12px;
+}
 
-.logo-text h1 { font-size: 1.6rem; margin-bottom: 3px; }
-.logo-text p { font-size: 0.85rem; opacity: 0.9; }
+.logo-text h1 { 
+    font-size: 1.6rem; 
+    margin-bottom: 3px; 
+}
+.logo-text p { 
+    font-size: 0.85rem; 
+    opacity: 0.9; 
+}
 
 .nav-right {
     display: flex;
@@ -43,7 +55,10 @@ body {
     gap: 22px;
 }
 
-.nav-stats { display: flex; gap: 25px; }
+.nav-stats { 
+    display: flex;
+    gap: 25px;
+}
 
 .home-btn {
     display: flex;
@@ -64,13 +79,22 @@ body {
     transform: translateY(-2px);
 }
 
-.home-btn-icon { font-size: 1.1rem; }
+.nav-stat-item { 
+    text-align: center; 
+    color: white; 
+}
+.nav-stat-number { 
+    font-size: 1.4rem; 
+    font-weight: bold; 
+    color: #d4a574; 
+}
+.nav-stat-label { 
+    font-size: 0.75rem; 
+    opacity: 0.9; 
+    margin-top: 3px; 
+}
 
-.nav-stat-item { text-align: center; color: white; }
-.nav-stat-number { font-size: 1.4rem; font-weight: bold; color: #d4a574; }
-.nav-stat-label { font-size: 0.75rem; opacity: 0.9; margin-top: 3px; }
-
-/* ===== 主要內容 ===== */
+/* 主要內容 */
 .container {
     max-width: 1500px;
     margin: 0 auto;
@@ -84,7 +108,7 @@ body {
     margin-bottom: 25px;
 }
 
-/* ===== 地圖區 ===== */
+/* 地圖 */
 .map-section {
     background: white;
     border-radius: 16px;
@@ -98,24 +122,25 @@ body {
     color: white;
 }
 
-.map-header h2 { font-size: 1.6rem; margin-bottom: 6px; }
-.map-header p { opacity: 0.9; font-size: 0.9rem; }
+.map-header h2 { 
+    font-size: 1.6rem; 
+    margin-bottom: 6px; 
+}
+.map-header p { 
+    opacity: 0.9; 
+    font-size: 0.9rem; 
+}
 
 .map-container {
     width: 100%;
     height: 650px;
     background: #e0e0e0;
-    border-radius: 0 0 16px 16px;
 }
 
 .map-container #map {
     width: 100%;
     height: 100%;
-    border-radius: 0 0 16px 16px;
 }
-
-/* Leaflet 標記 */
-.custom-marker { background: none; border: none; }
 
 .marker-pin {
     width: 36px;
@@ -134,12 +159,12 @@ body {
     font-size: 1.1rem;
 }
 
-/* ===== 咖啡廳側邊欄 ===== */
+/* 側邊欄 */
 .cafes-sidebar {
     display: flex;
     flex-direction: column;
-    gap: 18px;
     height: 740px;
+    gap: 18px;
 }
 
 /* 篩選器 */
@@ -169,7 +194,9 @@ body {
     transition: color 0.3s;
 }
 
-.filter-header:hover .filter-title { color: #d4a574; }
+.filter-header:hover .filter-title { 
+    color: #d4a574; 
+}
 
 .filter-toggle {
     font-size: 1.1rem;
@@ -177,7 +204,9 @@ body {
     transition: transform 0.3s;
 }
 
-.filter-toggle.collapsed { transform: rotate(-90deg); }
+.filter-toggle.collapsed { 
+    transform: rotate(-90deg); 
+}
 
 .filter-content {
     overflow: hidden;
@@ -186,7 +215,10 @@ body {
     opacity: 1;
 }
 
-.filter-content.collapsed { max-height: 0; opacity: 0; }
+.filter-content.collapsed { 
+    max-height: 0; 
+    opacity: 0; 
+}
 
 .filter-buttons {
     display: grid;
@@ -247,15 +279,21 @@ body {
 .cafes-list {
     display: flex;
     flex-direction: column;
-    gap: 12px;
     flex: 1;
     overflow-y: auto;
     padding: 4px;
+    gap: 12px;
 }
 
 .cafes-list::-webkit-scrollbar { width: 5px; }
-.cafes-list::-webkit-scrollbar-track { background: rgba(139, 110, 99, 0.1); border-radius: 8px; }
-.cafes-list::-webkit-scrollbar-thumb { background: rgba(139, 110, 99, 0.5); border-radius: 8px; }
+.cafes-list::-webkit-scrollbar-track { 
+    background: rgba(139, 110, 99, 0.1); 
+    border-radius: 8px; 
+}
+.cafes-list::-webkit-scrollbar-thumb { 
+    background: rgba(139, 110, 99, 0.5); 
+    border-radius: 8px; 
+}
 
 /* 咖啡廳卡片 */
 .cafe-card {
@@ -326,8 +364,7 @@ body {
 }
 
 .location-icon { color: #8d6e63; font-size: 0.95rem; margin-top: 1px; }
-
-.cafe-tags { display: flex; gap: 5px; flex-wrap: wrap; }
+.cafe-tags { display: flex; flex-wrap: wrap; gap: 5px; }
 
 .tag {
     padding: 3px 8px;
@@ -343,46 +380,7 @@ body {
     color: white;
 }
 
-/* ===== 底部資訊卡片 ===== */
-.info-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 22px;
-}
-
-.info-card {
-    background: white;
-    border-radius: 12px;
-    padding: 25px;
-    text-align: center;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-    transition: transform 0.3s;
-    border-top: 3px solid transparent;
-}
-
-.info-card:nth-child(1) { border-top-color: #8d6e63; }
-.info-card:nth-child(2) { border-top-color: #d4a574; }
-.info-card:nth-child(3) { border-top-color: #a1887f; }
-.info-card:nth-child(4) { border-top-color: #bcaaa4; }
-
-.info-card:hover { transform: translateY(-5px); }
-
-.info-icon { font-size: 2.5rem; margin-bottom: 12px; }
-
-.info-title {
-    font-size: 1rem;
-    color: #5d4037;
-    font-weight: bold;
-    margin-bottom: 8px;
-}
-
-.info-description {
-    font-size: 0.85rem;
-    color: #666;
-    line-height: 1.5;
-}
-
-/* ===== 頁尾 ===== */
+/* 頁尾 */
 .footer {
     margin-top: 50px;
     padding: 25px 20px;
@@ -396,7 +394,7 @@ body {
 .footer a { color: #d4a574; text-decoration: none; transition: color 0.3s; }
 .footer a:hover { color: #ffa726; }
 
-/* ===== 浮動按鈕 ===== */
+/* 回到頂部按鈕 */
 .floating-btn {
     position: fixed;
     bottom: 25px;
@@ -418,11 +416,9 @@ body {
     pointer-events: none;
 }
 
-.floating-btn:hover {
-    transform: scale(1.08);
-}
+.floating-btn:hover { transform: scale(1.08); }
 
-/* ===== 響應式 ===== */
+/* 響應式設計 */
 @media (max-width: 1200px) {
     .content-wrapper { grid-template-columns: 1fr; }
     .cafes-sidebar { order: -1; height: auto; }
@@ -442,5 +438,4 @@ body {
     .container { padding: 18px 12px; }
     .cafes-list { grid-template-columns: 1fr; }
     .map-container { height: 350px; }
-    .info-cards { grid-template-columns: 1fr; }
 }
