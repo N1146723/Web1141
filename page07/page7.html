@@ -1,12 +1,326 @@
 <!DOCTYPE html>
-<html >
-
+<html lang="zh-TW">
 <head>
-    <title>標題待改</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PawCare 寵物美容</title>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            margin: 0;
+            font-family: "Microsoft JhengHei", Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        header {
+            background-color: #ffb703;
+            padding: 20px;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 32px;
+            color: #023047;
+        }
+        header p {
+            margin: 10px 0 0;
+            color: #023047;
+            font-weight: bold;
+        }
+        nav {
+            background-color: #023047;
+            display: flex;
+            justify-content: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        nav a {
+            color: #fff;
+            padding: 14px 20px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        nav a:hover {
+            background-color: #219ebc;
+        }
+        
+        .banner {
+            background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('media/美容01.jpg') center/cover no-repeat;
+            height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 32px;
+            font-weight: bold;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+        }
+        section {
+            padding: 60px 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+        section h2 {
+            text-align: center;
+            color: #023047;
+            margin-bottom: 40px;
+            font-size: 28px;
+        }
+        
+        .about-images {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px;
+            justify-content: center;
+        }
+        .about-images img {
+            width: 48%;
+            max-width: 400px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .services {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            text-align: center;
+            overflow: hidden; 
+            transition: transform 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card img {
+            width: 100%;
+            height: 250px;
+            object-fit: contain;
+            background-color: #f9f9f9;
+        }
+        .card-content {
+            padding: 20px;
+        }
+        .card h3 {
+            margin-top: 0;
+            color: #023047;
+        }
+        .price {
+            color: #e63946;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-top: 15px;
+        }
+        form {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            max-width: 600px;
+            margin: auto;
+        }
+        form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #023047;
+        }
+        form input, form select, form textarea, form button {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        form button {
+            background-color: #ffb703;
+            border: none;
+            font-size: 18px;
+            font-weight: bold;
+            color: #023047;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        form button:hover {
+            background-color: #fca311;
+        }
+        .contact-info {
+            text-align: center;
+            font-size: 1.1em;
+        }
+        footer {
+            background-color: #023047;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 60px;
+        }
+
+     
+        @media (max-width: 600px) {
+            .banner {
+                font-size: 24px;
+                height: 250px;
+            }
+            .about-images {
+                flex-direction: column;
+                align-items: center;
+            }
+            .about-images img {
+                width: 100%;
+                height: auto;
+            }
+        }
+    </style>
 </head>
-
 <body>
-    <h1>N1146743 楊同學的第2個頁面</h1>
-</body>
 
+<header>
+    <h1>PawCare 寵物美容</h1>
+    <p>用心呵護每一位毛小孩</p>
+</header>
+
+<nav>
+    <a href="#about">關於我們</a>
+    <a href="#services">服務項目</a>
+    <a href="#booking">線上預約</a>
+    <a href="#contact">聯絡我們</a>
+</nav>
+
+<div class="banner">
+    專業 × 安心 × 有愛
+</div>
+
+<section id="about">
+    <h2>關於我們</h2>
+    <p style="text-align: center; font-size: 1.1em;">PawCare 寵物美容致力於提供專業、溫柔且安全的寵物美容服務。我們視您的毛小孩如己出，在舒適、無壓力的環境中，為他們提供洗澡、剪毛、造型與基礎護理，讓寶貝們煥然一新，開心回家。</p>
+    <div class="about-images">
+        <img src="media/造型08.jpg" alt="開心的薩摩耶犬戴著向日葵">
+        <img src="media/造型06.jpg" alt="可愛的博美犬戴著眼鏡">
+    </div>
+</section>
+
+<section id="services" style="background-color: #f0f4f8;">
+    <h2>服務項目</h2>
+    <div class="services">
+        <div class="card">
+            <img src="media/美容02.jpg" alt="幼犬洗澡">
+            <div class="card-content">
+                <h3>基礎洗澡</h3>
+                <p>溫和清潔、吹乾、基礎梳理，讓毛髮蓬鬆清爽。</p>
+                <p class="price">NT$600 起</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="media/美容03.jpg" alt="約克夏修剪毛髮">
+            <div class="card-content">
+                <h3>美容剪毛</h3>
+                <p>專業美容師依品種與需求，量身設計最適合的造型。</p>
+                <p class="price">NT$1200 起</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="media/造型07.jpg" alt="狗狗腳底毛修剪與護理">
+            <div class="card-content">
+                <h3>指甲與耳朵護理</h3>
+                <p>安全修剪指甲、磨甲、耳道清潔與腳底毛修剪。</p>
+                <p class="price">NT$300 起</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="media/造型05.jpg" alt="造型完成的可愛博美犬">
+            <div class="card-content">
+                <h3>全套尊寵方案</h3>
+                <p>包含精緻洗澡＋全身造型剪毛＋完整基礎護理。</p>
+                <p class="price">NT$1800 起</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="media/造型04.jpg" alt="寵物美容師與狗狗互動">
+            <div class="card-content">
+                <h3>特殊護理服務</h3>
+                <p>針對敏感肌膚、過敏體質提供專業護理建議與服務。</p>
+                <p class="price">NT$10000 起</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="media/造型09.jpg" alt="寵物美容師為狗狗梳理毛髮">
+            <div class="card-content">
+                <h3>造型設計諮詢</h3>
+                <p>提供專業造型建議，打造獨一無二的寵物風格。</p>
+                <p class="price">NT$5000 起</p>
+            </div>
+        </div>
+</section>
+
+<section id="booking">
+    <h2>線上預約</h2>
+    <form>
+        <label for="owner-name">飼主姓名</label>
+        <input type="text" id="owner-name" placeholder="請輸入您的姓名" required>
+        
+        <label for="owner-phone">聯絡電話</label>
+        <input type="tel" id="owner-phone" placeholder="請輸入聯絡電話" required>
+        
+        <label for="service-type">選擇服務項目</label>
+        <select id="service-type" required>
+            <option value="">請選擇...</option>
+            <option>基礎洗澡</option>
+            <option>美容剪毛</option>
+            <option>指甲與耳朵護理</option>
+            <option>全套尊寵方案</option>
+        </select>
+        
+        <label for="booking-date">預約日期</label>
+        <input type="date" id="booking-date" required min="<?php echo date('Y-m-d'); ?>">
+        
+        <label for="notes">備註（寵物品種、體型、特殊需求）</label>
+        <textarea id="notes" rows="4" placeholder="例如：黃金獵犬、25kg、皮膚較敏感..."></textarea>
+        
+        <button type="submit">送出預約</button>
+    </form>
+</section>
+
+<section id="contact" style="background-color: #ffb703; color: #023047;">
+    <h2>聯絡我們</h2>
+    <div class="contact-info">
+        <p><strong>地址：</strong>台北市寵物友善路 100 號</p>
+        <p><strong>電話：</strong>02-1234-5678</p>
+        <p><strong>營業時間：</strong>每日 10:00 – 19:00 (週二公休)</p>
+    </div>
+</section>
+
+<footer>
+    <p>© 2025 PawCare 寵物美容｜All Rights Reserved</p>
+</footer>
+
+<script>
+   
+    document.querySelector('form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('感謝您的預約！我們已收到您的資訊，將儘快由專人與您電話確認。');
+        this.reset();
+    });
+
+
+    const dateInput = document.getElementById('booking-date');
+    if(dateInput) {
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.setAttribute('min', today);
+    }
+</script>
+
+</body>
 </html>

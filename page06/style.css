@@ -1,20 +1,20 @@
-/* --- 1. 全域重置與基礎設定 --- */
+/* 設定 */
 *{
     padding:0;
     margin:0;
-    box-sizing: border-box; /* 確保 padding 和 border 不會增加元素總寬高 */
+    box-sizing: border-box; 
     font-family: Arial, "Helvetica Neue", Helvetica, "微軟正黑體", sans-serif;
 }
 
 body{
-    background-color: #f8f8f8; /* 輕微的灰色背景 */
+    background-color: #f8f8f8; /* 灰色背景 */
     line-height: 1.6;
 }
 
-/* --- 2. HEADER 樣式 (已調整 line-height) --- */
+/* 頁首 */
 header{
     background-color: #333;
-    height: 60px; /* 頁首高度 */
+    height: 60px; 
     color: white;
     width: 100%;
     position:relative;
@@ -25,21 +25,18 @@ h1{
     position:absolute;
     left: 120px;
     top:0;
-    line-height: 60px; /* 修正: 配合 header 高度實現垂直居中 */
+    line-height: 60px; 
     background-repeat:no-repeat;
     background-position:center;
     width:210px;
-    /* 假設 h1 使用背景圖作為 Logo，這裡使用 text-indent 隱藏文字 */
     text-indent:-9999px;
-    /* 為了讓這個 Logo h1 有點視覺效果，假設它有 logo.png 背景圖 */
-    /* background-image: url('images/logo.png'); */
 }
 
 header ul{
     position:absolute;
     right: 5vw;
     top:0;
-    line-height:60px; /* 修正: 配合 header 高度實現垂直居中 */
+    line-height:60px;
 }
 header li{
     display: inline;
@@ -51,45 +48,45 @@ header a{
     transition: color 0.3s;
 }
 header a:hover {
-    color: #ffd700; /* 懸停效果：亮金色 */
+    color: #ffd700; 
 }
 
-/* --- 3. MAIN 內容區塊設定 --- */
+/*內容 */
 main {
     width: 90%;
-    max-width: 1200px; /* 內容最大寬度 */
-    margin: 20px auto; /* 內容居中並上下留白 */
+    max-width: 1200px; 
+    margin: 20px auto; 
     padding: 20px 0;
 }
 
 section {
-    margin-bottom: 40px; /* 每個區塊之間的間距 */
+    margin-bottom: 40px; 
     padding: 20px;
     background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    border: 1px solid #ddd;
 }
 
 h2 {
-    color: #4CAF50; /* 綠色標題 */
+    color: #4CAF50; 
     margin-bottom: 15px;
     border-bottom: 2px solid #e0e0e0;
     padding-bottom: 5px;
 }
 
-/* --- 4. NEWS 區塊樣式 --- */
+/* 4 */
 .news a {
     color: #007BFF;
     text-decoration: none;
     font-weight: bold;
 }
 
-/* --- 5. SLOGAN 標語區塊樣式 --- */
+/*SLOGAN */
 .slogan {
-    background-color: #e8f5e9; /* 淺綠色背景 */
+    background-color: #e8f5e9; 
     text-align: center;
     padding: 30px;
-    border-left: 5px solid #4CAF50;
+    border-left: 35px solid #4CAF50;
 }
 blockquote {
     font-size: 1.5em;
@@ -98,26 +95,26 @@ blockquote {
     font-style: italic;
 }
 
-/* --- 6. 門市區塊樣式 --- */
+/* 6.門市 */
 .店面 {
     display: flex;
-    align-items: center; /* 垂直居中對齊 */
-    gap: 30px; /* 圖片和文字間距 */
+    align-items: center; 
+    gap: 30px; 
 }
 .店面 img {
     max-width: 50%;
     height: auto;
     border-radius: 6px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border: 1px solid #ddd;
 }
 .info h2 {
-    color: #D32F2F; /* 紅色強調新開張 */
+    color: #D32F2F; 
 }
 .info p {
     line-height: 1.8;
 }
 
-/* 新門市展示區塊 */
+/* 新門市 */
 .store-showcase {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -126,7 +123,7 @@ blockquote {
     background: linear-gradient(135deg, #fff 0%, #fafafa 100%);
     padding: 30px;
     border-radius: 12px;
-    box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+    border: 1px solid #ddd;
 }
 .store-image {
     overflow: hidden;
@@ -137,7 +134,7 @@ blockquote {
     height: auto;
     display: block;
     border-radius: 10px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    border: 1px solid #ddd;
     transition: transform 0.3s ease;
 }
 .store-image img:hover {
@@ -168,12 +165,19 @@ blockquote {
     margin-top: 20px;
 }
 .highlight-item {
-    background: white;
+    background: linear-gradient(to bottom, #fff 0%, #f0f0f0 100%);
     padding: 15px;
     border-radius: 8px;
     text-align: center;
     border-left: 4px solid #4CAF50;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.8);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+.highlight-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.8);
 }
 .highlight-item strong {
     display: block;
@@ -200,12 +204,12 @@ blockquote {
     }
 }
 
-/* --- 7. PRODUCT 產品列表樣式 (使用 Grid) --- */
+/*價格*/
 .product {
     display: grid;
-    /* 建立一個 4 欄的網格，每欄寬度相等 */
+
     grid-template-columns: repeat(4, 1fr); 
-    gap: 25px; /* 產品之間的間距 */
+    gap: 25px; 
     text-align: center;
 }
 
@@ -217,15 +221,15 @@ blockquote {
 }
 
 .product div:hover {
-    transform: translateY(-5px); /* 懸停時向上微移 */
-    box-shadow: 0 8px 16px rgba(0,0,0,0.15); /* 陰影加深 */
+    transform: translateY(-5px); 
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15); 
 }
 
 .product img {
     width: 100%;
     height: auto;
-    max-height: 180px; /* 限制圖片高度，避免大小不一 */
-    object-fit: cover; /* 確保圖片填滿容器且不變形 */
+    max-height: 180px; 
+    object-fit: cover; 
     border-radius: 4px;
     margin-bottom: 10px;
 }
@@ -241,7 +245,7 @@ blockquote {
     font-size: 0.9em;
 }
 
-/* --- 8. FOOTER 頁尾樣式 --- */
+/* 頁尾 */
 footer {
     background-color: #333;
     color: white;
@@ -251,24 +255,24 @@ footer {
     margin-top: 40px;
 }
 
-/* --- 9. RWD 響應式設計 (調整產品列表在小螢幕的顯示) --- */
+/*調整*/
 @media (max-width: 900px) {
-    /* 螢幕寬度小於 900px 時，產品列表改為 2 欄 */
+    
     .product {
         grid-template-columns: repeat(2, 1fr);
     }
     .店面 {
-        flex-direction: column; /* 門市圖片和文字改為垂直堆疊 */
+        flex-direction: column; 
     }
     .店面 img {
         max-width: 100%;
     }
     h1 {
-        left: 20px; /* 小螢幕下 Logo 靠左一點 */
+        left: 20px; 
     }
 }
 @media (max-width: 600px) {
-    /* 螢幕寬度小於 600px 時，產品列表改為單欄 */
+   
     .product {
         grid-template-columns: 1fr;
     }
@@ -278,7 +282,7 @@ footer {
     header li {
         margin-right: 2vw;
     }
-/* --- 10. 會員專區 / 填單系統 --- */
+/* 會員  */
 
 .member-area {
     width: 90%;
@@ -286,7 +290,7 @@ footer {
     margin: 40px auto;
     display: flex;
     gap: 40px;
-    flex-wrap: wrap; /* 小螢幕自動換行 */
+    flex-wrap: wrap;
 }
 
 .login-box,
@@ -307,7 +311,7 @@ footer {
     margin-bottom: 18px;
 }
 
-/* 表單格式 */
+
 form label {
     font-size: 0.95em;
     color: #333;
@@ -328,7 +332,7 @@ form input:focus {
     box-shadow: 0 0 3px rgba(76,175,80,0.4);
 }
 
-/* 提交按鈕 */
+/* 提交*/
 form button {
     width: 100%;
     padding: 12px;
@@ -345,7 +349,7 @@ form button:hover {
     background: #43A047;
 }
 
-/* --- Hero 封面背景樣式（共用於首頁及會員頁） --- */
+/* 背景*/
 .hero {
     position: relative;
     background-image: url('images/店面.png');
@@ -375,7 +379,7 @@ form button:hover {
     opacity: 0.95;
 }
 
-/* 07.jpg 展示樣式 */
+/* 07圖 */
 .cover-07 {
     display: flex;
     justify-content: center;
@@ -387,7 +391,7 @@ form button:hover {
     background: #fff;
     padding: 12px;
     border-radius: 10px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    border: 1px solid #ddd;
     text-align: center;
 }
 .cover-07 img {
@@ -406,7 +410,7 @@ form button:hover {
     .cover-07 .cover-inner { padding: 8px; }
 }
 
-/* 優惠券 / 購物金 / 訂閱樣式（會員專區） */
+/* 優惠券 */
 .coupons {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
