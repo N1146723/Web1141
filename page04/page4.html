@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>二技學分計算器</title>
+    <title>學分計算器</title>
 
     <!-- CSS -->
     <link rel="stylesheet" href="style.css">
@@ -16,170 +16,173 @@
 </head>
     <body>
 
-        <header>北商 進二技-資訊管理系 課程與學分計算</header>
+        <header>
+            <span class="main-title">課程整理 x 學分計算</span>
+            <span class="sub-title">畢業不迷路</span>
+        </header>
 
         <div class="container">
 
-            <section class="semester-block">
-                <h2>📘 課程目標與評分說明</h2>
+            <section class="semester-block" id="intro">
+                <h2>📘 課程介紹</h2>
                 <div class="course-list">
-                    <div class="course">
+                    <div class="course sem1">
                         <div class="type">第一學期：基礎必修</div>
                         <h3>國文</h3>
                         <p>使學生認識文學與語言在歷史與生活之重要性，進而提升學生語文能力。</p>
                         <p>學分：2</p>
                     </div>
-                    <div class="course">
+                    <div class="course sem1">
                         <div class="type">第一學期：基礎必修</div>
                         <h3>英文</h3>
                         <p>本課程旨在幫助學生提升商務溝通能力，這在當今職場中至關重要。...</p>
                         <p>學分：2</p>
                     </div>
-                    <div class="course">
+                    <div class="course sem1">
                         <div class="type">第一學期：專業必修</div>
                         <h3>程式語言</h3>
                         <p>本課程的目的是培養使用 Python 的能力。</p>
                         <p>學分：3</p>
                     </div>
-                    <div class="course">
+                    <div class="course sem1">
                         <div class="type">第一學期：專業必修</div>
                         <h3>資料倫理與法律</h3>
                         <p> 本課程旨在培養學生理解資訊科技發展所帶來的倫理與法律挑戰，並具備分析、評估與解決相關問題的能力。</p>
                         <p>學分：2</p>
                     </div>
-                    <div class="course">
+                    <div class="course sem1">
                         <div class="type">第一學期：專業必修</div>
                         <h3>管理資訊系統</h3>
                         <p>建立資訊系統功能與架構的基本認識與概念，並融合資訊科技管理的知識與技能，於未來迅速掌握多元系統功能，並進一步增強個人競爭力。</p>
                         <p>學分：3</p>
                     </div>
-                    <div class="course">
+                    <div class="course sem1">
                         <div class="type">第一學期：專業選修</div>
                         <h3>統計學</h3>
                         <p> 針對商學院學生，提供統計學及其應用的觀念介紹。學成後，學生面對各種複雜現象，可運用蒐集、整理、分析、解釋資料等程序，將其轉化為清楚的資訊，並進而推論、預測，以為決策的依據。</p>
                         <p>學分：3</p>
                     </div>
-                    <div class="course">
+                    <div class="course sem1">
                         <div class="type">第一學期：專業選修</div>
                         <h3>資料結構</h3>
                         <p>本課程介紹資料結構的基本觀念與一般的應用，由最基本的資料結構與演算法概念開始說明，再以 Python 語言加以詮釋陣列結構、堆疊、鏈結串列、佇列、樹狀、圖形、排序、搜尋等重要觀念。特別強調實際應用與演算法的瞭解。</p>
                         <p>學分：3</p>
                     </div>
-                    <div class="course">
+                    <div class="course sem1">
                         <div class="type">第一學期：專業選修</div>
                         <h3>網站應用程式設計</h3>
                         <p>前端網頁設計為當前網頁設計的主流,透過本課程可使同學們對網頁前端設計的有所認識。</p>
                         <p>學分：3</p>
                     </div>
-                    <div class="course">
+                    <div class="course sem2">
                         <div class="type">第二學期：專業必修</div>
                         <h3>應用統計學</h3>
                         <p> 針對商學院學生，提供統計學及其應用的觀念介紹。學成後，學生面對各種複雜現象，可運用蒐集、整理、分析、解釋資料等程序，將其轉化為清楚的資訊，並進而推論、預測，以為決策的依據。</p>
                         <p>學分：3</p>
                     </div>
-                    <div class="course">
+                    <div class="course sem2">
                         <div class="type">第二學期：專業必修</div>
                         <h3>物件導向系統分析與設計</h3>
                         <p>課程著重於分析方法之應用，並以UML為工具，讓同學可以透過實際的活動，從收集系統需求開始，逐步完成系統分析與設計作業，並為接下來的專題規劃預作準備。...</p>
                         <p>學分：3</p>
                     </div>
-                    <div class="course">
+                    <div class="course  sem2">
                         <div class="type">第二學期：專業必修</div>
                         <h3>資訊網路</h3>
                         <p>在網路管理中需要具備對於網路設備原理的介紹，網路設備的設定、操作和管理。並且培養學生解決網路問題的實務課程。</p>
                         <p>學分：3</p>
                     </div>
-                    <div class="course">
+                    <div class="course sem2">
                         <div class="type">第二學期：專業選修</div>
                         <h3>國際認證管理進階</h3>
                         <p>提供對網絡安全的深入的理論理解，為學生提供設計和支持網絡安全所需的知識和技能，提供以體驗為導向的課程，採用與行業相關的教學方法，讓學生為行業的入門級工作做好準備...。</p>
                         <p>學分：3</p>
                     </div>
-                    <div class="course">
+                    <div class="course sem2">
                         <div class="type">第二學期：專業選修</div>
                         <h3>行動應用開發</h3>
                         <p>引導學生進入Android手機應用程式開發的領域，提供相關知識及實用的學習方法。課程涵蓋Android開發環境的設置、SDK的運用、使用者介面設計，以及程式撰寫的基礎和進階技巧。</p>
                         <p>學分：3</p>
                     </div>
-                    <div class="course">
+                    <div class="course sem2">
                         <div class="type">第二學期：專業選修</div>
                         <h3>作業系統</h3>
                         <p>本課程在一般性地介紹作業系統相關的原理與技術。涵蓋的主題包括作業系統的功能和結構、CPU排班、死結（預防、避免、恢復）等。...</p>
                         <p>學分：3</p>
                     </div>
-                    <div class="course">
+                    <div class="course sem3">
                         <div class="type">第三學期：專業必修</div>
                         <h3>資料庫管理</h3>
                         <p> 本課程將介紹資料庫概念，並強調關聯式資料庫模型。課程也將闡述實體關聯模型(ERD)的概念和應用與正規化的原則和應用。...</p>
                         <p>學分：3</p>
                     </div>
-                    <div class="course">
+                    <div class="course sem3">
                         <div class="type">第三學期：專業必修</div>
                         <h3>電子商務與網路行銷</h3>
                         <p>從企業經營與策略的角度，融合個案、理論、實務解說電子商務與網路行銷的樣貌，探討數位轉型、商業模式創新、服務生態系、服務創新工作坊、後疫情時代的電子商務創新、SDGs企業永續等議題...。</p>
                         <p>學分：3</p>
                     </div>
-                    <div class="course">
+                    <div class="course sem3">
                         <div class="type">第三學期：專業選修</div>
                         <h3>國際認證管理進階</h3>
                         <p>提供對網絡安全的深入的理論理解，為學生提供設計和支持網絡安全所需的知識和技能...。</p>
                         <p>學分：3</p>
                     </div>
-                    <div class="course">
+                    <div class="course sem3">
                         <div class="type">第三學期：專業選修</div>
                         <h3>行動應用程式設計</h3>
                         <p>學習行動應用程式開發方法與技術，能設計、實作並測試跨平台或特定平台的應用程式。</p>
                         <p>學分：3</p>
                     </div>
-                    <div class="course">
+                    <div class="course sem3">
                         <div class="type">第三學期：專業選修</div>
                         <h3>消費者行為</h3>
                         <p>現代企業面對多變的市場與消費者需求，行銷人員必須透過市場調查與行銷資訊掌握市場脈動...。</p>
                         <p>學分：3</p>
                     </div>
-                    <div class="course">
+                    <div class="course sem3">
                         <div class="type">第三學期：專業選修</div>
                         <h3>資訊安全</h3>
                         <p>本課程介紹電腦和網路安全的基礎知識。包含基礎觀念、技術、管理與應用。課程內容將包括基礎密碼學、作業系統安全、安全存取控制措施、安全程式編碼...。</p>
                         <p>學分：3</p>
                     </div>
-                    <div class="course">
+                    <div class="course sem3">
                         <div class="type">第三學期：專業選修</div>
                         <h3>多媒體應用</h3>
                         <p> 本課程目標為讓學習者能夠了解多媒體內容及數位媒體的種類與其基礎原理；並輔以實例介紹與技巧教學，讓同學了解國內外多媒體發展趨勢...。</p>
                         <p>學分：3</p>
                     </div>
-                    <div class="course">
+                    <div class="course sem4">
                         <div class="type">第四學期：專業必修</div>
                         <h3>行動應用商務</h3>
                         <p>本課程的目標在於介紹行動商務的相關應用，包括從行動商務的基本概念、技術及應用，以及目前基於行動裝置所發展出的社群行銷、社群商務等應用。...</p>
                         <p>學分：3</p>
                     </div>
-                    <div class="course">
+                    <div class="course sem4">
                         <div class="type">第四學期：專業選修</div>
                         <h3>商業智慧與資料科學</h3>
                         <p> 1. 理解「商用大數據分析」在企業／商業環境中的角色與應用價值。<br> 2. 能掌握從資料收集、處理、分析到報告／決策支援的完整大數據分析流程...。</p>
                         <p>學分：3</p>
                     </div>
-                    <div class="course">
+                    <div class="course sem4">
                         <div class="type">第四學期：專業選修</div>
                         <h3>資料庫管理系統實作</h3>
                         <p>掌握資料庫設計與操作技巧，能建構、管理與維護資料庫系統，並運用 SQL 進行資料查詢與分析。</p>
                         <p>學分：3</p>
                     </div>
-                    <div class="course">
+                    <div class="course sem4">
                         <div class="type">第四學期：專業選修</div>
                         <h3>區塊鏈導論</h3>
                         <p>本課程介紹區塊鏈技術和應用，透過解析實際應用案例，由淺入深地介紹區塊鏈技術緣起、演進過程、技術原理和發展趨勢。...</p>
                         <p>學分：3</p>
                     </div>
-                    <div class="course">
+                    <div class="course sem4">
                         <div class="type">第四學期：專業選修</div>
                         <h3>企業資源規劃</h3>
                         <p>了解企業資源規劃的概念與流程，學習如何整合企業內部資源以提升管理效率與決策能力。</p>
                         <p>學分：3</p>
                     </div>
-                    <div class="course">
+                    <div class="course sem4">
                         <div class="type">第四學期：專業選修</div>
                         <h3>資訊科技管理</h3>
                         <p>讓同學了解如何使用資訊科技管理，科技管理上目前使用主流的技術。</p>
@@ -188,10 +191,10 @@
                 </div>
             </section>
 
-            <section class="semester-block">
+            <section class="semester-block" id="calculator">
                 <h2>📝 四學期學分選擇與計算</h2>
 
-                <div class="semester-block">
+                <div class="semester-block" id="sem1">
                     <div class="semester-title">第一學期</div>
                     <div class="course-item">
                         <input type="checkbox" class="proRequired1" value="3" checked disabled> <span>專業必修：程式語言（3學分）</span>
@@ -222,7 +225,7 @@
                     <div class="credit-result" id="sem1-total">本學期學分：0</div>
                 </div>
 
-                <div class="semester-block">
+                <div class="semester-block" id="sem2">
                     <div class="semester-title">第二學期</div>
                     <div class="course-item">
                         <input type="checkbox" class="proRequired2" value="3" checked disabled> <span>專業必修：應用統計學（3學分）</span>
@@ -257,7 +260,7 @@
                     <div class="credit-result" id="sem2-total">本學期學分：0</div>
                 </div>
 
-                <div class="semester-block">
+                <div class="semester-block" id="sem3">
                     <div class="semester-title">第三學期</div>
                     <div class="course-item">
                         <input type="checkbox" class="proRequired3" value="3" checked disabled> <span>專業必修：電子商務與網路行銷（3學分）</span>
@@ -304,7 +307,7 @@
                     <div class="credit-result" id="sem3-total">本學期學分：0</div>
                 </div>
 
-                <div class="semester-block">
+                <div class="semester-block" id="sem4">
                     <div class="semester-title">第四學期</div>
                     <div class="course-item">
                         <input type="checkbox" class="proRequired4" value="3" checked disabled> <span>專業必修：行動應用商務（3學分）</span>
@@ -363,7 +366,24 @@
                 北商課表查詢
             </a>
         </p>
-        <footer>© 114 學年度 - 學分計算器</footer>
+        <nav class="side-nav">
+            <a href="../index.html" class="home-btn">🏠 回首頁</a>
+
+            <a href="#intro">📘 課程介紹</a>
+            <a href="#calculator">📝 學分計算</a>
+
+            <hr>
+
+            <a href="#sem1">第一學期</a>
+            <a href="#sem2">第二學期</a>
+            <a href="#sem3">第三學期</a>
+            <a href="#sem4">第四學期</a>
+
+            <hr>
+
+            <a href="#top" class="top-btn">⬆ 回頂部</a>
+        </nav>
+        <footer>© 北商 114 學年度 資管一甲 - 學分計算器</footer>
 
     </body>
 </html>

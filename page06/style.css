@@ -447,6 +447,34 @@ form button:hover {
     margin-right: 8px;
 }
 
+/* 會員佈局 */
+.member-layout {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.member-column {
+    flex: 1;
+    min-width: 300px;
+}
+
+/* 訂閱表單 */
+.subscription-email {
+    margin-top: 12px;
+}
+
+.subscription-input {
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.subscription-btn {
+    margin-top: 10px;
+    max-width: 220px;
+}
+
 @media (max-width: 900px) {
     .coupons { grid-template-columns: 1fr; }
     .hero { height: 240px; }

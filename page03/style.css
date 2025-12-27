@@ -7,7 +7,7 @@ body {
     line-height: 1.6;
 }
 
-/* --- 頁首 (main-header) --- */
+/* 頁首 */
 .main-header {
     background-color: #2e4a3d; 
     color: white;
@@ -21,7 +21,7 @@ body {
     margin-bottom: 5px;
 }
 
-/* --- 橫向導航 --- */
+/* 橫向導航 */
 .horizontal-nav {
     background-color: #4a6a5a;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -63,7 +63,7 @@ body {
     padding: 0 20px;
 }
 
-/* --- 內容 (content-section) --- */
+/* 內容 */
 .content-section {
     background-color: #ffffff;
     padding: 30px;
@@ -88,7 +88,7 @@ body {
     margin-top: 10px;
 }
 
-/* --- 恐龍標題 --- */
+/* 標題 */
 .dino-group-section {
     padding-top: 20px;
     margin-bottom: 40px;
@@ -101,12 +101,12 @@ body {
     margin-top: 0;
 }
 
-.sauropod-color { border-color: #2e4a3d; color: #2e4a3d; } /* 蜥腳類：深綠 */
-.theropod-color { border-color: #b05c30; color: #b05c30; } /* 獸腳類：棕紅 */
-.armored-color { border-color: #708090; color: #708090; } /* 裝甲類：石板灰 */
+.sauropod-color { border-color: #2e4a3d; color: #2e4a3d; } 
+.theropod-color { border-color: #b05c30; color: #b05c30; }
+.armored-color { border-color: #708090; color: #708090; } 
 
 
-/* --- 恐龍卡片 --- */
+/* 介紹 */
 .dino-card {
     background-color: #ffffff;
     padding: 20px;
@@ -127,7 +127,6 @@ body {
     margin-top: 0;
 }
 
-/* --- 圖片與文字並排 --- */
 .dino-info-container {
     display: flex;
     gap: 30px; 
@@ -135,7 +134,7 @@ body {
 }
 
 .dino-text {
-    flex: 2;/
+    flex: 2;
 }
 
 .dino-image-placeholder {
@@ -161,7 +160,7 @@ body {
 }
 
 
-/* --- 互動按鈕 (info-button) --- */
+/* 互動 */
 .info-button {
     background-color: #b05c30;
     color: white;
@@ -177,7 +176,7 @@ body {
     background-color: #8c4726;
 }
 
-/* --- jQuery --- */
+/* jQuery */
 .dino-info-box {
     margin-top: 15px;
     padding: 15px;
@@ -191,9 +190,8 @@ body {
 }
 
 .main-footer {
-    background-color: #2e4a3d; /* 延用你的主題色 */
+    background-color: #2e4a3d;
     color: white;
     padding: 20px;
-    text-align: center; /* 關鍵：文字置中 */
-    margin-top: 40px;
+    text-align: center
 }

@@ -1,12 +1,40 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="zh-TW">
 <head>
-    <title>標題待改</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>九九乘法大冒險 - 積分挑戰版</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-    <h1>N1146743 楊同學的第3個頁面</h1>
-</body>
 
+    <h1>乘法英雄挑戰賽</h1>
+
+    <div class="scoreboard">
+        <div class="score-item">
+            <span class="label">目前分數</span>
+            <span id="currentScore" class="score-val">0</span>
+        </div>
+        <div class="score-item">
+            <span class="label">最高紀錄</span>
+            <span id="highScore" class="score-val">0</span>
+        </div>
+    </div>
+
+    <div id="rank-display">目前稱號：乘法小學徒 </div>
+
+    <div class="main-layout">
+        <div class="table-container" id="multiplicationTable"></div>
+
+        <div class="quiz-container">
+            <div id="question">? × ?</div>
+            <input type="number" id="answerInput" placeholder="?" onkeyup="if(event.key==='Enter') checkAnswer()">
+            <br>
+            <button onclick="checkAnswer()">回答！</button>
+            <div id="feedback"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
 </html>

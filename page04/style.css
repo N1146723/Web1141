@@ -14,6 +14,16 @@ header {
     font-weight: bold;
 }
 
+/* 副標語 */
+.sub-title {
+    font-size: 16px;
+    font-weight: normal;
+    color: #dbe7ff;
+    border-left: 2px solid rgba(255,255,255,0.4);
+    padding-left: 14px;
+    line-height: 1.2;
+}
+
 footer {
     background: #3f72af;
     color: white;
@@ -36,12 +46,20 @@ footer {
     gap: 20px;
 }
 
-.course {
-    background: #ffffff;
-    padding: 18px 20px;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+.course.sem1 {
+    background: #f6faff;
+}
+
+.course.sem2 {
+    background: #f6fff8;
+}
+
+.course.sem3 {
+    background: #fffaf3;
+}
+
+.course.sem4 {
+    background: #faf7ff;
 }
 
 .course:hover {
@@ -150,4 +168,61 @@ button:hover {
     font-weight: 600;
     color: #1e4e7b;
     border: 2px solid #3f72af;
+}
+
+/*  右側索引欄  */
+.side-nav {
+    position: fixed;
+    top: 120px;
+    right: 20px;
+    width: 160px;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 15px 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    z-index: 999;
+    font-size: 14px;
+}
+
+/* 連結樣式 */
+.side-nav a {
+    display: block;
+    text-decoration: none;
+    color: #112d4e;
+    padding: 6px 8px;
+    border-radius: 6px;
+    margin-bottom: 4px;
+    transition: background-color 0.2s;
+}
+
+.side-nav a:hover {
+    background-color: #eaf2ff;
+    color: #0d6efd;
+}
+
+/* 回首頁按鈕 */
+.home-btn {
+    background: #3f72af;
+    color: white !important;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.home-btn:hover {
+    background: #335580;
+}
+
+/* 分隔線 */
+.side-nav hr {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 8px 0;
+}
+
+/* 回頂部 */
+.top-btn {
+    font-size: 13px;
+    text-align: center;
+    color: #666;
 }

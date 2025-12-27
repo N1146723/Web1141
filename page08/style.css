@@ -1,0 +1,79 @@
+:root {
+            --primary-color: #ff7675;
+            --secondary-color: #74b9ff;
+            --accent-color: #fdcb6e;
+            --bg-color: #f0f2f5;
+        }
+        body {
+            font-family: "Microsoft JhengHei", sans-serif;
+            background-color: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        h1 { color: var(--primary-color); text-shadow: 2px 2px #fff; }
+
+        
+        .scoreboard {
+            background: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            display: flex;
+            gap: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            border: 3px solid var(--accent-color);
+        }
+        .score-item { text-align: center; }
+        .score-val { font-size: 24px; font-weight: bold; color: var(--primary-color); display: block; }
+        .label { font-size: 14px; color: #636e72; }
+
+        
+        #rank-display {
+            background: var(--accent-color);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            color: #d35400;
+            margin-bottom: 20px;
+        }
+
+        
+        .main-layout { display: flex; gap: 30px; flex-wrap: wrap; justify-content: center; }
+        
+        .table-container {
+            display: grid;
+            grid-template-columns: repeat(9, 1fr);
+            gap: 5px;
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .cell {
+            width: 60px; height: 60px;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            border-radius: 8px; background: #f1f2f6; cursor: pointer; font-size: 12px;
+            transition: 0.2s;
+        }
+        .cell:hover { background: var(--secondary-color); color: white; transform: scale(1.1); }
+        .cell span { font-weight: bold; font-size: 16px; }
+
+        .quiz-container {
+            background: #55efc4;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            width: 280px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        #question { font-size: 36px; margin-bottom: 20px; font-weight: bold; color: #2d3436; }
+        input { width: 100px; font-size: 28px; text-align: center; border-radius: 10px; border: 3px solid white; outline: none; }
+        button {
+            margin-top: 15px; padding: 12px 30px; font-size: 18px;
+            background: #0984e3; color: white; border: none; border-radius: 15px; cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover { background: #74b9ff; }
+        #feedback { margin-top: 15px; height: 30px; font-weight: bold; }
