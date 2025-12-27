@@ -1,66 +1,70 @@
 /* 設定 */
-*{
-    padding:0;
-    margin:0;
-    box-sizing: border-box; 
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
     font-family: Arial, "Helvetica Neue", Helvetica, "微軟正黑體", sans-serif;
 }
 
-body{
-    background-color: #f8f8f8; /* 灰色背景 */
+body {
+    background-color: #f8f8f8;
+    /* 灰色背景 */
     line-height: 1.6;
 }
 
 /* 頁首 */
-header{
+header {
     background-color: #333;
-    height: 60px; 
+    height: 60px;
     color: white;
     width: 100%;
-    position:relative;
+    position: relative;
 }
 
-h1{
+h1 {
     color: white;
-    position:absolute;
+    position: absolute;
     left: 120px;
-    top:0;
-    line-height: 60px; 
-    background-repeat:no-repeat;
-    background-position:center;
-    width:210px;
-    text-indent:-9999px;
+    top: 0;
+    line-height: 60px;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 210px;
+    text-indent: -9999px;
 }
 
-header ul{
-    position:absolute;
+header ul {
+    position: absolute;
     right: 5vw;
-    top:0;
-    line-height:60px;
+    top: 0;
+    line-height: 60px;
 }
-header li{
+
+header li {
     display: inline;
     margin-right: 4vw;
 }
-header a{
+
+header a {
     color: white;
     text-decoration: none;
     transition: color 0.3s;
 }
+
 header a:hover {
-    color: #ffd700; 
+    color: #ffd700;
 }
 
 /*內容 */
 main {
     width: 90%;
-    max-width: 1200px; 
-    margin: 20px auto; 
+    max-width: 1200px;
+    margin: 20px auto;
     padding: 20px 0;
 }
 
 section {
-    margin-bottom: 40px; 
+    margin-bottom: 40px;
     padding: 20px;
     background-color: #fff;
     border-radius: 8px;
@@ -68,7 +72,7 @@ section {
 }
 
 h2 {
-    color: #4CAF50; 
+    color: #4CAF50;
     margin-bottom: 15px;
     border-bottom: 2px solid #e0e0e0;
     padding-bottom: 5px;
@@ -83,11 +87,12 @@ h2 {
 
 /*SLOGAN */
 .slogan {
-    background-color: #e8f5e9; 
+    background-color: #e8f5e9;
     text-align: center;
     padding: 30px;
     border-left: 35px solid #4CAF50;
 }
+
 blockquote {
     font-size: 1.5em;
     color: #388E3C;
@@ -98,18 +103,21 @@ blockquote {
 /* 6.門市 */
 .店面 {
     display: flex;
-    align-items: center; 
-    gap: 30px; 
+    align-items: center;
+    gap: 30px;
 }
+
 .店面 img {
     max-width: 50%;
     height: auto;
     border-radius: 6px;
     border: 1px solid #ddd;
 }
+
 .info h2 {
-    color: #D32F2F; 
+    color: #D32F2F;
 }
+
 .info p {
     line-height: 1.8;
 }
@@ -125,10 +133,12 @@ blockquote {
     border-radius: 12px;
     border: 1px solid #ddd;
 }
+
 .store-image {
     overflow: hidden;
     border-radius: 10px;
 }
+
 .store-image img {
     width: 100%;
     height: auto;
@@ -137,33 +147,39 @@ blockquote {
     border: 1px solid #ddd;
     transition: transform 0.3s ease;
 }
+
 .store-image img:hover {
     transform: scale(1.02);
 }
+
 .store-info h2 {
     color: #D32F2F;
     font-size: 2em;
     margin-bottom: 6px;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
+
 .store-subtitle {
     color: #888;
     font-size: 1.1em;
     margin-bottom: 15px;
     font-weight: 500;
 }
+
 .store-description {
     color: #555;
     font-size: 1em;
     line-height: 1.8;
     margin-bottom: 20px;
 }
+
 .store-highlights {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 15px;
     margin-top: 20px;
 }
+
 .highlight-item {
     background: linear-gradient(to bottom, #fff 0%, #f0f0f0 100%);
     padding: 15px;
@@ -171,20 +187,23 @@ blockquote {
     text-align: center;
     border-left: 4px solid #4CAF50;
     border: 1px solid #ddd;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.8);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
 }
+
 .highlight-item:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.8);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
+
 .highlight-item strong {
     display: block;
     color: #333;
     font-size: 0.95em;
     margin-bottom: 6px;
 }
+
 .highlight-item p {
     color: #666;
     font-size: 0.9em;
@@ -196,9 +215,11 @@ blockquote {
         grid-template-columns: 1fr;
         gap: 25px;
     }
+
     .store-info h2 {
         font-size: 1.6em;
     }
+
     .store-highlights {
         grid-template-columns: 1fr;
     }
@@ -208,8 +229,8 @@ blockquote {
 .product {
     display: grid;
 
-    grid-template-columns: repeat(4, 1fr); 
-    gap: 25px; 
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
     text-align: center;
 }
 
@@ -221,15 +242,15 @@ blockquote {
 }
 
 .product div:hover {
-    transform: translateY(-5px); 
-    box-shadow: 0 8px 16px rgba(0,0,0,0.15); 
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
 }
 
 .product img {
     width: 100%;
     height: auto;
-    max-height: 180px; 
-    object-fit: cover; 
+    max-height: 180px;
+    object-fit: cover;
     border-radius: 4px;
     margin-bottom: 10px;
 }
@@ -257,31 +278,39 @@ footer {
 
 /*調整*/
 @media (max-width: 900px) {
-    
+
     .product {
         grid-template-columns: repeat(2, 1fr);
     }
+
     .店面 {
-        flex-direction: column; 
+        flex-direction: column;
     }
+
     .店面 img {
         max-width: 100%;
     }
+
     h1 {
-        left: 20px; 
+        left: 20px;
     }
 }
+
 @media (max-width: 600px) {
-   
+
     .product {
         grid-template-columns: 1fr;
     }
+
     header ul {
         right: 2vw;
     }
+
     header li {
         margin-right: 2vw;
     }
+}
+
 /* 會員  */
 
 .member-area {
@@ -300,7 +329,7 @@ footer {
     background: #fff;
     padding: 25px;
     border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .login-box h2,
@@ -329,7 +358,7 @@ form input {
 form input:focus {
     border-color: #4CAF50;
     outline: none;
-    box-shadow: 0 0 3px rgba(76,175,80,0.4);
+    box-shadow: 0 0 3px rgba(76, 175, 80, 0.4);
 }
 
 /* 提交*/
@@ -363,17 +392,20 @@ form button:hover {
     justify-content: center;
     color: white;
 }
+
 .hero .overlay {
-    background: rgba(0,0,0,0.35);
+    background: rgba(0, 0, 0, 0.35);
     padding: 30px 40px;
     border-radius: 8px;
     text-align: center;
 }
+
 .hero h2 {
     font-size: 2.2em;
     margin-bottom: 6px;
     color: #FFD54F;
 }
+
 .hero p {
     font-size: 1.1em;
     opacity: 0.95;
@@ -385,6 +417,7 @@ form button:hover {
     justify-content: center;
     margin: 24px 0;
 }
+
 .cover-07 .cover-inner {
     width: 100%;
     max-width: 1000px;
@@ -394,12 +427,14 @@ form button:hover {
     border: 1px solid #ddd;
     text-align: center;
 }
+
 .cover-07 img {
     width: 100%;
     height: auto;
     border-radius: 8px;
     display: block;
 }
+
 .cover-caption {
     margin-top: 10px;
     color: #666;
@@ -407,7 +442,9 @@ form button:hover {
 }
 
 @media (max-width: 900px) {
-    .cover-07 .cover-inner { padding: 8px; }
+    .cover-07 .cover-inner {
+        padding: 8px;
+    }
 }
 
 /* 優惠券 */
@@ -416,33 +453,39 @@ form button:hover {
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
 }
+
 .coupon {
-    background: linear-gradient(180deg,#fff,#fafafa);
+    background: linear-gradient(180deg, #fff, #fafafa);
     border: 1px solid #eee;
     padding: 16px;
     border-radius: 8px;
 }
+
 .coupon .code {
     font-weight: bold;
     color: #D32F2F;
     font-size: 1.1em;
 }
+
 .credit {
     background: #fff;
     border: 1px solid #eee;
     padding: 16px;
     border-radius: 8px;
 }
+
 .subscription-form {
     background: #fff;
     border: 1px solid #eee;
     padding: 18px;
     border-radius: 8px;
 }
+
 .subscription-form label {
     display: block;
     margin-bottom: 8px;
 }
+
 .subscription-form input[type="checkbox"] {
     margin-right: 8px;
 }
@@ -476,7 +519,11 @@ form button:hover {
 }
 
 @media (max-width: 900px) {
-    .coupons { grid-template-columns: 1fr; }
-    .hero { height: 240px; }
-}
+    .coupons {
+        grid-template-columns: 1fr;
+    }
 
+    .hero {
+        height: 240px;
+    }
+}
