@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-Tw">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>會員專區 - 五榖麵包</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>會員專區</h1>
+        <nav>
+            <ul>
+                <li><a href="page6.html">首頁</a></li>
+                <li><a href="page6_2.html">商品資訊</a></li>
+                <li><a href="page6_1.html">會員專區</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- 開幕 -->
+        <section class="hero" aria-hidden="false">
+            <div class="overlay">
+                <h2>4/1 開張</h2>
+                <p>新門市隆重登場 • 會員專屬優惠同步開跑</p>
+            </div>
+        </section>
+
+        <section class="member-section">
+            <div class="member-layout">
+                <div class="member-column">
+                    <h2>會員登入</h2>
+                    <form class="login-form">
+                        <div class="form-group">
+                            <label for="login-email">電子郵件：</label>
+                            <input type="email" id="login-email" name="email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="login-password">密碼：</label>
+                            <input type="password" id="login-password" name="password" required>
+                        </div>
+
+                        <button type="submit" class="btn">登入</button>
+                        <p>還沒有帳號？<a href="#register">點此註冊</a></p>
+                    </form>
+                </div>
+
+                <div class="member-column">
+                    <h2>會員專屬</h2>
+                    <div class="coupons">
+                        <div class="coupon">
+                            <div class="code">COUPON2026</div>
+                            <div>全店滿 300 折 50（邀請新會員專屬）</div>
+                            <small>有效期間：4/1 - 5/31</small>
+                        </div>
+                        <div class="credit">
+                            <h3>購物金</h3>
+                            <p>目前購物金餘額：<strong>NT$0</strong></p>
+                            <p>購物金可於結帳時折抵部分金額。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="register" class="member-section">
+            <h2>加入會員</h2>
+            <form class="register-form">
+                <div class="form-group">
+                    <label for="name">姓名：</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">電子郵件：</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">設定密碼：</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm-password">確認密碼：</label>
+                    <input type="password" id="confirm-password" name="confirm_password" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">手機：</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="birthday">生日：</label>
+                    <input type="date" id="birthday" name="birthday">
+                </div>
+
+                <div class="form-group">
+                    <label for="address">地址：</label>
+                    <input type="text" id="address" name="address">
+                </div>
+
+                <button type="submit" class="btn">註冊會員</button>
+            </form>
+        </section>
+
+        <section class="benefits">
+            <h2>會員權益</h2>
+            <ul>
+                <li>購買享 8 折優惠</li>
+                <li>生日當月享 9 折優惠</li>
+                <li>累積消費點數可兌換禮券</li>
+                <li>新品上市優先通知</li>
+                <li>會員專屬活動邀請</li>
+            </ul>
+        </section>
+
+        <section class="subscription-form">
+            <h2>訂閱通知</h2>
+            <form>
+                <label><input type="checkbox" name="subscribe_new" checked> 訂閱新品上市通知</label>
+                <label><input type="checkbox" name="subscribe_promo" checked> 訂閱促銷優惠券與廣告</label>
+                <label><input type="checkbox" name="subscribe_credit"> 自動儲值購物金通知</label>
+                <p class="subscription-email">輸入電子郵件： <input type="email" name="sub_email" placeholder="you@example.com" required class="subscription-input"></p>
+                <button type="submit" class="btn subscription-btn">確認訂閱</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>copyright 2026 五榖麵包 TERRA GRAINS. 版權所有.</p>
+    </footer>
+</body>
+</html>

@@ -177,6 +177,7 @@ footer {
     box-shadow: none;
 }
 
+
 /* Links */
 .food-list a,
 .links a {
@@ -198,6 +199,16 @@ footer {
     transform: translateX(5px);
 }
 
+.food-item td[colspan="2"] {
+    text-align: center;
+}
+
+.food-item td[colspan="2"] p,
+.food-item td[colspan="2"] b,
+.food-item td[colspan="2"] a {
+    text-align: center;
+}
+
 /* Table */
 table {
     margin: 0 auto;
@@ -215,3 +226,4 @@ th, td {
     vertical-align: top;
     text-align: center;
 }
+

@@ -26,18 +26,23 @@ header p {
 nav {
     background-color: #023047;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
     position: sticky;
     top: 0;
     z-index: 100;
+    padding: 0 20px;
 }
-nav a {
+.nav-left, .nav-right {
+    display: flex;
+}
+.nav-left a, .nav-right a {
     color: #fff;
     padding: 14px 20px;
     text-decoration: none;
     transition: background-color 0.3s;
 }
-nav a:hover {
+.nav-left a:hover, .nav-right a:hover {
     background-color: #219ebc;
 }
 
