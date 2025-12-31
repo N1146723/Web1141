@@ -19,7 +19,7 @@ header {
     font-size: 16px;
     font-weight: normal;
     color: #dbe7ff;
-    border-left: 2px solid rgba(255,255,255,0.4);
+    border-left: 2px solid rgba(255, 255, 255, 0.4);
     padding-left: 14px;
     line-height: 1.2;
 }
@@ -64,7 +64,7 @@ footer {
 
 .course:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
 }
 
 .course h3 {
@@ -113,7 +113,7 @@ footer {
     background-color: #f6faff;
 }
 
-.course-item input[type="checkbox"]:checked + span {
+.course-item input[type="checkbox"]:checked+span {
     font-weight: bold;
     color: #0d6efd;
 }
@@ -152,7 +152,7 @@ button {
     cursor: pointer;
     margin-top: 10px;
     width: 100%;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 button:hover {
@@ -179,7 +179,7 @@ button:hover {
     background: #ffffff;
     border-radius: 12px;
     padding: 15px 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
     z-index: 999;
     font-size: 14px;
 }

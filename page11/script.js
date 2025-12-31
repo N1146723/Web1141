@@ -1,4 +1,4 @@
-// 產生氣泡背景
+// N1116445 呂宜蓁 頁面#3
 var bubbleBox = document.getElementById('bubbleField');
 for (var i = 0; i < 20; i++) {
     var b = document.createElement('div');
@@ -20,13 +20,13 @@ var allSections = document.querySelectorAll('section[id]');
 // 更新右側導航點的active狀態
 function updateNav() {
     var scroll = window.scrollY + window.innerHeight / 3;
-    
+
     for (var i = 0; i < allSections.length; i++) {
         var section = allSections[i];
         var sTop = section.offsetTop;
         var sHeight = section.offsetHeight;
         var sId = section.getAttribute('id');
-        
+
         if (scroll >= sTop && scroll < sTop + sHeight) {
             for (var j = 0; j < navDots.length; j++) {
                 navDots[j].classList.remove('active');
@@ -39,9 +39,9 @@ function updateNav() {
 }
 
 // 向下滾動到一定距離才顯示回頂部按鈕
-window.addEventListener('scroll', function() {
+window.addEventListener('scroll', function () {
     updateNav();
-    
+
     if (window.scrollY > 500) {
         topBtn.classList.add('visible');
     } else {
@@ -51,7 +51,7 @@ window.addEventListener('scroll', function() {
 
 // 點擊側邊欄平滑滾動
 for (var i = 0; i < navDots.length; i++) {
-    navDots[i].addEventListener('click', function() {
+    navDots[i].addEventListener('click', function () {
         var sectionId = this.dataset.section;
         var sec = document.getElementById(sectionId);
         if (sec) {
@@ -65,7 +65,7 @@ for (var i = 0; i < navDots.length; i++) {
 var cards = document.querySelectorAll('.creature-item');
 for (var i = 0; i < cards.length; i++) {
     var header = cards[i].querySelector('.creature-header');
-    header.addEventListener('click', function() {
+    header.addEventListener('click', function () {
         var card = this.parentElement;
         // 先把其他卡片都收起來
         for (var j = 0; j < cards.length; j++) {
@@ -95,7 +95,7 @@ var wheel = document.getElementById('wheelCenter');
 var resultBox = document.getElementById('depthResult');
 
 for (var i = 0; i < depthBtns.length; i++) {
-    depthBtns[i].addEventListener('click', function() {
+    depthBtns[i].addEventListener('click', function () {
         // 移除其他按鈕的active
         for (var j = 0; j < depthBtns.length; j++) {
             depthBtns[j].classList.remove('active');
@@ -116,7 +116,7 @@ for (var i = 0; i < depthBtns.length; i++) {
 }
 
 // 回到頂部按鈕功能
-topBtn.addEventListener('click', function() {
+topBtn.addEventListener('click', function () {
     window.scrollTo({
         top: 0,
         behavior: 'smooth'

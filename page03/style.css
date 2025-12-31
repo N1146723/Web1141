@@ -2,14 +2,14 @@ body {
     font-family: 'Arial', 'Microsoft JhengHei', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f9; 
+    background-color: #f4f4f9;
     color: #333;
     line-height: 1.6;
 }
 
 /* 頁首 */
 .main-header {
-    background-color: #2e4a3d; 
+    background-color: #2e4a3d;
     color: white;
     padding: 30px 20px;
     text-align: center;
@@ -58,7 +58,7 @@ body {
 
 /* --- 主要內容 --- */
 .main-content-wrapper {
-    max-width: 1000px; 
+    max-width: 1000px;
     margin: 20px auto;
     padding: 0 20px;
 }
@@ -73,7 +73,7 @@ body {
 }
 
 .section-title {
-    color: #b05c30; 
+    color: #b05c30;
     border-left: 5px solid #2e4a3d;
     padding-left: 15px;
     margin-top: 0;
@@ -81,7 +81,7 @@ body {
 }
 
 .highlight-text {
-    background-color: #fffacd; 
+    background-color: #fffacd;
     padding: 5px 10px;
     border-radius: 4px;
     display: inline-block;
@@ -101,9 +101,20 @@ body {
     margin-top: 0;
 }
 
-.sauropod-color { border-color: #2e4a3d; color: #2e4a3d; } 
-.theropod-color { border-color: #b05c30; color: #b05c30; }
-.armored-color { border-color: #708090; color: #708090; } 
+.sauropod-color {
+    border-color: #2e4a3d;
+    color: #2e4a3d;
+}
+
+.theropod-color {
+    border-color: #b05c30;
+    color: #b05c30;
+}
+
+.armored-color {
+    border-color: #708090;
+    color: #708090;
+}
 
 
 /* 介紹 */
@@ -129,7 +140,7 @@ body {
 
 .dino-info-container {
     display: flex;
-    gap: 30px; 
+    gap: 30px;
     align-items: flex-start;
 }
 
@@ -155,7 +166,7 @@ body {
 .dino-image-placeholder img {
     width: 100%;
     height: 100%;
-    object-fit: cover; 
+    object-fit: cover;
     border-radius: 5px;
 }
 

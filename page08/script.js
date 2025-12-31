@@ -9,7 +9,7 @@ for (let i = 1; i <= 9; i++) {
     for (let j = 1; j <= 9; j++) {
         const cell = document.createElement('div');
         cell.className = 'cell';
-        cell.innerHTML = `${i}×${j}<br><span>${i*j}</span>`;
+        cell.innerHTML = `${i}×${j}<br><span>${i * j}</span>`;
         table.appendChild(cell);
     }
 }

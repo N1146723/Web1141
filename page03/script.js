@@ -1,27 +1,27 @@
 
-$(document).ready(function() {
+$(document).ready(function () {
 
-    var navHeight = $(".horizontal-nav").outerHeight() || 60; 
+    var navHeight = $(".horizontal-nav").outerHeight() || 60;
 
-    $(".nav-link").on('click', function(event) {
-        
+    $(".nav-link").on('click', function (event) {
+
         if (this.hash !== "") {
             event.preventDefault();
-            
+
             var hash = this.hash;
 
             $('html, body').animate({
-                scrollTop: $(hash).offset().top - navHeight - 15 
+                scrollTop: $(hash).offset().top - navHeight - 15
             }, 800);
         }
     });
 
 
-    $(".info-button").on('click', function() {
-        
+    $(".info-button").on('click', function () {
+
         var dinoName = $(this).data('dino');
         var infoContent = "";
-        
+
 
         switch (dinoName) {
             case "Diplodocus":
@@ -31,7 +31,7 @@ $(document).ready(function() {
                 infoContent = "<strong>腕龍 (Brachiosaurus) 生態：</strong> 牠們的鼻孔長在頭頂，不像其他蜥腳類。由於前腿較長，牠們可能可以抬頭夠到 15 米高的樹葉，像移動的『樹冠剪刀』。";
                 break;
             case "Apatosaurus":
-                 infoContent = "<strong>迷惑龍 (Apatosaurus) 生態：</strong> 過去曾與另一種恐龍（布朗托龍）混淆。牠們體型粗壯，為了支撐體重，脊椎骨非常強大。幼年時期的迷惑龍可能是獸腳類的主要獵物。";
+                infoContent = "<strong>迷惑龍 (Apatosaurus) 生態：</strong> 過去曾與另一種恐龍（布朗托龍）混淆。牠們體型粗壯，為了支撐體重，脊椎骨非常強大。幼年時期的迷惑龍可能是獸腳類的主要獵物。";
                 break;
             case "Allosaurus":
                 infoContent = "<strong>異特龍 (Allosaurus) 生態：</strong> 牠們的頭骨結構較輕盈，可能採取『斧頭式攻擊』，用上顎撞擊獵物，造成大量失血。化石證據顯示，異特龍會捕食劍龍和幼年蜥腳類恐龍。";
@@ -51,11 +51,11 @@ $(document).ready(function() {
 
 
         var $infoBox = $("#" + dinoName + "-info");
-        
+
         $infoBox.html(infoContent);
 
 
-        $infoBox.slideToggle(400); 
+        $infoBox.slideToggle(400);
     });
 
 });

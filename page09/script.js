@@ -1,4 +1,4 @@
-// 咖啡廳資料
+// N1116445 呂宜蓁 頁面#1
 var cafes = [
     { name: 'Tropo Coffee', lat: 25.0330, lng: 121.5654, district: '信義區', desc: '摩登復古的迷人空間' },
     { name: '汩咖啡', lat: 25.0590, lng: 121.5570, district: '松山區', desc: '鐵皮屋裡的日式侘寂空間' },
@@ -31,16 +31,16 @@ var cafes = [
 var myMap;
 var allMarkers = [];
 
-window.addEventListener('load', function() {
+window.addEventListener('load', function () {
     // 初始化地圖 (中心點設在台北市中心)
     myMap = L.map('map').setView([25.0478, 121.5318], 12);
-    
+
     // 載入地圖圖層
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         maxZoom: 19
     }).addTo(myMap);
-    
+
     // 在地圖上加標記
     for (var i = 0; i < cafes.length; i++) {
         var cafe = cafes[i];
@@ -51,49 +51,49 @@ window.addEventListener('load', function() {
             iconAnchor: [20, 40],
             popupAnchor: [0, -40]
         });
-        
+
         var m = L.marker([cafe.lat, cafe.lng], { icon: icon })
             .addTo(myMap)
             .bindPopup(
                 '<div style="text-align: center; min-width: 180px;">' +
-                    '<strong style="font-size: 1.1rem; color: #5d4037; display: block; margin-bottom: 8px;">' + cafe.name + '</strong>' +
-                    '<span style="font-size: 0.85rem; color: #8d6e63; display: block; margin-bottom: 5px;">📍 ' + cafe.district + '</span>' +
-                    '<span style="font-size: 0.85rem; color: #666; display: block; margin-bottom: 10px;">' + cafe.desc + '</span>' +
-                    '<a href="https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(cafe.name + ' ' + cafe.district + ' 台北') + '" ' +
-                    'target="_blank" ' +
-                    'style="color: #d4a574; text-decoration: none; font-weight: bold; font-size: 0.85rem;">' +
-                    '🗺️ 在 Google 地圖中查看' +
-                    '</a>' +
+                '<strong style="font-size: 1.1rem; color: #5d4037; display: block; margin-bottom: 8px;">' + cafe.name + '</strong>' +
+                '<span style="font-size: 0.85rem; color: #8d6e63; display: block; margin-bottom: 5px;">📍 ' + cafe.district + '</span>' +
+                '<span style="font-size: 0.85rem; color: #666; display: block; margin-bottom: 10px;">' + cafe.desc + '</span>' +
+                '<a href="https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(cafe.name + ' ' + cafe.district + ' 台北') + '" ' +
+                'target="_blank" ' +
+                'style="color: #d4a574; text-decoration: none; font-weight: bold; font-size: 0.85rem;">' +
+                '🗺️ 在 Google 地圖中查看' +
+                '</a>' +
                 '</div>'
             );
-        
+
         allMarkers.push(m);
     }
-    
+
     // 點擊卡片(地圖會移動到對應位置)
     var cards = document.querySelectorAll('.cafe-card');
     for (var i = 0; i < cards.length; i++) {
-        cards[i].addEventListener('click', function() {
+        cards[i].addEventListener('click', function () {
             // 清除其他卡片的 active
             for (var j = 0; j < cards.length; j++) {
                 cards[j].classList.remove('active');
             }
             this.classList.add('active');
-            
+
             var loc = this.getAttribute('data-location');
             var name = this.getAttribute('data-name');
-            
+
             if (loc && myMap) {
                 var coords = loc.split(',');
                 var lat = parseFloat(coords[0]);
                 var lng = parseFloat(coords[1]);
-                
+
                 // 地圖移動到所選卡片位置並放大
                 myMap.setView([lat, lng], 16, {
                     animate: true,
                     duration: 1
                 });
-                
+
                 // 打開對應卡片標記的popup
                 for (var k = 0; k < cafes.length; k++) {
                     if (cafes[k].name === name) {
@@ -110,14 +110,14 @@ window.addEventListener('load', function() {
                 if (mapSection && navbar) {
                     var targetTop = mapSection.getBoundingClientRect().top + window.pageYOffset - navbar.offsetHeight - 10;
                     window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
-                    setTimeout(function() {
+                    setTimeout(function () {
                         myMap.invalidateSize();
                     }, 400);
                 }
             }
         });
     }
-    
+
     // 篩選按鈕功能
     var filterBtns = document.querySelectorAll('.filter-btn');
     var countDisplay = document.getElementById('currentCount');
@@ -126,27 +126,27 @@ window.addEventListener('load', function() {
     var toggleIcon = filterHead.querySelector('.filter-toggle');
 
     // 篩選器展開收合
-    filterHead.addEventListener('click', function() {
+    filterHead.addEventListener('click', function () {
         filterBody.classList.toggle('collapsed');
         toggleIcon.classList.toggle('collapsed');
     });
 
     // 行政區篩選
     for (var i = 0; i < filterBtns.length; i++) {
-        filterBtns[i].addEventListener('click', function() {
+        filterBtns[i].addEventListener('click', function () {
             // 更新active狀態
             for (var j = 0; j < filterBtns.length; j++) {
                 filterBtns[j].classList.remove('active');
             }
             this.classList.add('active');
-            
+
             var dist = this.getAttribute('data-district');
             var count = 0;
-            
+
             // 顯示或隱藏卡片和標記
             for (var k = 0; k < cards.length; k++) {
                 var cardDist = cards[k].getAttribute('data-district');
-                
+
                 if (dist === 'all' || cardDist === dist) {
                     cards[k].style.display = 'block';
                     count++;
@@ -156,9 +156,9 @@ window.addEventListener('load', function() {
                     if (allMarkers[k]) allMarkers[k].remove();
                 }
             }
-            
+
             countDisplay.textContent = count;
-            
+
             // 調整地圖顯示範圍
             if (dist !== 'all' && count > 0) {
                 var visibleMarkers = [];
@@ -167,7 +167,7 @@ window.addEventListener('load', function() {
                         visibleMarkers.push(allMarkers[m]);
                     }
                 }
-                
+
                 if (visibleMarkers.length > 0) {
                     var group = L.featureGroup(visibleMarkers);
                     myMap.fitBounds(group.getBounds(), { padding: [50, 50] });
@@ -177,16 +177,16 @@ window.addEventListener('load', function() {
             }
         });
     }
-    
+
     // 回到頂部按鈕
     var backToTop = document.querySelector('.floating-btn');
-    backToTop.addEventListener('click', function() {
+    backToTop.addEventListener('click', function () {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 });
 
 // 滾動一段距離顯示回到頂部按鈕
-window.addEventListener('scroll', function() {
+window.addEventListener('scroll', function () {
     var btn = document.querySelector('.floating-btn');
     if (btn) {
         if (window.pageYOffset > 300) {

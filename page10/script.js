@@ -1,4 +1,4 @@
-// 問答題庫
+// N1116445 呂宜蓁 頁面#2
 const questions = [
     {
         question: "狗狗的嗅覺比人類強多少倍？",
@@ -40,16 +40,16 @@ function updateQuestion() {
     const q = questions[qIndex];
     document.getElementById('questionText').textContent = q.question;
     document.querySelector('.quiz-question-icon').textContent = q.icon;
-    
+
     const container = document.getElementById('optionsContainer');
     container.innerHTML = '';
-    
+
     for (let i = 0; i < q.options.length; i++) {
         const btn = document.createElement('button');
         btn.className = 'quiz-option';
         btn.dataset.answer = i;
         btn.textContent = q.options[i];
-        btn.onclick = function() {
+        btn.onclick = function () {
             selectAnswer(parseInt(this.dataset.answer));
         };
         container.appendChild(btn);
@@ -91,7 +91,7 @@ function selectAnswer(selected) {
         dots[qIndex].classList.add('wrong');
     }
 
-    setTimeout(function() {
+    setTimeout(function () {
         qIndex++;
         if (qIndex < questions.length) {
             updateQuestion();
@@ -136,7 +136,7 @@ function restartQuiz() {
 
     document.getElementById('quizContent').style.display = 'block';
     document.getElementById('quizResult').classList.remove('show');
-    
+
     // 清除進度點的狀態
     var allDots = document.querySelectorAll('.progress-dot');
     for (var i = 0; i < allDots.length; i++) {
@@ -307,34 +307,34 @@ function scrollToTop() {
 }
 
 // 頁面載入完成後執行
-window.addEventListener('load', function() {
+window.addEventListener('load', function () {
     // 初始化測驗
     updateQuestion();
-    
+
     // 翻轉卡片
     var cards = document.querySelectorAll('.flip-card');
     for (var i = 0; i < cards.length; i++) {
-        cards[i].addEventListener('click', function() {
+        cards[i].addEventListener('click', function () {
             this.classList.toggle('flipped');
         });
     }
-    
+
     // 品種卡片點擊
     var breedCards = document.querySelectorAll('.breed-card');
     for (var i = 0; i < breedCards.length; i++) {
-        breedCards[i].addEventListener('click', function() {
+        breedCards[i].addEventListener('click', function () {
             openModal(this.dataset.breed);
         });
     }
-    
+
     // 點擊背景關閉彈窗
-    document.getElementById('breedModal').addEventListener('click', function(e) {
+    document.getElementById('breedModal').addEventListener('click', function (e) {
         if (e.target === this) closeModal();
     });
 });
 
 // 滾動事件
-window.addEventListener('scroll', function() {
+window.addEventListener('scroll', function () {
     var btn = document.querySelector('.floating-paw');
     if (window.pageYOffset > 300) {
         btn.classList.add('show');
@@ -344,7 +344,7 @@ window.addEventListener('scroll', function() {
 });
 
 // ESC鍵關閉彈窗
-document.addEventListener('keydown', function(e) {
+document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') {
         closeModal();
     }
