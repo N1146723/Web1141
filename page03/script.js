@@ -1,4 +1,4 @@
-
+// N1146707 張昀萱 頁面#1
 $(document).ready(function () {
 
     var navHeight = $(".horizontal-nav").outerHeight() || 60;
@@ -16,12 +16,10 @@ $(document).ready(function () {
         }
     });
 
-
     $(".info-button").on('click', function () {
 
         var dinoName = $(this).data('dino');
         var infoContent = "";
-
 
         switch (dinoName) {
             case "Diplodocus":
@@ -49,12 +47,8 @@ $(document).ready(function () {
                 infoContent = "未找到該恐龍的生態資訊。";
         }
 
-
         var $infoBox = $("#" + dinoName + "-info");
-
         $infoBox.html(infoContent);
-
-
         $infoBox.slideToggle(400);
     });
 

@@ -1,3 +1,4 @@
+// N1146707 張昀萱 頁面#2
 $(function () {
 
     function getCreditSum(className) {

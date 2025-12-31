@@ -1,3 +1,4 @@
+// N1146743 楊亦嵐 頁面#3
 let score = 0;
 let highScore = localStorage.getItem('mathHighScore') || 0;
 let currentQ = { a: 0, b: 0, ans: 0 };
