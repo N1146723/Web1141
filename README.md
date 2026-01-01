@@ -1,20 +1,25 @@
 # [進二技資管一甲1141網頁期末](https://n1146723.github.io/Web1141/)
+## 成員
+- N1146723 鄭宜舫 組長
+- N1146707 張昀萱
+- N1146743 楊亦嵐
+- N1116445 呂宜蓁
+
+## 粗略進度
 - 11/09 組長公告專案如何進行
 - 11/23 組長確定主題
     - index.html (偏美觀，美觀卡牌伸縮效果)
-    - page1.html (偏美觀，視差效果，預計放自己的繪畫作品集)
-    - page2.html (偏功能性，兩支手機對話功能，有亮暗切換模式)
-- 11/30 組長開始微調 index.html page1.html
+    - page01/index.html (偏美觀，視差效果，預計放自己的繪畫作品集)
+    - page02/index.html (偏功能性，兩支手機對話功能，有亮暗切換模式)
+- 11/30 組長開始微調 index.html、page01.index.html
 - 12/04 張同學已完成兩個 page
 - 12/06 楊同學已完成兩個 page，呂同學完成全頁面，但是仍須修正
 - 12/07 組長完善 index.page
-- 12/14 組長完善 page2.page，新增其他同學的頁面 (部分)
-- 12/14 組長完善 page2.page，新增其他同學的頁面 (部分)
+- 12/14 組長完善 page02/index.page，新增其他同學的頁面 (部分)
 - 12/20 第一次小組討論，各位同學都還有微調檔案
-## 成員
-- N1146723 組長 / N1146707 / N1146743 / N1116445
+- 12/27 第二次小組討論，部分同學都微調檔案
 
-## [時程](https://docs.google.com/document/d/1kBFKFEpiEYYy4r1fhn8T5baJV9wC-DZ5edGfSDCNnC0/edit?tab=t.0)
+## [組長公告排程](https://docs.google.com/document/d/1kBFKFEpiEYYy4r1fhn8T5baJV9wC-DZ5edGfSDCNnC0/edit?tab=t.0)
 - 【15週 - 12/20】討論#1（13:00-13:30 or 16:00-16:30）
     - 請各位把做好的三頁面跟文件，上傳 google drive
     - 大家一起檢視與討論，看是否有重複，如有需要大家再回去各自調整
