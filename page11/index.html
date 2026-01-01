@@ -2,352 +2,352 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>11 深海探索之旅 - 潛入藍色秘境</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>11 深海探索之旅 - 潛入藍色秘境</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="script.js" defer></script>
+    </head>
 
-<body>
-    <div class="bubble-field" id="bubbleField"></div>
+    <body>
+        <div class="bubble-field" id="bubbleField"></div>
 
-    <nav class="side-nav">
-        <div class="side-nav-item active" data-section="hero"></div>
-        <div class="side-nav-item" data-section="creatures"></div>
-        <div class="side-nav-item" data-section="depth"></div>
-    </nav>
+        <nav class="side-nav">
+            <div class="side-nav-item active" data-section="hero"></div>
+            <div class="side-nav-item" data-section="creatures"></div>
+            <div class="side-nav-item" data-section="depth"></div>
+        </nav>
 
-    <nav class="navbar" id="navbar">
-        <div class="logo">
-            <span class="logo-icon">🌊</span>
-            <span class="logo-text">DEEP EXPLORER</span>
+        <nav class="navbar" id="navbar">
+            <div class="logo">
+                <span class="logo-icon">🌊</span>
+                <span class="logo-text">DEEP EXPLORER</span>
+            </div>
+            <a href="../index.html" class="home-btn">
+                <span>🏠</span>
+                <span>回首頁</span>
+            </a>
+        </nav>
+
+        <div class="page-wrapper">
+
+            <section class="hero" id="hero">
+                <div class="hero-content">
+                    <h1 class="hero-title">深海探索之旅</h1>
+                    <p class="hero-subtitle">潛入藍色秘境，探索神秘海底世界<br>讓每一次呼吸都成為與海洋的對話</p>
+                    <div class="hero-stats">
+                        <div class="hero-stat">
+                            <span class="hero-stat-number">230,000</span>
+                            <span class="hero-stat-label">已知海洋物種</span>
+                        </div>
+                        <div class="hero-stat">
+                            <span class="hero-stat-number">11,034</span>
+                            <span class="hero-stat-label">最深海溝(公尺)</span>
+                        </div>
+                        <div class="hero-stat">
+                            <span class="hero-stat-number">71</span>
+                            <span class="hero-stat-label">地球海洋覆蓋(%)</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="creatures">
+                <div class="section-header">
+                    <span class="section-icon">🐠</span>
+                    <h2 class="section-title">神奇海洋生物圖鑑</h2>
+                    <p class="section-subtitle">點擊生物查看詳細資訊</p>
+                </div>
+                <div class="creature-showcase">
+                    <div class="creature-item active">
+                        <div class="creature-header">
+                            <div class="creature-icon">
+                                <img src="media/shark.jpg" alt="鯨鯊">
+                            </div>
+                            <div class="creature-brief">
+                                <h3 class="creature-name">鯨鯊</h3>
+                                <p class="creature-latin">Rhincodon typus - Whale Shark</p>
+                            </div>
+                            <div class="creature-tags">
+                                <span class="creature-tag">🏆 最大魚類</span>
+                                <span class="creature-tag">💚 溫和巨人</span>
+                            </div>
+                            <span class="creature-toggle">▼</span>
+                        </div>
+                        <div class="creature-detail">
+                            <div class="creature-detail-inner">
+                                <div class="detail-text">
+                                    鯨鯊是目前世界上最大的魚類，體長可達20公尺。儘管體型龐大，鯨鯊卻以浮游生物和小魚為食，性情溫和。牠們獨特的斑點花紋如同指紋般獨一無二，科學家藉此追蹤識別個體。
+                                </div>
+                                <div class="detail-stats">
+                                    <div class="detail-stat">
+                                        <span class="detail-stat-icon">📏</span>
+                                        <div class="detail-stat-info">
+                                            <span class="detail-stat-label">最大體長</span>
+                                            <span class="detail-stat-value">18-20 公尺</span>
+                                        </div>
+                                    </div>
+                                    <div class="detail-stat">
+                                        <span class="detail-stat-icon">📍</span>
+                                        <div class="detail-stat-info">
+                                            <span class="detail-stat-label">分布區域</span>
+                                            <span class="detail-stat-value">熱帶與溫帶海域</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="creature-item">
+                        <div class="creature-header">
+                            <div class="creature-icon">
+                                <img src="media/turtle.jpg" alt="綠蠵龜">
+                            </div>
+                            <div class="creature-brief">
+                                <h3 class="creature-name">綠蠵龜</h3>
+                                <p class="creature-latin">Chelonia mydas - Green Sea Turtle</p>
+                            </div>
+                            <div class="creature-tags">
+                                <span class="creature-tag">🌿 草食性</span>
+                                <span class="creature-tag">🛡️ 保育類</span>
+                            </div>
+                            <span class="creature-toggle">▼</span>
+                        </div>
+                        <div class="creature-detail">
+                            <div class="creature-detail-inner">
+                                <div class="detail-text">
+                                    綠蠵龜是大型海龜的一種，名字來自於體內脂肪的顏色而非外表。牠們是極少數成年後以海草和藻類為主食的海龜，對維持海洋生態平衡有重要作用。
+                                </div>
+                                <div class="detail-stats">
+                                    <div class="detail-stat">
+                                        <span class="detail-stat-icon">⏱️</span>
+                                        <div class="detail-stat-info">
+                                            <span class="detail-stat-label">壽命</span>
+                                            <span class="detail-stat-value">80-100 年</span>
+                                        </div>
+                                    </div>
+                                    <div class="detail-stat">
+                                        <span class="detail-stat-icon">🏊</span>
+                                        <div class="detail-stat-info">
+                                            <span class="detail-stat-label">潛水深度</span>
+                                            <span class="detail-stat-value">可達 200 公尺</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="creature-item">
+                        <div class="creature-header">
+                            <div class="creature-icon">
+                                <img src="media/jellyfish.jpg" alt="月亮水母">
+                            </div>
+                            <div class="creature-brief">
+                                <h3 class="creature-name">月亮水母</h3>
+                                <p class="creature-latin">Aurelia aurita - Moon Jellyfish</p>
+                            </div>
+                            <div class="creature-tags">
+                                <span class="creature-tag">✨ 透明夢幻</span>
+                                <span class="creature-tag">🌙 無腦生物</span>
+                            </div>
+                            <span class="creature-toggle">▼</span>
+                        </div>
+                        <div class="creature-detail">
+                            <div class="creature-detail-inner">
+                                <div class="detail-text">
+                                    月亮水母因其透明圓盤狀傘體而得名，在水中隨波漂流的姿態如夢似幻。雖然沒有大腦、心臟和血液，卻已在地球上生存超過5億年，是最古老的多器官生物之一。
+                                </div>
+                                <div class="detail-stats">
+                                    <div class="detail-stat">
+                                        <span class="detail-stat-icon">💧</span>
+                                        <div class="detail-stat-info">
+                                            <span class="detail-stat-label">身體組成</span>
+                                            <span class="detail-stat-value">95% 水分</span>
+                                        </div>
+                                    </div>
+                                    <div class="detail-stat">
+                                        <span class="detail-stat-icon">⚡</span>
+                                        <div class="detail-stat-info">
+                                            <span class="detail-stat-label">毒性</span>
+                                            <span class="detail-stat-value">輕微刺痛感</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="creature-item">
+                        <div class="creature-header">
+                            <div class="creature-icon">
+                                <img src="media/octopus.jpg" alt="大章魚">
+                            </div>
+                            <div class="creature-brief">
+                                <h3 class="creature-name">大章魚</h3>
+                                <p class="creature-latin">Enteroctopus dofleini - Giant Pacific Octopus</p>
+                            </div>
+                            <div class="creature-tags">
+                                <span class="creature-tag">🧠 高智商</span>
+                                <span class="creature-tag">🎨 變色高手</span>
+                            </div>
+                            <span class="creature-toggle">▼</span>
+                        </div>
+                        <div class="creature-detail">
+                            <div class="creature-detail-inner">
+                                <div class="detail-text">
+                                    太平洋巨型章魚是最聰明的無脊椎動物之一，擁有三顆心臟和藍色的血液。牠們能在數秒內改變身體的顏色和紋理以進行偽裝，並能解開容器蓋子和走迷宮。
+                                </div>
+                                <div class="detail-stats">
+                                    <div class="detail-stat">
+                                        <span class="detail-stat-icon">❤️</span>
+                                        <div class="detail-stat-info">
+                                            <span class="detail-stat-label">心臟數量</span>
+                                            <span class="detail-stat-value">3 顆心臟</span>
+                                        </div>
+                                    </div>
+                                    <div class="detail-stat">
+                                        <span class="detail-stat-icon">🦑</span>
+                                        <div class="detail-stat-info">
+                                            <span class="detail-stat-label">觸手吸盤</span>
+                                            <span class="detail-stat-value">約 2000 個</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="creature-item">
+                        <div class="creature-header">
+                            <div class="creature-icon">
+                                <img src="media/clownfish.jpg" alt="小丑魚">
+                            </div>
+                            <div class="creature-brief">
+                                <h3 class="creature-name">小丑魚</h3>
+                                <p class="creature-latin">Amphiprioninae - Clownfish</p>
+                            </div>
+                            <div class="creature-tags">
+                                <span class="creature-tag">🤝 共生關係</span>
+                                <span class="creature-tag">🎬 明星物種</span>
+                            </div>
+                            <span class="creature-toggle">▼</span>
+                        </div>
+                        <div class="creature-detail">
+                            <div class="creature-detail-inner">
+                                <div class="detail-text">
+                                    小丑魚因電影《海底總動員》而聞名全球，牠們與海葵形成獨特的共生關係。小丑魚身上的黏液可保護自己免受海葵毒刺傷害，同時為海葵帶來食物並驅趕掠食者。
+                                </div>
+                                <div class="detail-stats">
+                                    <div class="detail-stat">
+                                        <span class="detail-stat-icon">🌺</span>
+                                        <div class="detail-stat-info">
+                                            <span class="detail-stat-label">共生夥伴</span>
+                                            <span class="detail-stat-value">海葵</span>
+                                        </div>
+                                    </div>
+                                    <div class="detail-stat">
+                                        <span class="detail-stat-icon">🔄</span>
+                                        <div class="detail-stat-info">
+                                            <span class="detail-stat-label">特殊能力</span>
+                                            <span class="detail-stat-value">性別轉換</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="creature-item">
+                        <div class="creature-header">
+                            <div class="creature-icon">
+                                <img src="media/ray.jpg" alt="蝠鱝">
+                            </div>
+                            <div class="creature-brief">
+                                <h3 class="creature-name">蝠鱝</h3>
+                                <p class="creature-latin">Mobula birostris - Manta Ray</p>
+                            </div>
+                            <div class="creature-tags">
+                                <span class="creature-tag">🪽 海中飛翔</span>
+                                <span class="creature-tag">🧠 聰明溫柔</span>
+                            </div>
+                            <span class="creature-toggle">▼</span>
+                        </div>
+                        <div class="creature-detail">
+                            <div class="creature-detail-inner">
+                                <div class="detail-text">
+                                    蝠鱝是海洋中最優雅的生物之一，展開雙翼可達7公尺寬，在水中如同飛翔的巨鳥。牠們擁有魚類中最大的腦身比，被認為具有自我意識，是潛水員夢寐以求的邂逅對象。
+                                </div>
+                                <div class="detail-stats">
+                                    <div class="detail-stat">
+                                        <span class="detail-stat-icon">📐</span>
+                                        <div class="detail-stat-info">
+                                            <span class="detail-stat-label">翼展寬度</span>
+                                            <span class="detail-stat-value">最大 7 公尺</span>
+                                        </div>
+                                    </div>
+                                    <div class="detail-stat">
+                                        <span class="detail-stat-icon">🍽️</span>
+                                        <div class="detail-stat-info">
+                                            <span class="detail-stat-label">食物</span>
+                                            <span class="detail-stat-value">浮游生物</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="depth">
+                <div class="section-header">
+                    <span class="section-icon">🔬</span>
+                    <h2 class="section-title">深度探索器</h2>
+                    <p class="section-subtitle">點擊深度，探索不同海洋層的奧秘</p>
+                </div>
+                <div class="depth-container">
+                    <div class="depth-wheel">
+                        <div class="wheel-center" id="wheelCenter">
+                            <span class="wheel-center-icon">🌊</span>
+                            <p class="wheel-center-name">選擇深度</p>
+                            <p class="wheel-center-hint">探索海洋層</p>
+                        </div>
+                        <button class="depth-btn" data-depth="1">0m</button>
+                        <button class="depth-btn" data-depth="2">20m</button>
+                        <button class="depth-btn" data-depth="3">40m</button>
+                        <button class="depth-btn" data-depth="4">200m</button>
+                        <button class="depth-btn" data-depth="5">1000m</button>
+                        <button class="depth-btn" data-depth="6">4000m</button>
+                        <button class="depth-btn" data-depth="7">6000m</button>
+                        <button class="depth-btn" data-depth="8">11000m</button>
+                    </div>
+                    <div class="depth-result-card" id="depthResult">
+                        <p class="result-desc">選擇上方深度計的深度，探索該海洋層的生物與特點</p>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="footer">
+                <div class="footer-content">
+                    <div class="footer-brand">
+                        <div class="footer-logo">
+                            <span class="footer-logo-icon">🌊</span>
+                            <span class="footer-logo-text">DEEP EXPLORER</span>
+                        </div>
+                        <p class="footer-desc">探索海洋的奧秘，感受深藍的召喚。讓我們一起潛入這片占地球71%的藍色世界，發現生命的另一種可能。</p>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>© 2024 Deep Explorer | Made with 🐋 by <span class="highlight">N1116445 呂宜蓁</span></p>
+                </div>
+            </footer>
+
         </div>
-        <a href="../index.html" class="home-btn">
-            <span>🏠</span>
-            <span>回首頁</span>
-        </a>
-    </nav>
 
-    <div class="page-wrapper">
-
-        <section class="hero" id="hero">
-            <div class="hero-content">
-                <h1 class="hero-title">深海探索之旅</h1>
-                <p class="hero-subtitle">潛入藍色秘境，探索神秘海底世界<br>讓每一次呼吸都成為與海洋的對話</p>
-                <div class="hero-stats">
-                    <div class="hero-stat">
-                        <span class="hero-stat-number">230,000</span>
-                        <span class="hero-stat-label">已知海洋物種</span>
-                    </div>
-                    <div class="hero-stat">
-                        <span class="hero-stat-number">11,034</span>
-                        <span class="hero-stat-label">最深海溝(公尺)</span>
-                    </div>
-                    <div class="hero-stat">
-                        <span class="hero-stat-number">71</span>
-                        <span class="hero-stat-label">地球海洋覆蓋(%)</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="section" id="creatures">
-            <div class="section-header">
-                <span class="section-icon">🐠</span>
-                <h2 class="section-title">神奇海洋生物圖鑑</h2>
-                <p class="section-subtitle">點擊生物查看詳細資訊</p>
-            </div>
-            <div class="creature-showcase">
-                <div class="creature-item active">
-                    <div class="creature-header">
-                        <div class="creature-icon">
-                            <img src="media/shark.jpg" alt="鯨鯊">
-                        </div>
-                        <div class="creature-brief">
-                            <h3 class="creature-name">鯨鯊</h3>
-                            <p class="creature-latin">Rhincodon typus - Whale Shark</p>
-                        </div>
-                        <div class="creature-tags">
-                            <span class="creature-tag">🏆 最大魚類</span>
-                            <span class="creature-tag">💚 溫和巨人</span>
-                        </div>
-                        <span class="creature-toggle">▼</span>
-                    </div>
-                    <div class="creature-detail">
-                        <div class="creature-detail-inner">
-                            <div class="detail-text">
-                                鯨鯊是目前世界上最大的魚類，體長可達20公尺。儘管體型龐大，鯨鯊卻以浮游生物和小魚為食，性情溫和。牠們獨特的斑點花紋如同指紋般獨一無二，科學家藉此追蹤識別個體。
-                            </div>
-                            <div class="detail-stats">
-                                <div class="detail-stat">
-                                    <span class="detail-stat-icon">📏</span>
-                                    <div class="detail-stat-info">
-                                        <span class="detail-stat-label">最大體長</span>
-                                        <span class="detail-stat-value">18-20 公尺</span>
-                                    </div>
-                                </div>
-                                <div class="detail-stat">
-                                    <span class="detail-stat-icon">📍</span>
-                                    <div class="detail-stat-info">
-                                        <span class="detail-stat-label">分布區域</span>
-                                        <span class="detail-stat-value">熱帶與溫帶海域</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="creature-item">
-                    <div class="creature-header">
-                        <div class="creature-icon">
-                            <img src="media/turtle.jpg" alt="綠蠵龜">
-                        </div>
-                        <div class="creature-brief">
-                            <h3 class="creature-name">綠蠵龜</h3>
-                            <p class="creature-latin">Chelonia mydas - Green Sea Turtle</p>
-                        </div>
-                        <div class="creature-tags">
-                            <span class="creature-tag">🌿 草食性</span>
-                            <span class="creature-tag">🛡️ 保育類</span>
-                        </div>
-                        <span class="creature-toggle">▼</span>
-                    </div>
-                    <div class="creature-detail">
-                        <div class="creature-detail-inner">
-                            <div class="detail-text">
-                                綠蠵龜是大型海龜的一種，名字來自於體內脂肪的顏色而非外表。牠們是極少數成年後以海草和藻類為主食的海龜，對維持海洋生態平衡有重要作用。
-                            </div>
-                            <div class="detail-stats">
-                                <div class="detail-stat">
-                                    <span class="detail-stat-icon">⏱️</span>
-                                    <div class="detail-stat-info">
-                                        <span class="detail-stat-label">壽命</span>
-                                        <span class="detail-stat-value">80-100 年</span>
-                                    </div>
-                                </div>
-                                <div class="detail-stat">
-                                    <span class="detail-stat-icon">🏊</span>
-                                    <div class="detail-stat-info">
-                                        <span class="detail-stat-label">潛水深度</span>
-                                        <span class="detail-stat-value">可達 200 公尺</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="creature-item">
-                    <div class="creature-header">
-                        <div class="creature-icon">
-                            <img src="media/jellyfish.jpg" alt="月亮水母">
-                        </div>
-                        <div class="creature-brief">
-                            <h3 class="creature-name">月亮水母</h3>
-                            <p class="creature-latin">Aurelia aurita - Moon Jellyfish</p>
-                        </div>
-                        <div class="creature-tags">
-                            <span class="creature-tag">✨ 透明夢幻</span>
-                            <span class="creature-tag">🌙 無腦生物</span>
-                        </div>
-                        <span class="creature-toggle">▼</span>
-                    </div>
-                    <div class="creature-detail">
-                        <div class="creature-detail-inner">
-                            <div class="detail-text">
-                                月亮水母因其透明圓盤狀傘體而得名，在水中隨波漂流的姿態如夢似幻。雖然沒有大腦、心臟和血液，卻已在地球上生存超過5億年，是最古老的多器官生物之一。
-                            </div>
-                            <div class="detail-stats">
-                                <div class="detail-stat">
-                                    <span class="detail-stat-icon">💧</span>
-                                    <div class="detail-stat-info">
-                                        <span class="detail-stat-label">身體組成</span>
-                                        <span class="detail-stat-value">95% 水分</span>
-                                    </div>
-                                </div>
-                                <div class="detail-stat">
-                                    <span class="detail-stat-icon">⚡</span>
-                                    <div class="detail-stat-info">
-                                        <span class="detail-stat-label">毒性</span>
-                                        <span class="detail-stat-value">輕微刺痛感</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="creature-item">
-                    <div class="creature-header">
-                        <div class="creature-icon">
-                            <img src="media/octopus.jpg" alt="大章魚">
-                        </div>
-                        <div class="creature-brief">
-                            <h3 class="creature-name">大章魚</h3>
-                            <p class="creature-latin">Enteroctopus dofleini - Giant Pacific Octopus</p>
-                        </div>
-                        <div class="creature-tags">
-                            <span class="creature-tag">🧠 高智商</span>
-                            <span class="creature-tag">🎨 變色高手</span>
-                        </div>
-                        <span class="creature-toggle">▼</span>
-                    </div>
-                    <div class="creature-detail">
-                        <div class="creature-detail-inner">
-                            <div class="detail-text">
-                                太平洋巨型章魚是最聰明的無脊椎動物之一，擁有三顆心臟和藍色的血液。牠們能在數秒內改變身體的顏色和紋理以進行偽裝，並能解開容器蓋子和走迷宮。
-                            </div>
-                            <div class="detail-stats">
-                                <div class="detail-stat">
-                                    <span class="detail-stat-icon">❤️</span>
-                                    <div class="detail-stat-info">
-                                        <span class="detail-stat-label">心臟數量</span>
-                                        <span class="detail-stat-value">3 顆心臟</span>
-                                    </div>
-                                </div>
-                                <div class="detail-stat">
-                                    <span class="detail-stat-icon">🦑</span>
-                                    <div class="detail-stat-info">
-                                        <span class="detail-stat-label">觸手吸盤</span>
-                                        <span class="detail-stat-value">約 2000 個</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="creature-item">
-                    <div class="creature-header">
-                        <div class="creature-icon">
-                            <img src="media/clownfish.jpg" alt="小丑魚">
-                        </div>
-                        <div class="creature-brief">
-                            <h3 class="creature-name">小丑魚</h3>
-                            <p class="creature-latin">Amphiprioninae - Clownfish</p>
-                        </div>
-                        <div class="creature-tags">
-                            <span class="creature-tag">🤝 共生關係</span>
-                            <span class="creature-tag">🎬 明星物種</span>
-                        </div>
-                        <span class="creature-toggle">▼</span>
-                    </div>
-                    <div class="creature-detail">
-                        <div class="creature-detail-inner">
-                            <div class="detail-text">
-                                小丑魚因電影《海底總動員》而聞名全球，牠們與海葵形成獨特的共生關係。小丑魚身上的黏液可保護自己免受海葵毒刺傷害，同時為海葵帶來食物並驅趕掠食者。
-                            </div>
-                            <div class="detail-stats">
-                                <div class="detail-stat">
-                                    <span class="detail-stat-icon">🌺</span>
-                                    <div class="detail-stat-info">
-                                        <span class="detail-stat-label">共生夥伴</span>
-                                        <span class="detail-stat-value">海葵</span>
-                                    </div>
-                                </div>
-                                <div class="detail-stat">
-                                    <span class="detail-stat-icon">🔄</span>
-                                    <div class="detail-stat-info">
-                                        <span class="detail-stat-label">特殊能力</span>
-                                        <span class="detail-stat-value">性別轉換</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="creature-item">
-                    <div class="creature-header">
-                        <div class="creature-icon">
-                            <img src="media/ray.jpg" alt="蝠鱝">
-                        </div>
-                        <div class="creature-brief">
-                            <h3 class="creature-name">蝠鱝</h3>
-                            <p class="creature-latin">Mobula birostris - Manta Ray</p>
-                        </div>
-                        <div class="creature-tags">
-                            <span class="creature-tag">🪽 海中飛翔</span>
-                            <span class="creature-tag">🧠 聰明溫柔</span>
-                        </div>
-                        <span class="creature-toggle">▼</span>
-                    </div>
-                    <div class="creature-detail">
-                        <div class="creature-detail-inner">
-                            <div class="detail-text">
-                                蝠鱝是海洋中最優雅的生物之一，展開雙翼可達7公尺寬，在水中如同飛翔的巨鳥。牠們擁有魚類中最大的腦身比，被認為具有自我意識，是潛水員夢寐以求的邂逅對象。
-                            </div>
-                            <div class="detail-stats">
-                                <div class="detail-stat">
-                                    <span class="detail-stat-icon">📐</span>
-                                    <div class="detail-stat-info">
-                                        <span class="detail-stat-label">翼展寬度</span>
-                                        <span class="detail-stat-value">最大 7 公尺</span>
-                                    </div>
-                                </div>
-                                <div class="detail-stat">
-                                    <span class="detail-stat-icon">🍽️</span>
-                                    <div class="detail-stat-info">
-                                        <span class="detail-stat-label">食物</span>
-                                        <span class="detail-stat-value">浮游生物</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="section" id="depth">
-            <div class="section-header">
-                <span class="section-icon">🔬</span>
-                <h2 class="section-title">深度探索器</h2>
-                <p class="section-subtitle">點擊深度，探索不同海洋層的奧秘</p>
-            </div>
-            <div class="depth-container">
-                <div class="depth-wheel">
-                    <div class="wheel-center" id="wheelCenter">
-                        <span class="wheel-center-icon">🌊</span>
-                        <p class="wheel-center-name">選擇深度</p>
-                        <p class="wheel-center-hint">探索海洋層</p>
-                    </div>
-                    <button class="depth-btn" data-depth="1">0m</button>
-                    <button class="depth-btn" data-depth="2">20m</button>
-                    <button class="depth-btn" data-depth="3">40m</button>
-                    <button class="depth-btn" data-depth="4">200m</button>
-                    <button class="depth-btn" data-depth="5">1000m</button>
-                    <button class="depth-btn" data-depth="6">4000m</button>
-                    <button class="depth-btn" data-depth="7">6000m</button>
-                    <button class="depth-btn" data-depth="8">11000m</button>
-                </div>
-                <div class="depth-result-card" id="depthResult">
-                    <p class="result-desc">選擇上方深度計的深度，探索該海洋層的生物與特點</p>
-                </div>
-            </div>
-        </section>
-
-        <footer class="footer">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <div class="footer-logo">
-                        <span class="footer-logo-icon">🌊</span>
-                        <span class="footer-logo-text">DEEP EXPLORER</span>
-                    </div>
-                    <p class="footer-desc">探索海洋的奧秘，感受深藍的召喚。讓我們一起潛入這片占地球71%的藍色世界，發現生命的另一種可能。</p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2024 Deep Explorer | Made with 🐋 by <span class="highlight">N1116445 呂宜蓁</span></p>
-            </div>
-        </footer>
-
-    </div>
-
-    <button class="scroll-top" id="scrollTop">↑</button>
-</body>
+        <button class="scroll-top" id="scrollTop">↑</button>
+    </body>
 
 </html>

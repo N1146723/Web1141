@@ -2,655 +2,655 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>09 台北咖啡地圖 - 城市咖啡香</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link rel="stylesheet" href="style.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="script.js"></script>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>09 台北咖啡地圖 - 城市咖啡香</title>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+        <link rel="stylesheet" href="style.css" />
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+        <script src="script.js"></script>
+    </head>
 
-<body>
-    <nav class="navbar">
-        <div class="nav-content">
-            <div class="logo">
-                <div class="logo-icon">☕</div>
-                <div class="logo-text">
-                    <h1>台北咖啡地圖</h1>
-                    <p>探索城市中的咖啡香，尋找你的專屬咖啡廳</p>
-                </div>
-            </div>
-            <div class="nav-right">
-                <div class="nav-stats">
-                    <div class="nav-stat-item">
-                        <div class="nav-stat-number">26</div>
-                        <div class="nav-stat-label">精選咖啡廳</div>
-                    </div>
-                    <div class="nav-stat-item">
-                        <div class="nav-stat-number">4.8</div>
-                        <div class="nav-stat-label">平均評分</div>
-                    </div>
-                    <div class="nav-stat-item">
-                        <div class="nav-stat-number">8+</div>
-                        <div class="nav-stat-label">行政區</div>
+    <body>
+        <nav class="navbar">
+            <div class="nav-content">
+                <div class="logo">
+                    <div class="logo-icon">☕</div>
+                    <div class="logo-text">
+                        <h1>台北咖啡地圖</h1>
+                        <p>探索城市中的咖啡香，尋找你的專屬咖啡廳</p>
                     </div>
                 </div>
-                <a href="../index.html" class="home-btn">
-                    <span class="home-btn-icon">🏠</span>
-                    <span>回首頁</span>
-                </a>
+                <div class="nav-right">
+                    <div class="nav-stats">
+                        <div class="nav-stat-item">
+                            <div class="nav-stat-number">26</div>
+                            <div class="nav-stat-label">精選咖啡廳</div>
+                        </div>
+                        <div class="nav-stat-item">
+                            <div class="nav-stat-number">4.8</div>
+                            <div class="nav-stat-label">平均評分</div>
+                        </div>
+                        <div class="nav-stat-item">
+                            <div class="nav-stat-number">8+</div>
+                            <div class="nav-stat-label">行政區</div>
+                        </div>
+                    </div>
+                    <a href="../index.html" class="home-btn">
+                        <span class="home-btn-icon">🏠</span>
+                        <span>回首頁</span>
+                    </a>
+                </div>
             </div>
+        </nav>
+
+        <div class="container">
+            <div class="content-wrapper">
+                <div class="map-section">
+                    <div class="map-header">
+                        <h2>📍 咖啡廳地圖</h2>
+                        <p>點擊右側咖啡廳卡片，在地圖上查看位置</p>
+                    </div>
+                    <div class="map-container">
+                        <div id="map"></div>
+                    </div>
+                </div>
+
+                <div class="cafes-sidebar">
+                    <div class="filter-section">
+                        <div class="filter-header" id="filterHeader">
+                            <div class="filter-title">
+                                <span>🔍</span>
+                                <span>依行政區篩選</span>
+                            </div>
+                            <span class="filter-toggle">▼</span>
+                        </div>
+                        <div class="filter-content" id="filterContent">
+                            <div class="filter-buttons">
+                                <button class="filter-btn all active" data-district="all">全部顯示 (26)</button>
+                                <button class="filter-btn" data-district="信義區">信義區 (1)</button>
+                                <button class="filter-btn" data-district="松山區">松山區 (7)</button>
+                                <button class="filter-btn" data-district="中山區">中山區 (4)</button>
+                                <button class="filter-btn" data-district="大安區">大安區 (2)</button>
+                                <button class="filter-btn" data-district="大同區">大同區 (4)</button>
+                                <button class="filter-btn" data-district="中正區">中正區 (2)</button>
+                                <button class="filter-btn" data-district="士林區">士林區 (3)</button>
+                                <button class="filter-btn" data-district="內湖區">內湖區 (1)</button>
+                                <button class="filter-btn" data-district="北投區">北投區 (2)</button>
+                            </div>
+                            <div class="filter-count">目前顯示：<span id="currentCount">26</span> 間咖啡廳</div>
+                        </div>
+                    </div>
+
+                    <div class="cafes-list">
+                        <div class="cafe-card" data-location="25.0330,121.5654" data-name="Tropo Coffee"
+                            data-district="信義區">
+                            <div class="cafe-number">1</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">Tropo Coffee</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★★</span>
+                                        <span class="rating-number">4.8</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>信義區 - 摩登復古的迷人空間</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">精品咖啡</span>
+                                <span class="tag">復古風</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-card" data-location="25.0590,121.5570" data-name="汩咖啡" data-district="松山區">
+                            <div class="cafe-number">2</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">汩咖啡</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★★</span>
+                                        <span class="rating-number">4.7</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>松山區 - 鐵皮屋裡的日式侘寂空間</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">日式風格</span>
+                                <span class="tag">侘寂美學</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-card" data-location="25.0600,121.5580" data-name="真拾生活" data-district="松山區">
+                            <div class="cafe-number">3</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">真拾生活</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★☆</span>
+                                        <span class="rating-number">4.6</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>松山區 - 北歐鄉村風Brunch Cafe</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">北歐風</span>
+                                <span class="tag">Brunch</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-card" data-location="25.0605,121.5590" data-name="PECKISH Bakery"
+                            data-district="松山區">
+                            <div class="cafe-number">4</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">PECKISH Bakery</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★★</span>
+                                        <span class="rating-number">4.8</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>松山區 - 設計感可頌專賣Cafe</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">可頌專賣</span>
+                                <span class="tag">設計感</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-card" data-location="25.0595,121.5598" data-name="PAUSE studio"
+                            data-district="松山區">
+                            <div class="cafe-number">5</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">PAUSE studio</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★★</span>
+                                        <span class="rating-number">4.9</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>松山區 - 民生社區純白韓系咖啡廳</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">純白韓系</span>
+                                <span class="tag">不限時</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-card" data-location="25.0585,121.5575" data-name="ALL DAY ROASTING COMPANY"
+                            data-district="松山區">
+                            <div class="cafe-number">6</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">ALL DAY ROASTING</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★★</span>
+                                        <span class="rating-number">4.7</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>松山區 - 工業風自家烘焙咖啡</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">自家烘焙</span>
+                                <span class="tag">工業風</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-card" data-location="25.0610,121.5595" data-name="CAFEAO" data-district="松山區">
+                            <div class="cafe-number">7</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">CAFEAO</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★☆</span>
+                                        <span class="rating-number">4.6</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>松山區 - 陳冠希創立咖啡新品牌</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">潮流品牌</span>
+                                <span class="tag">時尚</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-card" data-location="25.0620,121.5600" data-name="好日子咖啡" data-district="松山區">
+                            <div class="cafe-number">8</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">好日子咖啡</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★☆</span>
+                                        <span class="rating-number">4.5</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>松山區 - 感受延壽街日常氛圍</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag">日常咖啡</span>
+                                <span class="tag">社區</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-card" data-location="25.0539,121.5246" data-name="春秋書店" data-district="中山區">
+                            <div class="cafe-number">9</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">春秋書店</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★☆</span>
+                                        <span class="rating-number">4.7</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>中山區 - 赤峰街老宅的文青咖啡</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">老宅</span>
+                                <span class="tag">書店</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-card" data-location="25.0630,121.5280" data-name="Hoto Cafe" data-district="中山區">
+                            <div class="cafe-number">10</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">Hoto Cafe</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★★</span>
+                                        <span class="rating-number">4.8</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>中山區 - 公園旁日系咖啡甜點店</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">日系</span>
+                                <span class="tag">甜點</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-card" data-location="25.0640,121.5290" data-name="Keystone Coffee"
+                            data-district="中山區">
+                            <div class="cafe-number">11</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">Keystone Coffee</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★★</span>
+                                        <span class="rating-number">4.9</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>中山區 - 職人烘焙咖啡</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">職人烘焙</span>
+                                <span class="tag">精品咖啡</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-card" data-location="25.0545,121.5250" data-name="時差 Jetlag" data-district="中山區">
+                            <div class="cafe-number">12</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">時差 Jetlag</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★☆</span>
+                                        <span class="rating-number">4.6</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>中山區 - 香港空少打造的咖啡角落</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag">香港風</span>
+                                <span class="tag">特色</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-card" data-location="25.0340,121.5440" data-name="好物 Spirit" data-district="大安區">
+                            <div class="cafe-number">13</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">好物 Spirit 咖啡</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★★</span>
+                                        <span class="rating-number">4.8</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>大安區 - 復古歐風老宅</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">復古歐風</span>
+                                <span class="tag">老宅</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-card" data-location="25.0360,121.5450" data-name="Tamed Fox" data-district="大安區">
+                            <div class="cafe-number">14</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">Tamed Fox</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★☆</span>
+                                        <span class="rating-number">4.7</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>大安區 - 舒心美式Cafe健康蔬食</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">健康蔬食</span>
+                                <span class="tag">美式</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-card" data-location="25.0539,121.5195" data-name="幻猻家咖啡" data-district="大同區">
+                            <div class="cafe-number">15</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">幻猻家咖啡</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★★</span>
+                                        <span class="rating-number">4.8</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>大同區 - 踏進去穿越到京都</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">京都風格</span>
+                                <span class="tag">老宅</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-card" data-location="25.0550,121.5200" data-name="黑露咖啡" data-district="大同區">
+                            <div class="cafe-number">16</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">黑露咖啡</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★☆</span>
+                                        <span class="rating-number">4.7</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>大同區 - 營業至深夜的京都古風咖啡廳</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">京都古風</span>
+                                <span class="tag">深夜營業</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-card" data-location="25.0560,121.5100" data-name="Modern Mode" data-district="大同區">
+                            <div class="cafe-number">17</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">Modern Mode</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★★</span>
+                                        <span class="rating-number">4.8</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>大同區 - 大稻埕裡的巴黎復古咖啡廳</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">巴黎復古</span>
+                                <span class="tag">大稻埕</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-card" data-location="25.0520,121.5230" data-name="羊毛與花 光點" data-district="大同區">
+                            <div class="cafe-number">18</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">羊毛與花 光點</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★☆</span>
+                                        <span class="rating-number">4.6</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>大同區 - 比鄰城市電影院的採光咖啡廳</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag">採光佳</span>
+                                <span class="tag">電影院旁</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-card" data-location="25.0420,121.5180" data-name="直物文具Cafe" data-district="中正區">
+                            <div class="cafe-number">19</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">直物文具Cafe</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★★</span>
+                                        <span class="rating-number">4.9</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>中正區 - 台灣首間文具咖啡廳</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">文具主題</span>
+                                <span class="tag">首創</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-card" data-location="25.0490,121.5140" data-name="MKCR 山小孩咖啡" data-district="中正區">
+                            <div class="cafe-number">20</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">MKCR 山小孩咖啡</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★★</span>
+                                        <span class="rating-number">4.8</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>中正區 - 北門旁品質自烘咖啡</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">自烘咖啡</span>
+                                <span class="tag">北門</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-card" data-location="25.1019,121.5512" data-name="野人花園" data-district="士林區">
+                            <div class="cafe-number">21</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">野人花園</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★★</span>
+                                        <span class="rating-number">4.9</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>士林區 - 沈浸在山中森林的無限時祕境</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">山中秘境</span>
+                                <span class="tag">不限時</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-card" data-location="25.1280,121.5450" data-name="豆留森林" data-district="士林區">
+                            <div class="cafe-number">22</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">豆留森林</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★★</span>
+                                        <span class="rating-number">4.8</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>士林區 - 陽明山下CAMA竹林老宅特別店</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">竹林老宅</span>
+                                <span class="tag">陽明山</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-card" data-location="25.1369,121.5473" data-name="好樣秘境" data-district="士林區">
+                            <div class="cafe-number">23</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">好樣秘境</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★★</span>
+                                        <span class="rating-number">4.9</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>士林區 - 菁山路上的純白靜謐花園</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">純白花園</span>
+                                <span class="tag">秘境</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-card" data-location="25.0820,121.5880" data-name="文心藝所" data-district="內湖區">
+                            <div class="cafe-number">24</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">文心藝所</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★★</span>
+                                        <span class="rating-number">4.9</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>內湖區 - 最美書店裡閱讀和喝咖啡</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">最美書店</span>
+                                <span class="tag">藝術空間</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-card" data-location="25.1370,121.5010" data-name="穠咖啡" data-district="北投區">
+                            <div class="cafe-number">25</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">穠咖啡</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★★</span>
+                                        <span class="rating-number">4.8</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>北投區 - 必嚐酒香提拉米蘇、創意調酒咖啡</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">提拉米蘇</span>
+                                <span class="tag">調酒咖啡</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-card" data-location="25.1520,121.5150" data-name="山上聊" data-district="北投區">
+                            <div class="cafe-number">26</div>
+                            <div class="cafe-card-header">
+                                <div>
+                                    <h3 class="cafe-name">山上聊</h3>
+                                    <div class="cafe-rating">
+                                        <span class="stars">★★★★★</span>
+                                        <span class="rating-number">4.9</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cafe-location">
+                                <span class="location-icon">📍</span>
+                                <span>北投區 - 呼吸芬多精擼貓的祕密花園</span>
+                            </div>
+                            <div class="cafe-tags">
+                                <span class="tag highlight">森林系</span>
+                                <span class="tag">貓咪</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
-    </nav>
 
-    <div class="container">
-        <div class="content-wrapper">
-            <div class="map-section">
-                <div class="map-header">
-                    <h2>📍 咖啡廳地圖</h2>
-                    <p>點擊右側咖啡廳卡片，在地圖上查看位置</p>
-                </div>
-                <div class="map-container">
-                    <div id="map"></div>
-                </div>
-            </div>
-
-            <div class="cafes-sidebar">
-                <div class="filter-section">
-                    <div class="filter-header" id="filterHeader">
-                        <div class="filter-title">
-                            <span>🔍</span>
-                            <span>依行政區篩選</span>
-                        </div>
-                        <span class="filter-toggle">▼</span>
-                    </div>
-                    <div class="filter-content" id="filterContent">
-                        <div class="filter-buttons">
-                            <button class="filter-btn all active" data-district="all">全部顯示 (26)</button>
-                            <button class="filter-btn" data-district="信義區">信義區 (1)</button>
-                            <button class="filter-btn" data-district="松山區">松山區 (7)</button>
-                            <button class="filter-btn" data-district="中山區">中山區 (4)</button>
-                            <button class="filter-btn" data-district="大安區">大安區 (2)</button>
-                            <button class="filter-btn" data-district="大同區">大同區 (4)</button>
-                            <button class="filter-btn" data-district="中正區">中正區 (2)</button>
-                            <button class="filter-btn" data-district="士林區">士林區 (3)</button>
-                            <button class="filter-btn" data-district="內湖區">內湖區 (1)</button>
-                            <button class="filter-btn" data-district="北投區">北投區 (2)</button>
-                        </div>
-                        <div class="filter-count">目前顯示：<span id="currentCount">26</span> 間咖啡廳</div>
-                    </div>
-                </div>
-
-                <div class="cafes-list">
-                    <div class="cafe-card" data-location="25.0330,121.5654" data-name="Tropo Coffee"
-                        data-district="信義區">
-                        <div class="cafe-number">1</div>
-                        <div class="cafe-card-header">
-                            <div>
-                                <h3 class="cafe-name">Tropo Coffee</h3>
-                                <div class="cafe-rating">
-                                    <span class="stars">★★★★★</span>
-                                    <span class="rating-number">4.8</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cafe-location">
-                            <span class="location-icon">📍</span>
-                            <span>信義區 - 摩登復古的迷人空間</span>
-                        </div>
-                        <div class="cafe-tags">
-                            <span class="tag highlight">精品咖啡</span>
-                            <span class="tag">復古風</span>
-                        </div>
-                    </div>
-
-                    <div class="cafe-card" data-location="25.0590,121.5570" data-name="汩咖啡" data-district="松山區">
-                        <div class="cafe-number">2</div>
-                        <div class="cafe-card-header">
-                            <div>
-                                <h3 class="cafe-name">汩咖啡</h3>
-                                <div class="cafe-rating">
-                                    <span class="stars">★★★★★</span>
-                                    <span class="rating-number">4.7</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cafe-location">
-                            <span class="location-icon">📍</span>
-                            <span>松山區 - 鐵皮屋裡的日式侘寂空間</span>
-                        </div>
-                        <div class="cafe-tags">
-                            <span class="tag highlight">日式風格</span>
-                            <span class="tag">侘寂美學</span>
-                        </div>
-                    </div>
-
-                    <div class="cafe-card" data-location="25.0600,121.5580" data-name="真拾生活" data-district="松山區">
-                        <div class="cafe-number">3</div>
-                        <div class="cafe-card-header">
-                            <div>
-                                <h3 class="cafe-name">真拾生活</h3>
-                                <div class="cafe-rating">
-                                    <span class="stars">★★★★☆</span>
-                                    <span class="rating-number">4.6</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cafe-location">
-                            <span class="location-icon">📍</span>
-                            <span>松山區 - 北歐鄉村風Brunch Cafe</span>
-                        </div>
-                        <div class="cafe-tags">
-                            <span class="tag highlight">北歐風</span>
-                            <span class="tag">Brunch</span>
-                        </div>
-                    </div>
-
-                    <div class="cafe-card" data-location="25.0605,121.5590" data-name="PECKISH Bakery"
-                        data-district="松山區">
-                        <div class="cafe-number">4</div>
-                        <div class="cafe-card-header">
-                            <div>
-                                <h3 class="cafe-name">PECKISH Bakery</h3>
-                                <div class="cafe-rating">
-                                    <span class="stars">★★★★★</span>
-                                    <span class="rating-number">4.8</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cafe-location">
-                            <span class="location-icon">📍</span>
-                            <span>松山區 - 設計感可頌專賣Cafe</span>
-                        </div>
-                        <div class="cafe-tags">
-                            <span class="tag highlight">可頌專賣</span>
-                            <span class="tag">設計感</span>
-                        </div>
-                    </div>
-
-                    <div class="cafe-card" data-location="25.0595,121.5598" data-name="PAUSE studio"
-                        data-district="松山區">
-                        <div class="cafe-number">5</div>
-                        <div class="cafe-card-header">
-                            <div>
-                                <h3 class="cafe-name">PAUSE studio</h3>
-                                <div class="cafe-rating">
-                                    <span class="stars">★★★★★</span>
-                                    <span class="rating-number">4.9</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cafe-location">
-                            <span class="location-icon">📍</span>
-                            <span>松山區 - 民生社區純白韓系咖啡廳</span>
-                        </div>
-                        <div class="cafe-tags">
-                            <span class="tag highlight">純白韓系</span>
-                            <span class="tag">不限時</span>
-                        </div>
-                    </div>
-
-                    <div class="cafe-card" data-location="25.0585,121.5575" data-name="ALL DAY ROASTING COMPANY"
-                        data-district="松山區">
-                        <div class="cafe-number">6</div>
-                        <div class="cafe-card-header">
-                            <div>
-                                <h3 class="cafe-name">ALL DAY ROASTING</h3>
-                                <div class="cafe-rating">
-                                    <span class="stars">★★★★★</span>
-                                    <span class="rating-number">4.7</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cafe-location">
-                            <span class="location-icon">📍</span>
-                            <span>松山區 - 工業風自家烘焙咖啡</span>
-                        </div>
-                        <div class="cafe-tags">
-                            <span class="tag highlight">自家烘焙</span>
-                            <span class="tag">工業風</span>
-                        </div>
-                    </div>
-
-                    <div class="cafe-card" data-location="25.0610,121.5595" data-name="CAFEAO" data-district="松山區">
-                        <div class="cafe-number">7</div>
-                        <div class="cafe-card-header">
-                            <div>
-                                <h3 class="cafe-name">CAFEAO</h3>
-                                <div class="cafe-rating">
-                                    <span class="stars">★★★★☆</span>
-                                    <span class="rating-number">4.6</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cafe-location">
-                            <span class="location-icon">📍</span>
-                            <span>松山區 - 陳冠希創立咖啡新品牌</span>
-                        </div>
-                        <div class="cafe-tags">
-                            <span class="tag highlight">潮流品牌</span>
-                            <span class="tag">時尚</span>
-                        </div>
-                    </div>
-
-                    <div class="cafe-card" data-location="25.0620,121.5600" data-name="好日子咖啡" data-district="松山區">
-                        <div class="cafe-number">8</div>
-                        <div class="cafe-card-header">
-                            <div>
-                                <h3 class="cafe-name">好日子咖啡</h3>
-                                <div class="cafe-rating">
-                                    <span class="stars">★★★★☆</span>
-                                    <span class="rating-number">4.5</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cafe-location">
-                            <span class="location-icon">📍</span>
-                            <span>松山區 - 感受延壽街日常氛圍</span>
-                        </div>
-                        <div class="cafe-tags">
-                            <span class="tag">日常咖啡</span>
-                            <span class="tag">社區</span>
-                        </div>
-                    </div>
-
-                    <div class="cafe-card" data-location="25.0539,121.5246" data-name="春秋書店" data-district="中山區">
-                        <div class="cafe-number">9</div>
-                        <div class="cafe-card-header">
-                            <div>
-                                <h3 class="cafe-name">春秋書店</h3>
-                                <div class="cafe-rating">
-                                    <span class="stars">★★★★☆</span>
-                                    <span class="rating-number">4.7</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cafe-location">
-                            <span class="location-icon">📍</span>
-                            <span>中山區 - 赤峰街老宅的文青咖啡</span>
-                        </div>
-                        <div class="cafe-tags">
-                            <span class="tag highlight">老宅</span>
-                            <span class="tag">書店</span>
-                        </div>
-                    </div>
-
-                    <div class="cafe-card" data-location="25.0630,121.5280" data-name="Hoto Cafe" data-district="中山區">
-                        <div class="cafe-number">10</div>
-                        <div class="cafe-card-header">
-                            <div>
-                                <h3 class="cafe-name">Hoto Cafe</h3>
-                                <div class="cafe-rating">
-                                    <span class="stars">★★★★★</span>
-                                    <span class="rating-number">4.8</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cafe-location">
-                            <span class="location-icon">📍</span>
-                            <span>中山區 - 公園旁日系咖啡甜點店</span>
-                        </div>
-                        <div class="cafe-tags">
-                            <span class="tag highlight">日系</span>
-                            <span class="tag">甜點</span>
-                        </div>
-                    </div>
-
-                    <div class="cafe-card" data-location="25.0640,121.5290" data-name="Keystone Coffee"
-                        data-district="中山區">
-                        <div class="cafe-number">11</div>
-                        <div class="cafe-card-header">
-                            <div>
-                                <h3 class="cafe-name">Keystone Coffee</h3>
-                                <div class="cafe-rating">
-                                    <span class="stars">★★★★★</span>
-                                    <span class="rating-number">4.9</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cafe-location">
-                            <span class="location-icon">📍</span>
-                            <span>中山區 - 職人烘焙咖啡</span>
-                        </div>
-                        <div class="cafe-tags">
-                            <span class="tag highlight">職人烘焙</span>
-                            <span class="tag">精品咖啡</span>
-                        </div>
-                    </div>
-
-                    <div class="cafe-card" data-location="25.0545,121.5250" data-name="時差 Jetlag" data-district="中山區">
-                        <div class="cafe-number">12</div>
-                        <div class="cafe-card-header">
-                            <div>
-                                <h3 class="cafe-name">時差 Jetlag</h3>
-                                <div class="cafe-rating">
-                                    <span class="stars">★★★★☆</span>
-                                    <span class="rating-number">4.6</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cafe-location">
-                            <span class="location-icon">📍</span>
-                            <span>中山區 - 香港空少打造的咖啡角落</span>
-                        </div>
-                        <div class="cafe-tags">
-                            <span class="tag">香港風</span>
-                            <span class="tag">特色</span>
-                        </div>
-                    </div>
-
-                    <div class="cafe-card" data-location="25.0340,121.5440" data-name="好物 Spirit" data-district="大安區">
-                        <div class="cafe-number">13</div>
-                        <div class="cafe-card-header">
-                            <div>
-                                <h3 class="cafe-name">好物 Spirit 咖啡</h3>
-                                <div class="cafe-rating">
-                                    <span class="stars">★★★★★</span>
-                                    <span class="rating-number">4.8</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cafe-location">
-                            <span class="location-icon">📍</span>
-                            <span>大安區 - 復古歐風老宅</span>
-                        </div>
-                        <div class="cafe-tags">
-                            <span class="tag highlight">復古歐風</span>
-                            <span class="tag">老宅</span>
-                        </div>
-                    </div>
-
-                    <div class="cafe-card" data-location="25.0360,121.5450" data-name="Tamed Fox" data-district="大安區">
-                        <div class="cafe-number">14</div>
-                        <div class="cafe-card-header">
-                            <div>
-                                <h3 class="cafe-name">Tamed Fox</h3>
-                                <div class="cafe-rating">
-                                    <span class="stars">★★★★☆</span>
-                                    <span class="rating-number">4.7</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cafe-location">
-                            <span class="location-icon">📍</span>
-                            <span>大安區 - 舒心美式Cafe健康蔬食</span>
-                        </div>
-                        <div class="cafe-tags">
-                            <span class="tag highlight">健康蔬食</span>
-                            <span class="tag">美式</span>
-                        </div>
-                    </div>
-
-                    <div class="cafe-card" data-location="25.0539,121.5195" data-name="幻猻家咖啡" data-district="大同區">
-                        <div class="cafe-number">15</div>
-                        <div class="cafe-card-header">
-                            <div>
-                                <h3 class="cafe-name">幻猻家咖啡</h3>
-                                <div class="cafe-rating">
-                                    <span class="stars">★★★★★</span>
-                                    <span class="rating-number">4.8</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cafe-location">
-                            <span class="location-icon">📍</span>
-                            <span>大同區 - 踏進去穿越到京都</span>
-                        </div>
-                        <div class="cafe-tags">
-                            <span class="tag highlight">京都風格</span>
-                            <span class="tag">老宅</span>
-                        </div>
-                    </div>
-
-                    <div class="cafe-card" data-location="25.0550,121.5200" data-name="黑露咖啡" data-district="大同區">
-                        <div class="cafe-number">16</div>
-                        <div class="cafe-card-header">
-                            <div>
-                                <h3 class="cafe-name">黑露咖啡</h3>
-                                <div class="cafe-rating">
-                                    <span class="stars">★★★★☆</span>
-                                    <span class="rating-number">4.7</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cafe-location">
-                            <span class="location-icon">📍</span>
-                            <span>大同區 - 營業至深夜的京都古風咖啡廳</span>
-                        </div>
-                        <div class="cafe-tags">
-                            <span class="tag highlight">京都古風</span>
-                            <span class="tag">深夜營業</span>
-                        </div>
-                    </div>
-
-                    <div class="cafe-card" data-location="25.0560,121.5100" data-name="Modern Mode" data-district="大同區">
-                        <div class="cafe-number">17</div>
-                        <div class="cafe-card-header">
-                            <div>
-                                <h3 class="cafe-name">Modern Mode</h3>
-                                <div class="cafe-rating">
-                                    <span class="stars">★★★★★</span>
-                                    <span class="rating-number">4.8</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cafe-location">
-                            <span class="location-icon">📍</span>
-                            <span>大同區 - 大稻埕裡的巴黎復古咖啡廳</span>
-                        </div>
-                        <div class="cafe-tags">
-                            <span class="tag highlight">巴黎復古</span>
-                            <span class="tag">大稻埕</span>
-                        </div>
-                    </div>
-
-                    <div class="cafe-card" data-location="25.0520,121.5230" data-name="羊毛與花 光點" data-district="大同區">
-                        <div class="cafe-number">18</div>
-                        <div class="cafe-card-header">
-                            <div>
-                                <h3 class="cafe-name">羊毛與花 光點</h3>
-                                <div class="cafe-rating">
-                                    <span class="stars">★★★★☆</span>
-                                    <span class="rating-number">4.6</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cafe-location">
-                            <span class="location-icon">📍</span>
-                            <span>大同區 - 比鄰城市電影院的採光咖啡廳</span>
-                        </div>
-                        <div class="cafe-tags">
-                            <span class="tag">採光佳</span>
-                            <span class="tag">電影院旁</span>
-                        </div>
-                    </div>
-
-                    <div class="cafe-card" data-location="25.0420,121.5180" data-name="直物文具Cafe" data-district="中正區">
-                        <div class="cafe-number">19</div>
-                        <div class="cafe-card-header">
-                            <div>
-                                <h3 class="cafe-name">直物文具Cafe</h3>
-                                <div class="cafe-rating">
-                                    <span class="stars">★★★★★</span>
-                                    <span class="rating-number">4.9</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cafe-location">
-                            <span class="location-icon">📍</span>
-                            <span>中正區 - 台灣首間文具咖啡廳</span>
-                        </div>
-                        <div class="cafe-tags">
-                            <span class="tag highlight">文具主題</span>
-                            <span class="tag">首創</span>
-                        </div>
-                    </div>
-
-                    <div class="cafe-card" data-location="25.0490,121.5140" data-name="MKCR 山小孩咖啡" data-district="中正區">
-                        <div class="cafe-number">20</div>
-                        <div class="cafe-card-header">
-                            <div>
-                                <h3 class="cafe-name">MKCR 山小孩咖啡</h3>
-                                <div class="cafe-rating">
-                                    <span class="stars">★★★★★</span>
-                                    <span class="rating-number">4.8</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cafe-location">
-                            <span class="location-icon">📍</span>
-                            <span>中正區 - 北門旁品質自烘咖啡</span>
-                        </div>
-                        <div class="cafe-tags">
-                            <span class="tag highlight">自烘咖啡</span>
-                            <span class="tag">北門</span>
-                        </div>
-                    </div>
-
-                    <div class="cafe-card" data-location="25.1019,121.5512" data-name="野人花園" data-district="士林區">
-                        <div class="cafe-number">21</div>
-                        <div class="cafe-card-header">
-                            <div>
-                                <h3 class="cafe-name">野人花園</h3>
-                                <div class="cafe-rating">
-                                    <span class="stars">★★★★★</span>
-                                    <span class="rating-number">4.9</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cafe-location">
-                            <span class="location-icon">📍</span>
-                            <span>士林區 - 沈浸在山中森林的無限時祕境</span>
-                        </div>
-                        <div class="cafe-tags">
-                            <span class="tag highlight">山中秘境</span>
-                            <span class="tag">不限時</span>
-                        </div>
-                    </div>
-
-                    <div class="cafe-card" data-location="25.1280,121.5450" data-name="豆留森林" data-district="士林區">
-                        <div class="cafe-number">22</div>
-                        <div class="cafe-card-header">
-                            <div>
-                                <h3 class="cafe-name">豆留森林</h3>
-                                <div class="cafe-rating">
-                                    <span class="stars">★★★★★</span>
-                                    <span class="rating-number">4.8</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cafe-location">
-                            <span class="location-icon">📍</span>
-                            <span>士林區 - 陽明山下CAMA竹林老宅特別店</span>
-                        </div>
-                        <div class="cafe-tags">
-                            <span class="tag highlight">竹林老宅</span>
-                            <span class="tag">陽明山</span>
-                        </div>
-                    </div>
-
-                    <div class="cafe-card" data-location="25.1369,121.5473" data-name="好樣秘境" data-district="士林區">
-                        <div class="cafe-number">23</div>
-                        <div class="cafe-card-header">
-                            <div>
-                                <h3 class="cafe-name">好樣秘境</h3>
-                                <div class="cafe-rating">
-                                    <span class="stars">★★★★★</span>
-                                    <span class="rating-number">4.9</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cafe-location">
-                            <span class="location-icon">📍</span>
-                            <span>士林區 - 菁山路上的純白靜謐花園</span>
-                        </div>
-                        <div class="cafe-tags">
-                            <span class="tag highlight">純白花園</span>
-                            <span class="tag">秘境</span>
-                        </div>
-                    </div>
-
-                    <div class="cafe-card" data-location="25.0820,121.5880" data-name="文心藝所" data-district="內湖區">
-                        <div class="cafe-number">24</div>
-                        <div class="cafe-card-header">
-                            <div>
-                                <h3 class="cafe-name">文心藝所</h3>
-                                <div class="cafe-rating">
-                                    <span class="stars">★★★★★</span>
-                                    <span class="rating-number">4.9</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cafe-location">
-                            <span class="location-icon">📍</span>
-                            <span>內湖區 - 最美書店裡閱讀和喝咖啡</span>
-                        </div>
-                        <div class="cafe-tags">
-                            <span class="tag highlight">最美書店</span>
-                            <span class="tag">藝術空間</span>
-                        </div>
-                    </div>
-
-                    <div class="cafe-card" data-location="25.1370,121.5010" data-name="穠咖啡" data-district="北投區">
-                        <div class="cafe-number">25</div>
-                        <div class="cafe-card-header">
-                            <div>
-                                <h3 class="cafe-name">穠咖啡</h3>
-                                <div class="cafe-rating">
-                                    <span class="stars">★★★★★</span>
-                                    <span class="rating-number">4.8</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cafe-location">
-                            <span class="location-icon">📍</span>
-                            <span>北投區 - 必嚐酒香提拉米蘇、創意調酒咖啡</span>
-                        </div>
-                        <div class="cafe-tags">
-                            <span class="tag highlight">提拉米蘇</span>
-                            <span class="tag">調酒咖啡</span>
-                        </div>
-                    </div>
-
-                    <div class="cafe-card" data-location="25.1520,121.5150" data-name="山上聊" data-district="北投區">
-                        <div class="cafe-number">26</div>
-                        <div class="cafe-card-header">
-                            <div>
-                                <h3 class="cafe-name">山上聊</h3>
-                                <div class="cafe-rating">
-                                    <span class="stars">★★★★★</span>
-                                    <span class="rating-number">4.9</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="cafe-location">
-                            <span class="location-icon">📍</span>
-                            <span>北投區 - 呼吸芬多精擼貓的祕密花園</span>
-                        </div>
-                        <div class="cafe-tags">
-                            <span class="tag highlight">森林系</span>
-                            <span class="tag">貓咪</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="floating-btn" title="回到頂部">
+            ↑
         </div>
 
-    </div>
-
-    <div class="floating-btn" title="回到頂部">
-        ↑
-    </div>
-
-    <footer class="footer">
-        <div class="footer-content">
-            <p>資料來源：<a href="https://iceoffice.com.tw/taipeicafemap/" target="_blank">食攝人生 - 台北咖啡廳地圖</a></p>
-            <p>© 2025 台北咖啡地圖 | 探索城市中的每一杯咖啡香</p>
-            <p class="footer-text">製作者：呂宜蓁 N1116445</p>
-        </div>
-    </footer>
-</body>
+        <footer class="footer">
+            <div class="footer-content">
+                <p>資料來源：<a href="https://iceoffice.com.tw/taipeicafemap/" target="_blank">食攝人生 - 台北咖啡廳地圖</a></p>
+                <p>© 2025 台北咖啡地圖 | 探索城市中的每一杯咖啡香</p>
+                <p class="footer-text">製作者：呂宜蓁 N1116445</p>
+            </div>
+        </footer>
+    </body>
 
 </html>

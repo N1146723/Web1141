@@ -2,42 +2,42 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>08 九九乘法挑戰 - 積分比拼版</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>08 九九乘法挑戰 - 積分比拼版</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="script.js" defer></script>
+    </head>
 
-<body>
-    <a href="../index.html" id="home-link">回首頁</a>
-    <h1>乘法英雄挑戰賽</h1>
+    <body>
+        <a href="../index.html" id="home-link">回首頁</a>
+        <h1>乘法英雄挑戰賽</h1>
 
-    <div class="scoreboard">
-        <div class="score-item">
-            <span class="label">目前分數</span>
-            <span id="currentScore" class="score-val">0</span>
+        <div class="scoreboard">
+            <div class="score-item">
+                <span class="label">目前分數</span>
+                <span id="currentScore" class="score-val">0</span>
+            </div>
+            <div class="score-item">
+                <span class="label">最高紀錄</span>
+                <span id="highScore" class="score-val">0</span>
+            </div>
         </div>
-        <div class="score-item">
-            <span class="label">最高紀錄</span>
-            <span id="highScore" class="score-val">0</span>
+
+        <div id="rank-display">目前稱號：乘法小學徒 </div>
+
+        <div class="main-layout">
+            <div class="table-container" id="multiplicationTable"></div>
+
+            <div class="quiz-container">
+                <div id="question">? × ?</div>
+                <input type="number" id="answerInput" placeholder="?" onkeyup="if(event.key==='Enter') checkAnswer()">
+                <br>
+                <button onclick="checkAnswer()">回答！</button>
+                <div id="feedback"></div>
+            </div>
         </div>
-    </div>
-
-    <div id="rank-display">目前稱號：乘法小學徒 </div>
-
-    <div class="main-layout">
-        <div class="table-container" id="multiplicationTable"></div>
-
-        <div class="quiz-container">
-            <div id="question">? × ?</div>
-            <input type="number" id="answerInput" placeholder="?" onkeyup="if(event.key==='Enter') checkAnswer()">
-            <br>
-            <button onclick="checkAnswer()">回答！</button>
-            <div id="feedback"></div>
-        </div>
-    </div>
-</body>
+    </body>
 
 </html>

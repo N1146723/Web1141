@@ -2,115 +2,115 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <meta charset="UTF-8">
-    <title>02 沒朋友覺得冷 - 來場自我對話</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <title>02 沒朋友覺得冷 - 來場自我對話</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="script.js" defer></script>
+    </head>
 
-<body class="light">
-    <header class="page-header">
-        <button class="mode-btn" id="sunBtn">☀️</button>
-        <div class="center">
-            <div class="marquee">～～ 沒朋友，自己跟自己聊天！刪除訊息功能開發中，敬請期待 ～～</div>
-        </div>
-        <button class="mode-btn" id="moonBtn">🌙</button>
-    </header>
-
-    <div class="main-wrapper">
-        <!-- 左側面板 -->
-        <div class="side-panel" id="panelA">
-            <label>選擇頭像</label>
-            <div class="avatar-selector" data-target="A">
-                <img src="media/avatar1.jpg" class="selected">
-                <img src="media/avatar2.jpg">
-                <img src="media/avatar3.jpg">
-                <img src="media/avatar4.jpg">
-                <img src="media/avatar5.jpg">
+    <body class="light">
+        <header class="page-header">
+            <button class="mode-btn" id="sunBtn">☀️</button>
+            <div class="center">
+                <div class="marquee">～～ 沒朋友，自己跟自己聊天！刪除訊息功能開發中，敬請期待 ～～</div>
             </div>
-            <label>手機 A 名字</label>
-            <input type="text" class="name-input" value="Jason">
-            <label>手機 A 副標題</label>
-            <input type="text" class="sub-input" value="I am good.">
+            <button class="mode-btn" id="moonBtn">🌙</button>
+        </header>
 
-            <label>聊天字體大小</label>
-            <select class="font-size-select" data-target="A">
-                <option value="10px">小</option>
-                <option value="12px" selected>中</option>
-                <option value="14px">大</option>
-            </select>
-        </div>
-
-        <!-- 手機 A 與 B -->
-        <div class="phone-wrapper">
-            <div class="phone" data-user="A">
-                <div class="status-bar">
-                    <span class="time-display"></span>
-                    <div><span>📶</span><span>🔋&emsp;</span></div>
+        <div class="main-wrapper">
+            <!-- 左側面板 -->
+            <div class="side-panel" id="panelA">
+                <label>選擇頭像</label>
+                <div class="avatar-selector" data-target="A">
+                    <img src="media/avatar1.jpg" class="selected">
+                    <img src="media/avatar2.jpg">
+                    <img src="media/avatar3.jpg">
+                    <img src="media/avatar4.jpg">
+                    <img src="media/avatar5.jpg">
                 </div>
-                <div class="content">
-                    <div class="header">
-                        <div>
-                            <p class="name">Jason</p>
-                            <p class="sub">I am good.</p>
+                <label>手機 A 名字</label>
+                <input type="text" class="name-input" value="Jason">
+                <label>手機 A 副標題</label>
+                <input type="text" class="sub-input" value="I am good.">
+
+                <label>聊天字體大小</label>
+                <select class="font-size-select" data-target="A">
+                    <option value="10px">小</option>
+                    <option value="12px" selected>中</option>
+                    <option value="14px">大</option>
+                </select>
+            </div>
+
+            <!-- 手機 A 與 B -->
+            <div class="phone-wrapper">
+                <div class="phone" data-user="A">
+                    <div class="status-bar">
+                        <span class="time-display"></span>
+                        <div><span>📶</span><span>🔋&emsp;</span></div>
+                    </div>
+                    <div class="content">
+                        <div class="header">
+                            <div>
+                                <p class="name">Jason</p>
+                                <p class="sub">I am good.</p>
+                            </div>
+                            <img src="media/avatar1.jpg" class="avatar">
                         </div>
-                        <img src="media/avatar1.jpg" class="avatar">
-                    </div>
-                    <div class="chat-area" id="chatA"></div>
-                    <div class="input-area">
-                        <textarea id="inputA" class="text" rows="1" placeholder="輸入訊息"></textarea>
-                        <button class="send-btn" data-send-for="A">➤</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="phone" data-user="B">
-                <div class="status-bar">
-                    <span class="time-display"></span>
-                    <div><span>📶</span> <span>🔋&emsp;</span></div>
-                </div>
-                <div class="content">
-                    <div class="header">
-                        <div>
-                            <p class="name">Linda</p>
-                            <p class="sub">Life is good.</p>
+                        <div class="chat-area" id="chatA"></div>
+                        <div class="input-area">
+                            <textarea id="inputA" class="text" rows="1" placeholder="輸入訊息"></textarea>
+                            <button class="send-btn" data-send-for="A">➤</button>
                         </div>
-                        <img src="media/avatar2.jpg" class="avatar">
                     </div>
-                    <div class="chat-area" id="chatB"></div>
-                    <div class="input-area">
-                        <textarea id="inputB" class="text" rows="1" placeholder="輸入訊息"></textarea>
-                        <button class="send-btn" data-send-for="B">➤</button>
+                </div>
+
+                <div class="phone" data-user="B">
+                    <div class="status-bar">
+                        <span class="time-display"></span>
+                        <div><span>📶</span> <span>🔋&emsp;</span></div>
+                    </div>
+                    <div class="content">
+                        <div class="header">
+                            <div>
+                                <p class="name">Linda</p>
+                                <p class="sub">Life is good.</p>
+                            </div>
+                            <img src="media/avatar2.jpg" class="avatar">
+                        </div>
+                        <div class="chat-area" id="chatB"></div>
+                        <div class="input-area">
+                            <textarea id="inputB" class="text" rows="1" placeholder="輸入訊息"></textarea>
+                            <button class="send-btn" data-send-for="B">➤</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- 右側面板 -->
-        <div class="side-panel" id="panelB">
-            <label>選擇頭像</label>
-            <div class="avatar-selector" data-target="B">
-                <img src="media/avatar2.jpg" class="selected">
-                <img src="media/avatar3.jpg">
-                <img src="media/avatar4.jpg">
-                <img src="media/avatar5.jpg">
-                <img src="media/avatar1.jpg">
+            <!-- 右側面板 -->
+            <div class="side-panel" id="panelB">
+                <label>選擇頭像</label>
+                <div class="avatar-selector" data-target="B">
+                    <img src="media/avatar2.jpg" class="selected">
+                    <img src="media/avatar3.jpg">
+                    <img src="media/avatar4.jpg">
+                    <img src="media/avatar5.jpg">
+                    <img src="media/avatar1.jpg">
+                </div>
+                <label>手機 B 名字</label>
+                <input type="text" class="name-input" value="Linda">
+                <label>手機 B 副標題</label>
+                <input type="text" class="sub-input" value="Life is good.">
+
+                <label>聊天字體大小</label>
+                <select class="font-size-select" data-target="B">
+                    <option value="10px">小</option>
+                    <option value="12px" selected>中</option>
+                    <option value="14px">大</option>
+                </select>
             </div>
-            <label>手機 B 名字</label>
-            <input type="text" class="name-input" value="Linda">
-            <label>手機 B 副標題</label>
-            <input type="text" class="sub-input" value="Life is good.">
-
-            <label>聊天字體大小</label>
-            <select class="font-size-select" data-target="B">
-                <option value="10px">小</option>
-                <option value="12px" selected>中</option>
-                <option value="14px">大</option>
-            </select>
         </div>
-    </div>
 
-</body>
+    </body>
 
 </html>
