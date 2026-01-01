@@ -70,6 +70,16 @@ nav {
     text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
 }
 
+.about-us {
+    text-align: center;
+    font-size: 1.1em;
+}
+
+.contact-us {
+    background-color: #ffb703;
+    color: #023047;
+}
+
 section {
     padding: 60px 20px;
     max-width: 1000px;
@@ -97,6 +107,10 @@ section h2 {
     object-fit: cover;
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.services-overview {
+    background-color: #f0f4f8;
 }
 
 .services {

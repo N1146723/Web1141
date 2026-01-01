@@ -419,6 +419,11 @@ body {
     margin: 0 auto;
 }
 
+.footer-text {
+    margin-top: 15px;
+    font-size: 0.9rem;
+}
+
 .footer p {
     margin-bottom: 8px;
     opacity: 0.9;
