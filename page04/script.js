@@ -1,6 +1,5 @@
 // N1146707 張昀萱 頁面#2
 $(function () {
-
     function getCreditSum(className) {
         let sum = 0;
         $(`.${className}:checked`).each(function () {
@@ -10,7 +9,6 @@ $(function () {
     }
 
     function updateCredits() {
-
         const sem1_total =
             getCreditSum('proRequired1') +
             getCreditSum('proElective1') +
